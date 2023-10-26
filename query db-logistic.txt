@@ -1,0 +1,59 @@
+-- Tabel Pengguna (Users)
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL
+);
+
+-- Tabel Tim (Teams)
+CREATE TABLE teams (
+    team_id INT AUTO_INCREMENT PRIMARY KEY,
+    team_name VARCHAR(255) NOT NULL
+);
+
+-- Tabel Kriteria (Criteria)
+CREATE TABLE criteria (
+    criteria_id INT AUTO_INCREMENT PRIMARY KEY,
+    criteria_name VARCHAR(255) NOT NULL,
+    team_id INT,
+    FOREIGN KEY (team_id) REFERENCES teams(team_id)
+);
+
+-- Tabel Subkriteria (Subcriteria)
+CREATE TABLE subcriteria (
+    subcriteria_id INT AUTO_INCREMENT PRIMARY KEY,
+    subcriteria_name VARCHAR(255) NOT NULL,
+    criteria_id INT,
+    FOREIGN KEY (criteria_id) REFERENCES criteria(criteria_id)
+);
+
+-- Tabel Pertanyaan (Questions)
+CREATE TABLE questions (
+    question_id INT AUTO_INCREMENT PRIMARY KEY,
+    question_text TEXT NOT NULL,
+    subcriteria_id INT,
+    FOREIGN KEY (subcriteria_id) REFERENCES subcriteria(subcriteria_id)
+);
+
+-- Tabel Pilihan Ganda (MultipleChoice)
+CREATE TABLE multiple_choice (
+    choice_id INT AUTO_INCREMENT PRIMARY KEY,
+    choice_value INT NOT NULL,
+    question_id INT,
+    FOREIGN KEY (question_id) REFERENCES questions(question_id)
+);
+
+-- Tabel Penilaian (Assessment)
+CREATE TABLE assessments (
+    assessment_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    team_id INT,
+    question_id INT,
+    choice_id INT,
+    score INT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (team_id) REFERENCES teams(team_id),
+    FOREIGN KEY (question_id) REFERENCES questions(question_id),
+    FOREIGN KEY (choice_id) REFERENCES multiple_choice(choice_id)
+);
