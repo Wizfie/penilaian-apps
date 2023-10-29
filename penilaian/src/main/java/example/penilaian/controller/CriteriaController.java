@@ -13,14 +13,14 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/criteria")
+@RequestMapping("/api")
 public class CriteriaController {
 
     @Autowired
     private CriteriaService criteriaService;
 
 
-    @GetMapping("/all")
+    @GetMapping("/criteriaAll")
     public List<Criteria> getAllCriteria() {
         return criteriaService.getAllCriteria();
     }

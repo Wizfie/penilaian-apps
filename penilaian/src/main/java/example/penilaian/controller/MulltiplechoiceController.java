@@ -12,13 +12,13 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/choice")
+@RequestMapping("/api")
 public class MulltiplechoiceController {
 
     @Autowired
     private MultiplechoiceService multiplechoiceService;
 
-    @GetMapping("/all")
+    @GetMapping("/choiceAll")
     public List<MultipleChoice> getAllChoice(){
         return multiplechoiceService.getAllChoice();
     }

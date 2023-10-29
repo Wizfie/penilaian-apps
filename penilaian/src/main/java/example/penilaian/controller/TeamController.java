@@ -1,8 +1,8 @@
 package example.penilaian.controller;
 
 
-import example.penilaian.entity.Subcriteria;
-import example.penilaian.service.SubcriteriaService;
+import example.penilaian.entity.Team;
+import example.penilaian.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +14,13 @@ import java.util.List;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api")
-
-public class SubcriteriaController {
+public class TeamController {
 
     @Autowired
-    private SubcriteriaService subcriteriaService;
+    private TeamService teamService;
 
-    @GetMapping("/subcriteriaAll")
-    public List<Subcriteria> getAllSubcriteria(){
-        return subcriteriaService.getAllSubcriteria();
+    @GetMapping("/getAllTeam")
+    public List<Team> getAllTeam(){
+        return teamService.getAllTeam();
     }
 }
