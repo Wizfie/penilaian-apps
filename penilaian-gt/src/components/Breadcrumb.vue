@@ -2,10 +2,10 @@
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb m-3 fw-bolder fs-6 bg-body-secondary p-4 rounded-2">
 			<li class="breadcrumb-item">
-				<router-link class="text-dark" to="">PLAN</router-link>
+				<router-link class="text-dark" to="/plan">PLAN</router-link>
 			</li>
 			<li class="breadcrumb-item">
-				<router-link class="text-dark" to="">DO</router-link>
+				<router-link class="text-dark" to="/do">DO</router-link>
 			</li>
 			<li class="breadcrumb-item">
 				<router-link class="text-dark" to="">CHECK</router-link>

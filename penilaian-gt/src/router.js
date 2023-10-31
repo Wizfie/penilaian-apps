@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Login from "./views/Login.vue";
-import Register from "./views/Register.vue";
-import Penilaian from "./views/Penilaian.vue";
+import Login from "./views/Auth/Login.vue";
+import Register from "./views/Auth/Register.vue";
+import plan from "./views/Penilaian-Lapangan/Plan-Page.vue";
+import dashboard from "./views/Penilaian-Lapangan/Dashboard.vue";
+import doPage from "./views/Penilaian-Lapangan/Do-Page.vue";
 const routes = [
 	{
 		path: "/",
@@ -14,11 +16,20 @@ const routes = [
 		component: Register,
 	},
 	{
-		path: "/penilaian",
-		name: "Penilaian",
-		component: Penilaian,
+		path: "/dashboard",
+		name: "dashboard",
+		component: dashboard,
 	},
-	// Define other routes here
+	{
+		path: "/plan",
+		name: "plan",
+		component: plan,
+	},
+	{
+		path: "/do",
+		name: "do",
+		component: doPage,
+	},
 ];
 
 const router = createRouter({

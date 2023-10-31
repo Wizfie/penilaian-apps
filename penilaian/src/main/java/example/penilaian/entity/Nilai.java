@@ -19,20 +19,22 @@ public class Nilai {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int nilaiId;
 
-    private int nilai;
-
-    @ManyToOne
-    @JoinColumn(name = "users_id")
-    private Users users;
-
-    @ManyToOne
-    @JoinColumn(name = "team_id")
-    private Team team;
-
-    @ManyToOne
-    @JoinColumn(name = "question_id")
-    private Question question;
+    private double nilai;
+    private String teamName;
+    private String username;
+    private int questionId;
 
 
 
 }
+//    @ManyToOne
+//    @JoinColumn(name = "users_id")
+//    private Users users;
+//    @ManyToOne
+//    @JoinColumn(name = "team_id")
+//    private Team team;
+
+//    @ManyToOne
+//    @JoinColumn(name = "question_id")
+//    private Question question;
+

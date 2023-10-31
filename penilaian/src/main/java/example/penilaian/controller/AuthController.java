@@ -1,6 +1,7 @@
 package example.penilaian.controller;
 
 import example.penilaian.model.LoginUserRequest;
+import example.penilaian.model.UserToken;
 import example.penilaian.model.WebResponse;
 import example.penilaian.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,17 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-
     @PostMapping(
             path = "/api/auth/login",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<String> login(@RequestBody LoginUserRequest request){
-        authService.login(request);
+    public WebResponse<UserToken> login(@RequestBody LoginUserRequest request) {
+        UserToken userToken = authService.login(request);
 
-        return WebResponse.<String>builder().data("Login Success").build();
+
+        return WebResponse.<UserToken>builder()
+                .data(userToken)
+                .build();
     }
 
 

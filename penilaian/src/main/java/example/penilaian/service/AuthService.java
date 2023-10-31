@@ -2,8 +2,8 @@ package example.penilaian.service;
 
 import example.penilaian.entity.Users;
 import example.penilaian.model.LoginUserRequest;
+import example.penilaian.model.UserToken;
 import example.penilaian.model.ValidatorService;
-import example.penilaian.model.WebResponse;
 import example.penilaian.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class AuthService {
     private ValidatorService validatorService;
 
     @Transactional
-    public WebResponse<String> login(LoginUserRequest request) {
+    public UserToken login(LoginUserRequest request) {
         validatorService.validate(request);
 
         Users user = userRepository.findByNip(request.getNip())
@@ -32,8 +32,12 @@ public class AuthService {
         if (user.getPassword().equals(request.getPassword())) {
             // Password cocok, Anda dapat mengizinkan akses ke pengguna.
 
-            // Contoh WebResponse jika login berhasil:
-            return WebResponse.<String>builder().data("Login Success").build();
+            // Buat objek UserToken dengan nip dan username dari pengguna yang login.
+
+            return UserToken.builder()
+                    .nip(user.getNip())
+                    .username(user.getUsername())
+                    .build();
         } else {
             throw new ResponseStatusException(UNAUTHORIZED, "NIP or Password Salah");
         }

@@ -5,16 +5,13 @@
 		</div>
 		<ul class="menu-sidebar list-unstyled text-center position-relative">
 			<li>
-				<a><router-link to="">Dashboard</router-link></a>
+				<a><router-link to="/dashboard">Dashboard</router-link></a>
 			</li>
 			<li>
 				<a><router-link to="/penilaian">Penilaian</router-link></a>
 			</li>
-			<!-- <li>
-					<a><router-link to="/profile">Profile</router-link></a>
-				</li> -->
 			<li class="sign-out">
-				<a><router-link to="/">Sign Out</router-link> </a>
+				<a><router-link @click="signOut()" to="">Sign Out</router-link> </a>
 			</li>
 		</ul>
 	</aside>
@@ -26,6 +23,13 @@
 			return {
 				isSidebarHidden: false,
 			};
+		},
+
+		methods: {
+			signOut() {
+				sessionStorage.clear("userData");
+				this.$router.push("/");
+			},
 		},
 		props: {
 			isSidebarHidden: Boolean, // Terima prop untuk mengatur kelas 'hidden'
@@ -40,6 +44,7 @@
 		min-width: 250px;
 		max-width: 250px;
 		position: fixed;
+		height: 100%;
 	}
 	.hidden {
 		display: none;
@@ -50,13 +55,6 @@
 	}
 
 	.menu-sidebar li a {
-		/* display: block;
-		background-color: transparent;
-		padding: 1px;
-		font-weight: bolder;
-		margin-bottom: 10px;
-		margin-top: 10;
-		justify-content: center; */
 		display: flex;
 		flex-direction: column;
 		align-items: center;
