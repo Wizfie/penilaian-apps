@@ -105,21 +105,5 @@
 	};
 </script>
 <style scoped>
-	.register {
-		display: flex;
-		background-color: rgb(5, 5, 119);
-		justify-content: center;
-		align-items: center;
-		height: 100vh;
-		margin: 0;
-	}
-	.register-container {
-		/* text-align: center; */
-		width: 400px;
-		height: 500px;
-		border-color: black;
-		background-color: cornflowerblue;
-		border-radius: 20px;
-		box-shadow: 5px 5px 10px #888888;
-	}
+	@import "../../assets/regis.css";
 </style>

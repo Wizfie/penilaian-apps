@@ -4,31 +4,41 @@ import Register from "./views/Auth/Register.vue";
 import plan from "./views/Penilaian-Lapangan/Plan-Page.vue";
 import dashboard from "./views/Penilaian-Lapangan/Dashboard.vue";
 import doPage from "./views/Penilaian-Lapangan/Do-Page.vue";
+import check from "./views/Penilaian-Lapangan/Check-Page.vue";
+import action from "./views/Penilaian-Lapangan/Action-Page.vue";
+import presentasi from "./views/Penilaian-Lapangan/Presentasi.vue";
 const routes = [
 	{
 		path: "/",
-		name: "Login",
 		component: Login,
 	},
 	{
 		path: "/register",
-		name: "Register",
 		component: Register,
 	},
 	{
 		path: "/dashboard",
-		name: "dashboard",
 		component: dashboard,
 	},
 	{
 		path: "/plan",
-		name: "plan",
 		component: plan,
 	},
 	{
 		path: "/do",
-		name: "do",
 		component: doPage,
+	},
+	{
+		path: "/check",
+		component: check,
+	},
+	{
+		path: "/action",
+		component: action,
+	},
+	{
+		path: "/presentasi",
+		component: presentasi,
 	},
 ];
 

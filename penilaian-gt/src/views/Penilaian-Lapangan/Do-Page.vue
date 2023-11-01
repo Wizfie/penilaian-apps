@@ -1,302 +1,275 @@
 <template>
-	<aside id="sidebar" class="sidebar">
-		<ul class="sidebar-nav" id="sidebar-nav">
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="index.html">
-					<i class="bi bi-grid"></i>
-					<span>Dashboard</span>
-				</a>
-			</li>
-			<!-- End Dashboard Nav -->
+	<div>
+		<Header />
 
-			<li class="nav-item">
-				<a
-					class="nav-link collapsed"
-					data-bs-target="#components-nav"
-					data-bs-toggle="collapse"
-					href="#"
-				>
-					<i class="bi bi-menu-button-wide"></i><span>Components</span
-					><i class="bi bi-chevron-down ms-auto"></i>
-				</a>
-				<ul
-					id="components-nav"
-					class="nav-content collapse"
-					data-bs-parent="#sidebar-nav"
-				>
-					<li>
-						<a href="components-alerts.html">
-							<i class="bi bi-circle"></i><span>Alerts</span>
-						</a>
-					</li>
-					<li>
-						<a href="components-accordion.html">
-							<i class="bi bi-circle"></i><span>Accordion</span>
-						</a>
-					</li>
-					<li>
-						<a href="components-badges.html">
-							<i class="bi bi-circle"></i><span>Badges</span>
-						</a>
-					</li>
-					<li>
-						<a href="components-breadcrumbs.html">
-							<i class="bi bi-circle"></i><span>Breadcrumbs</span>
-						</a>
-					</li>
-					<li>
-						<a href="components-buttons.html">
-							<i class="bi bi-circle"></i><span>Buttons</span>
-						</a>
-					</li>
-					<li>
-						<a href="components-cards.html">
-							<i class="bi bi-circle"></i><span>Cards</span>
-						</a>
-					</li>
-					<li>
-						<a href="components-carousel.html">
-							<i class="bi bi-circle"></i><span>Carousel</span>
-						</a>
-					</li>
-					<li>
-						<a href="components-list-group.html">
-							<i class="bi bi-circle"></i><span>List group</span>
-						</a>
-					</li>
-					<li>
-						<a href="components-modal.html">
-							<i class="bi bi-circle"></i><span>Modal</span>
-						</a>
-					</li>
-					<li>
-						<a href="components-tabs.html">
-							<i class="bi bi-circle"></i><span>Tabs</span>
-						</a>
-					</li>
-					<li>
-						<a href="components-pagination.html">
-							<i class="bi bi-circle"></i><span>Pagination</span>
-						</a>
-					</li>
-					<li>
-						<a href="components-progress.html">
-							<i class="bi bi-circle"></i><span>Progress</span>
-						</a>
-					</li>
-					<li>
-						<a href="components-spinners.html">
-							<i class="bi bi-circle"></i><span>Spinners</span>
-						</a>
-					</li>
-					<li>
-						<a href="components-tooltips.html">
-							<i class="bi bi-circle"></i><span>Tooltips</span>
-						</a>
-					</li>
-				</ul>
-			</li>
-			<!-- End Components Nav -->
+		<main id="main" class="main">
+			<div class="pagetitle">
+				<h1 class="my-4 fs-1">DO</h1>
+				<!-- Breadcrumb -->
+				<Breadcrumb />
+				<!-- Breadcrumb -->
+			</div>
+			<!-- End Page Title -->
 
-			<li class="nav-item">
-				<a
-					class="nav-link collapsed"
-					data-bs-target="#forms-nav"
-					data-bs-toggle="collapse"
-					href="#"
-				>
-					<i class="bi bi-journal-text"></i><span>Forms</span
-					><i class="bi bi-chevron-down ms-auto"></i>
-				</a>
-				<ul
-					id="forms-nav"
-					class="nav-content collapse"
-					data-bs-parent="#sidebar-nav"
-				>
-					<li>
-						<a href="forms-elements.html">
-							<i class="bi bi-circle"></i><span>Form Elements</span>
-						</a>
-					</li>
-					<li>
-						<a href="forms-layouts.html">
-							<i class="bi bi-circle"></i><span>Form Layouts</span>
-						</a>
-					</li>
-					<li>
-						<a href="forms-editors.html">
-							<i class="bi bi-circle"></i><span>Form Editors</span>
-						</a>
-					</li>
-					<li>
-						<a href="forms-validation.html">
-							<i class="bi bi-circle"></i><span>Form Validation</span>
-						</a>
-					</li>
-				</ul>
-			</li>
-			<!-- End Forms Nav -->
-
-			<li class="nav-item">
-				<a
-					class="nav-link collapsed"
-					data-bs-target="#tables-nav"
-					data-bs-toggle="collapse"
-					href="#"
-				>
-					<i class="bi bi-layout-text-window-reverse"></i><span>Tables</span
-					><i class="bi bi-chevron-down ms-auto"></i>
-				</a>
-				<ul
-					id="tables-nav"
-					class="nav-content collapse"
-					data-bs-parent="#sidebar-nav"
-				>
-					<li>
-						<a href="tables-general.html">
-							<i class="bi bi-circle"></i><span>General Tables</span>
-						</a>
-					</li>
-					<li>
-						<a href="tables-data.html">
-							<i class="bi bi-circle"></i><span>Data Tables</span>
-						</a>
-					</li>
-				</ul>
-			</li>
-			<!-- End Tables Nav -->
-
-			<li class="nav-item">
-				<a
-					class="nav-link collapsed"
-					data-bs-target="#charts-nav"
-					data-bs-toggle="collapse"
-					href="#"
-				>
-					<i class="bi bi-bar-chart"></i><span>Charts</span
-					><i class="bi bi-chevron-down ms-auto"></i>
-				</a>
-				<ul
-					id="charts-nav"
-					class="nav-content collapse"
-					data-bs-parent="#sidebar-nav"
-				>
-					<li>
-						<a href="charts-chartjs.html">
-							<i class="bi bi-circle"></i><span>Chart.js</span>
-						</a>
-					</li>
-					<li>
-						<a href="charts-apexcharts.html">
-							<i class="bi bi-circle"></i><span>ApexCharts</span>
-						</a>
-					</li>
-					<li>
-						<a href="charts-echarts.html">
-							<i class="bi bi-circle"></i><span>ECharts</span>
-						</a>
-					</li>
-				</ul>
-			</li>
-			<!-- End Charts Nav -->
-
-			<li class="nav-item">
-				<a
-					class="nav-link collapsed"
-					data-bs-target="#icons-nav"
-					data-bs-toggle="collapse"
-					href="#"
-				>
-					<i class="bi bi-gem"></i><span>Icons</span
-					><i class="bi bi-chevron-down ms-auto"></i>
-				</a>
-				<ul
-					id="icons-nav"
-					class="nav-content collapse"
-					data-bs-parent="#sidebar-nav"
-				>
-					<li>
-						<a href="icons-bootstrap.html">
-							<i class="bi bi-circle"></i><span>Bootstrap Icons</span>
-						</a>
-					</li>
-					<li>
-						<a href="icons-remix.html">
-							<i class="bi bi-circle"></i><span>Remix Icons</span>
-						</a>
-					</li>
-					<li>
-						<a href="icons-boxicons.html">
-							<i class="bi bi-circle"></i><span>Boxicons</span>
-						</a>
-					</li>
-				</ul>
-			</li>
-			<!-- End Icons Nav -->
-
-			<li class="nav-heading">Pages</li>
-
-			<li class="nav-item">
-				<a class="nav-link" href="users-profile.html">
-					<i class="bi bi-person"></i>
-					<span>Profile</span>
-				</a>
-			</li>
-			<!-- End Profile Page Nav -->
-
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="pages-faq.html">
-					<i class="bi bi-question-circle"></i>
-					<span>F.A.Q</span>
-				</a>
-			</li>
-			<!-- End F.A.Q Page Nav -->
-
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="pages-contact.html">
-					<i class="bi bi-envelope"></i>
-					<span>Contact</span>
-				</a>
-			</li>
-			<!-- End Contact Page Nav -->
-
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="pages-register.html">
-					<i class="bi bi-card-list"></i>
-					<span>Register</span>
-				</a>
-			</li>
-			<!-- End Register Page Nav -->
-
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="pages-login.html">
-					<i class="bi bi-box-arrow-in-right"></i>
-					<span>Login</span>
-				</a>
-			</li>
-			<!-- End Login Page Nav -->
-
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="pages-error-404.html">
-					<i class="bi bi-dash-circle"></i>
-					<span>Error 404</span>
-				</a>
-			</li>
-			<!-- End Error 404 Page Nav -->
-
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="pages-blank.html">
-					<i class="bi bi-file-earmark"></i>
-					<span>Blank</span>
-				</a>
-			</li>
-			<!-- End Blank Page Nav -->
-		</ul>
-	</aside>
+			<section class="section">
+				<div class="row">
+					<!-- Card with header and footer -->
+					<div class="card mx-auto">
+						<div class="card-tittle fs-2 text-center mt-5">
+							Penilaian Lapangan
+						</div>
+						<form>
+							<div>
+								<div class="card-tittle">
+									<div class="col mb-3">
+										<label class="col-sm-2 col-form-label">Penilai</label>
+										<div class="col-sm-2">
+											<input
+												type="text"
+												class="form-control"
+												v-model="requestData.user"
+												disabled
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="card-tittle">
+									<div class="col-sm-2">
+										<select
+											class="form-select"
+											aria-label="Default select example"
+										>
+											<option selected disabled>Pilih Team</option>
+											<option v-for="team in teamList" :value="team.teamName">
+												{{ team.teamName.toUpperCase() }}
+											</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<hr />
+							<div class="card-body">
+								<div
+									class="card-tittle"
+									v-for="criteria in criteriaList"
+									:key="criteria.criteriaId"
+								>
+									<h3 class="my-5">
+										<span
+											><i class="bi bi-circle-fill fs-4 me-2"></i>
+											{{ criteria.criteriaName }}</span
+										>
+									</h3>
+									<div
+										class="card-subtitle my-2 ms-2"
+										v-for="subs in subcriteriaList.filter(
+											(crit) => crit.criteria.criteriaId === criteria.criteriaId
+										)"
+									>
+										<h5 class="my-2">
+											{{ subs.subcriteriaName }}
+										</h5>
+										<hr />
+										<div
+											v-for="question in questionList.filter(
+												(sub) =>
+													sub.subcriteria.subcriteriaId === subs.subcriteriaId
+											)"
+										>
+											<p class="ms-2 my-4">
+												{{ question.questionText }}
+											</p>
+											<div
+												class="form-check form-check-inline flex flex-wrap ms-2"
+												v-for="(item, index) in choiceList.filter(
+													(quest) =>
+														quest.question.questionId === question.questionId
+												)"
+											>
+												<input
+													class="form-check-input"
+													type="radio"
+													:name="'selectedChoice_' + item.question.questionId"
+													:id="
+														'selectedChoice_' +
+														item.question.questionId +
+														'_' +
+														index
+													"
+													:value="item.choiceValue"
+													v-model="requestData.nilai[item.question.questionId]"
+													required
+												/>
+												<label
+													class="form-check-label"
+													:for="
+														'selectedChoice_' +
+														item.question.questionId +
+														'_' +
+														index
+													"
+													>{{ item.choiceValue }}</label
+												>
+											</div>
+											<hr />
+										</div>
+									</div>
+								</div>
+								<button class="btn btn-primary w-100" type="submit">
+									Submit
+								</button>
+							</div>
+						</form>
+					</div>
+					<!-- End Card with header and footer -->
+				</div>
+			</section>
+		</main>
+		<!-- End #main -->
+	</div>
 </template>
 <script>
+	import Header from "../../components/Header.vue";
+	import Breadcrumb from "../../components/Breadcrumb.vue";
 	export default {
-		name: "Do-Page",
+		components: {
+			Header,
+			Breadcrumb,
+		},
+		data() {
+			return {
+				isSidebarHidden: false,
+				criteriaList: [],
+				subcriteriaList: [],
+				questionList: [],
+				choiceList: [],
+				teamList: [],
+				requestData: {
+					user: null,
+					team: null,
+					nilai: {},
+				},
+			};
+		},
+		methods: {
+			signOut() {
+				localStorage.clear("userData");
+				this.$router.push("/");
+			},
+
+			getAllCriteria() {
+				try {
+					this.$axios.get("/criteriaAll").then((response) => {
+						const allItems = response.data;
+						this.criteriaList = allItems.slice(0, 4);
+						//   console.log(this.criteriaList);
+					});
+				} catch (error) {
+					console.error("Error fetching criteria data:", error);
+				}
+			},
+
+			getAllSubcriteria() {
+				try {
+					this.$axios.get("/subcriteriaAll").then((response) => {
+						const allItems = response.data;
+						this.subcriteriaList = allItems.slice(0, 11);
+						// console.log(this.subcriteriaList);
+					});
+				} catch (error) {
+					console.error("Error fetching subcriteria data:", error);
+				}
+			},
+			getAllQuestion() {
+				try {
+					this.$axios.get("/questionAll").then((response) => {
+						this.questionList = response.data;
+						// console.log(this.questionList);
+					});
+				} catch (error) {
+					console.error("Error fetching Question data:", error);
+				}
+			},
+			getAllChoice() {
+				try {
+					this.$axios.get("/choiceAll").then((response) => {
+						this.choiceList = response.data;
+						//   console.log(this.choiceList);
+					});
+				} catch (error) {
+					console.error("Error fetching choice data:", error);
+				}
+			},
+			getAllTeam() {
+				try {
+					this.$axios.get("/getAllTeam").then((response) => {
+						this.teamList = response.data;
+						//   console.log(this.teamList);
+					});
+				} catch (error) {
+					console.error("Error fetching Team data:", error);
+				}
+			},
+
+			toggleSidebar() {
+				this.isSidebarHidden = !this.isSidebarHidden;
+			},
+
+			inputData() {
+				// Mengambil data dari elemen HTML dan menyimpannya dalam variabel
+				const username = this.requestData.user;
+				const teamName = this.requestData.team;
+
+				// Filter the questionList based on user input values
+				const filteredQuestionList = this.questionList.filter((question) => {
+					const questionId = question.questionId;
+					const selectedValue = this.requestData.nilai[questionId];
+					return selectedValue !== undefined && selectedValue !== null;
+				});
+
+				// Loop through the filtered questionList to collect data for nilaiData
+				const nilaiData = filteredQuestionList.map((question) => {
+					const questionId = question.questionId;
+					const nilai = this.requestData.nilai[questionId];
+					return {
+						username: username,
+						teamName: teamName,
+						questionId: questionId,
+						nilai: nilai,
+					};
+				});
+
+				console.log(nilaiData);
+
+				this.$axios
+					.post("/save-nilai", nilaiData)
+					.then((response) => {
+						console.log(response);
+						alert("Data Berhasil disimpan");
+					})
+					.catch((error) => {
+						console.error("Terjadi Kesalahan:", error);
+					})
+					.finally(() => {
+						this.requestData.user = null;
+						this.requestData.team = null;
+						this.requestData.nilai = {};
+						window.scrollTo(0, 0);
+					});
+			},
+		},
+		created() {
+			this.getAllCriteria();
+			this.getAllSubcriteria();
+			this.getAllQuestion();
+			this.getAllChoice();
+			this.getAllTeam();
+
+			const userData = JSON.parse(localStorage.getItem("userData"));
+			if (userData) {
+				this.requestData.user = userData.username;
+			}
+		},
 	};
 </script>
-<style scoped></style>
+<style></style>

@@ -68,7 +68,7 @@
 							nip: response.data.data.nip,
 							username: response.data.data.username,
 						};
-						sessionStorage.setItem("userData", JSON.stringify(userData));
+						localStorage.setItem("userData", JSON.stringify(userData));
 						alert("Login Berhasil");
 						setTimeout(() => {
 							router.push("/plan");

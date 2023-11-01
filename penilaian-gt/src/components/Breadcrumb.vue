@@ -1,32 +1,37 @@
 <template>
-	<nav aria-label="breadcrumb">
-		<ol class="breadcrumb m-3 fw-bolder fs-6 bg-body-secondary p-4 rounded-2">
+	<nav style="--bs-breadcrumb-divider: '-'">
+		<ol class="breadcrumb fs-5">
 			<li class="breadcrumb-item">
-				<router-link class="text-dark" to="/plan">PLAN</router-link>
+				<router-link
+					:class="{ active: $route.path === '/dashboard' }"
+					to="/dashboard"
+					><a>Home</a></router-link
+				>
 			</li>
 			<li class="breadcrumb-item">
-				<router-link class="text-dark" to="/do">DO</router-link>
+				<router-link :class="{ active: $route.path === '/plan' }" to="/plan"
+					><a>Plan</a></router-link
+				>
 			</li>
 			<li class="breadcrumb-item">
-				<router-link class="text-dark" to="">CHECK</router-link>
+				<router-link :class="{ active: $route.path === '/do' }" to="/do"
+					><a>Do</a></router-link
+				>
 			</li>
 			<li class="breadcrumb-item">
-				<router-link class="text-dark" to="">ACTION</router-link>
+				<router-link :class="{ active: $route.path === '/check' }" to="/check"
+					><a>Check</a></router-link
+				>
+			</li>
+			<li class="breadcrumb-item">
+				<router-link :class="{ active: $route.path === '/action' }" to="/action"
+					><a>Action</a></router-link
+				>
 			</li>
 		</ol>
 	</nav>
 </template>
 <script>
-	export default {
-		name: "Breadcrumb-Component",
-	};
+	export default {};
 </script>
-<style scoped>
-	/* Breadcrumb */
-	.breadcrumb li :hover {
-		background-color: gray;
-		padding: 5px;
-		border-radius: 10px;
-	}
-	/* Breadcrumb */
-</style>
+<style lang=""></style>

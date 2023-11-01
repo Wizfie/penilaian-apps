@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import example.penilaian.service.UserService;
 
 @RestController
+//@CrossOrigin("http://192.168.43.176:5173")
 @CrossOrigin("*")
+
 public class UserController {
 
     @Autowired

@@ -1,109 +1,93 @@
 <template>
-	<div class="wrapper d-flex">
-		<!-- Sidebar -->
-		<Sidebar :isSidebarHidden="isSidebarHidden" />
-		<!--Sidebar -->
+	<div>
+		<Header />
 
-		<main
-			class="w-100"
-			:style="{ marginLeft: isSidebarHidden ? '0' : '250px' }"
-		>
-			<!-- Nav Header -->
-			<nav
-				class="d-flex justify-content-between bg-dark-subtle p-2 align-items-center"
-			>
-				<button @click="toggleSidebar" class="btn btn-secondary">></button>
-				<div class="nav-header d-flex mx-2">
-					<div class="dropdown">
-						<button
-							class="btn btn-secondary btn-sm"
-							type="button"
-							data-bs-toggle="dropdown"
-							aria-expanded="true"
-						>
-							Profile
-						</button>
-						<ul class="dropdown-menu">
-							<li>
-								<button @click="signOut" class="dropdown-item" type="button">
-									Sign Out
-								</button>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-			<!-- Nav Header -->
-			<!-- Breadcrumb -->
-			<Breadcrumb />
-			<!-- Breadcrumb -->
-			<!-- kontent -->
-			<h1 class="p-3 text-center">PLAN</h1>
-			<div class="d-flex flex-lg-row flex-column w-100">
-				<form @submit.prevent="inputData" class="w-100">
-					<div
-						class="box-question card-body rounded-1 bg-body-secondary mx-auto p-3"
-					>
-						<div>
-							<label for="input-user">Nama Juri:</label>
-							<input
-								class="form-control w-50 bg-white my-2"
-								type="text"
-								aria-label="Disabled input
-							example"
-								v-model="requestData.user"
-								disabled
-								readonly
-							/>
+		<main id="main" class="main">
+			<div class="pagetitle">
+				<h1 class="my-4 fs-1">PLAN</h1>
+				<!-- Breadcrumb -->
+				<Breadcrumb />
+				<!-- Breadcrumb -->
+			</div>
+			<!-- End Page Title -->
+
+			<section class="section">
+				<div class="row">
+					<!-- Card with header and footer -->
+					<div class="card mx-auto">
+						<div class="card-tittle fs-2 text-center mt-5">
+							Penilaian Lapangan
 						</div>
-						<div class="team-group w-50 my-2">
-							<label for="teamSelect">Pilih Tim:</label>
-							<select
-								class="form-select my-2"
-								aria-label="Default select example"
-								v-model="requestData.team"
-								required
-							>
-								<option v-for="team in teamList" :value="team.teamName">
-									{{ team.teamName.toUpperCase() }}
-								</option>
-							</select>
-						</div>
-						<div v-for="criteria in criteriaList" :key="criteria.criteriaId">
-							<div class="border border-2 border border-black p-3">
-								<h5 class="card-subtitle border-2">
-									{{ criteria.criteriaName }}
-								</h5>
-							</div>
-							<div class="border border-2 border border-black"></div>
+						<form>
 							<div>
+								<div class="card-tittle">
+									<div class="col mb-3">
+										<label class="col-sm-2 col-form-label">Penilai</label>
+										<div class="col-sm-2">
+											<input
+												type="text"
+												class="form-control"
+												v-model="requestData.user"
+												disabled
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="card-tittle">
+									<div class="col-sm-2">
+										<select
+											class="form-select"
+											aria-label="Default select example"
+										>
+											<option selected disabled>Pilih Team</option>
+											<option v-for="team in teamList" :value="team.teamName">
+												{{ team.teamName.toUpperCase() }}
+											</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<hr />
+							<div class="card-body">
 								<div
-									v-for="subs in subcriteriaList.filter(
-										(crit) => crit.criteria.criteriaId === criteria.criteriaId
-									)"
-									class="border border-2 border border-black my-2 p-2"
+									class="card-tittle"
+									v-for="criteria in criteriaList"
+									:key="criteria.criteriaId"
 								>
-									<h6 class="card-text">{{ subs.subcriteriaName }}</h6>
+									<h3 class="my-5">
+										<span
+											><i class="bi bi-circle-fill fs-4 me-2"></i>
+											{{ criteria.criteriaName }}</span
+										>
+									</h3>
 									<div
-										v-for="question in questionList.filter(
-											(sub) =>
-												sub.subcriteria.subcriteriaId === subs.subcriteriaId
+										class="card-subtitle my-2 ms-2"
+										v-for="subs in subcriteriaList.filter(
+											(crit) => crit.criteria.criteriaId === criteria.criteriaId
 										)"
 									>
-										<p class="card-text ms-3">{{ question.questionText }}</p>
-
-										<div class="radio-input ms-2 my-4">
+										<h5 class="my-2">
+											{{ subs.subcriteriaName }}
+										</h5>
+										<hr />
+										<div
+											v-for="question in questionList.filter(
+												(sub) =>
+													sub.subcriteria.subcriteriaId === subs.subcriteriaId
+											)"
+										>
+											<p class="ms-2 my-4">
+												{{ question.questionText }}
+											</p>
 											<div
+												class="form-check form-check-inline flex flex-wrap ms-2"
 												v-for="(item, index) in choiceList.filter(
 													(quest) =>
 														quest.question.questionId === question.questionId
 												)"
-												class="form-check"
 											>
-												<!-- required -->
 												<input
-													style="width: 20px; height: 20px"
-													class="form-check-input ms-1"
+													class="form-check-input"
 													type="radio"
 													:name="'selectedChoice_' + item.question.questionId"
 													:id="
@@ -117,7 +101,7 @@
 													required
 												/>
 												<label
-													class="form-check-label ms-2"
+													class="form-check-label"
 													:for="
 														'selectedChoice_' +
 														item.question.questionId +
@@ -127,32 +111,31 @@
 													>{{ item.choiceValue }}</label
 												>
 											</div>
-											<hr style="height: 2px" />
+											<hr />
 										</div>
 									</div>
 								</div>
+								<button class="btn btn-primary w-100" type="submit">
+									Submit
+								</button>
 							</div>
-						</div>
-						<div>
-							<button class="btn btn-secondary w-100 mt-2" type="submit">
-								Submit
-							</button>
-						</div>
+						</form>
 					</div>
-				</form>
-			</div>
-
-			<!-- kontent -->
+					<!-- End Card with header and footer -->
+				</div>
+			</section>
 		</main>
+		<!-- End #main -->
 	</div>
 </template>
-
 <script>
-	import Sidebar from "../../components/Sidebar.vue";
+	import Header from "../../components/Header.vue";
 	import Breadcrumb from "../../components/Breadcrumb.vue";
 	export default {
-		components: { Sidebar, Breadcrumb },
-		name: "Penilaian-View",
+		components: {
+			Header,
+			Breadcrumb,
+		},
 		data() {
 			return {
 				isSidebarHidden: false,
@@ -170,7 +153,7 @@
 		},
 		methods: {
 			signOut() {
-				sessionStorage.clear("userData");
+				localStorage.clear("userData");
 				this.$router.push("/");
 			},
 
@@ -282,42 +265,11 @@
 			this.getAllChoice();
 			this.getAllTeam();
 
-			const userData = JSON.parse(sessionStorage.getItem("userData"));
+			const userData = JSON.parse(localStorage.getItem("userData"));
 			if (userData) {
 				this.requestData.user = userData.username;
 			}
 		},
 	};
 </script>
-
-<style scoped>
-	/* Kontent */
-
-	main {
-		margin-left: 250px;
-	}
-	.box-question {
-		width: 100%;
-		min-width: 300px;
-		max-width: 60%;
-		max-height: fit-content;
-		overflow: auto;
-	}
-	.card-text {
-		word-wrap: break-word;
-	}
-
-	/* Kontent */
-	/*radio button */
-	.radio-input .form-check {
-		display: inline-block;
-		margin-right: 10px; /* Jarak antara radio buttons */
-	}
-
-	@media (max-width: 768px) {
-		.radio-input .form-check {
-			display: block; /* Ubah menjadi satu kolom pada layar kecil */
-		}
-	}
-	/*radio button */
-</style>
+<style></style>
