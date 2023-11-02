@@ -27,14 +27,4 @@ public class Nilai {
 
 
 }
-//    @ManyToOne
-//    @JoinColumn(name = "users_id")
-//    private Users users;
-//    @ManyToOne
-//    @JoinColumn(name = "team_id")
-//    private Team team;
-
-//    @ManyToOne
-//    @JoinColumn(name = "question_id")
-//    private Question question;
 

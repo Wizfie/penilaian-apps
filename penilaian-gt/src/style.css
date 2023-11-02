@@ -667,6 +667,7 @@ h6 {
 
 .sidebar-nav .nav-item {
 	margin-bottom: 5px;
+	cursor: pointer;
 }
 
 .sidebar-nav .nav-heading {

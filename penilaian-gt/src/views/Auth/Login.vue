@@ -71,7 +71,7 @@
 						localStorage.setItem("userData", JSON.stringify(userData));
 						alert("Login Berhasil");
 						setTimeout(() => {
-							router.push("/plan");
+							router.push("/dashboard");
 						}, 1000);
 					})
 					.catch((error) => {

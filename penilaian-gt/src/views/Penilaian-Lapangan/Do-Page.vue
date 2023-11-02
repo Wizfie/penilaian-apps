@@ -18,7 +18,7 @@
 						<div class="card-tittle fs-2 text-center mt-5">
 							Penilaian Lapangan
 						</div>
-						<form>
+						<form @submit.prevent="inputData">
 							<div>
 								<div class="card-tittle">
 									<div class="col mb-3">
@@ -38,6 +38,7 @@
 										<select
 											class="form-select"
 											aria-label="Default select example"
+											v-model="requestData.team"
 										>
 											<option selected disabled>Pilih Team</option>
 											<option v-for="team in teamList" :value="team.teamName">
@@ -87,6 +88,7 @@
 												)"
 											>
 												<input
+													style="width: 20px; height: 20px"
 													class="form-check-input"
 													type="radio"
 													:name="'selectedChoice_' + item.question.questionId"
@@ -131,6 +133,7 @@
 <script>
 	import Header from "../../components/Header.vue";
 	import Breadcrumb from "../../components/Breadcrumb.vue";
+	import router from "../../router";
 	export default {
 		components: {
 			Header,
@@ -145,7 +148,6 @@
 				choiceList: [],
 				teamList: [],
 				requestData: {
-					user: null,
 					team: null,
 					nilai: {},
 				},
@@ -161,8 +163,8 @@
 				try {
 					this.$axios.get("/criteriaAll").then((response) => {
 						const allItems = response.data;
-						this.criteriaList = allItems.slice(0, 4);
-						//   console.log(this.criteriaList);
+						this.criteriaList = allItems.slice(4, 5);
+						console.log(this.criteriaList);
 					});
 				} catch (error) {
 					console.error("Error fetching criteria data:", error);
@@ -173,7 +175,7 @@
 				try {
 					this.$axios.get("/subcriteriaAll").then((response) => {
 						const allItems = response.data;
-						this.subcriteriaList = allItems.slice(0, 11);
+						this.subcriteriaList = allItems;
 						// console.log(this.subcriteriaList);
 					});
 				} catch (error) {
@@ -255,6 +257,7 @@
 						this.requestData.team = null;
 						this.requestData.nilai = {};
 						window.scrollTo(0, 0);
+						this.$router.push("/check");
 					});
 			},
 		},

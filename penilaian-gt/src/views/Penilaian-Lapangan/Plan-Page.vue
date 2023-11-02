@@ -18,7 +18,7 @@
 						<div class="card-tittle fs-2 text-center mt-5">
 							Penilaian Lapangan
 						</div>
-						<form>
+						<form @submit.prevent="inputData">
 							<div>
 								<div class="card-tittle">
 									<div class="col mb-3">
@@ -34,10 +34,12 @@
 									</div>
 								</div>
 								<div class="card-tittle">
+									<label class="col-sm-2 col-form-label">Team</label>
 									<div class="col-sm-2">
 										<select
 											class="form-select"
 											aria-label="Default select example"
+											v-model="requestData.team"
 										>
 											<option selected disabled>Pilih Team</option>
 											<option v-for="team in teamList" :value="team.teamName">
@@ -87,6 +89,7 @@
 												)"
 											>
 												<input
+													style="width: 20px; height: 20px"
 													class="form-check-input"
 													type="radio"
 													:name="'selectedChoice_' + item.question.questionId"
@@ -115,10 +118,10 @@
 										</div>
 									</div>
 								</div>
-								<button class="btn btn-primary w-100" type="submit">
-									Submit
-								</button>
 							</div>
+							<button class="btn btn-primary w-100 p-2 m-2" type="submit">
+								Submit
+							</button>
 						</form>
 					</div>
 					<!-- End Card with header and footer -->
@@ -131,6 +134,7 @@
 <script>
 	import Header from "../../components/Header.vue";
 	import Breadcrumb from "../../components/Breadcrumb.vue";
+	import router from "../../router";
 	export default {
 		components: {
 			Header,
@@ -152,11 +156,6 @@
 			};
 		},
 		methods: {
-			signOut() {
-				localStorage.clear("userData");
-				this.$router.push("/");
-			},
-
 			getAllCriteria() {
 				try {
 					this.$axios.get("/criteriaAll").then((response) => {
@@ -251,10 +250,10 @@
 						console.error("Terjadi Kesalahan:", error);
 					})
 					.finally(() => {
-						this.requestData.user = null;
 						this.requestData.team = null;
 						this.requestData.nilai = {};
 						window.scrollTo(0, 0);
+						router.push("/do");
 					});
 			},
 		},

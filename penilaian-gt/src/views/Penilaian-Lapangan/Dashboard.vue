@@ -14,6 +14,49 @@
 				</nav>
 			</div>
 			<!-- End Page Title -->
+
+			<section class="section">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title">History Penilaian</h5>
+								<input type="text" v-model="user" />
+							</div>
+						</div>
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title">Table with hoverable rows</h5>
+
+								<!-- Table with hoverable rows -->
+								<table class="table table-hover-">
+									<thead>
+										<tr>
+											<th scope="col">#</th>
+											<th scope="col">Team Name</th>
+											<th scope="col">Nilai</th>
+											<th scope="col">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr
+											class="table datatable"
+											v-for="(team, index) in teams"
+											:key="index"
+										>
+											<th scope="row">{{ index + 1 }}</th>
+											<td>{{ team.name }}</td>
+											<td>{{ team.totalNilai }}</td>
+											<td><button>View</button></td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- End Table with hoverable rows -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 		</main>
 		<!-- End #main -->
 	</div>
@@ -26,17 +69,8 @@
 		},
 		data() {
 			return {
-				isSidebarHidden: false,
-				criteriaList: [],
-				subcriteriaList: [],
-				questionList: [],
-				choiceList: [],
-				teamList: [],
-				requestData: {
-					user: null,
-					team: null,
-					nilai: {},
-				},
+				user: null,
+				nilaiList: [],
 			};
 		},
 		methods: {
@@ -45,118 +79,43 @@
 				this.$router.push("/");
 			},
 
-			getAllCriteria() {
+			getNilaiByUser() {
 				try {
-					this.$axios.get("/criteriaAll").then((response) => {
-						const allItems = response.data;
-						this.criteriaList = allItems.slice(0, 4);
-						//   console.log(this.criteriaList);
-					});
+					this.$axios
+						.get("/nilai-list?username=" + this.user)
+						.then((response) => {
+							this.nilaiList = response.data;
+						});
 				} catch (error) {
-					console.error("Error fetching criteria data:", error);
+					console.error("Error fetching nilai data:", error);
 				}
-			},
-
-			getAllSubcriteria() {
-				try {
-					this.$axios.get("/subcriteriaAll").then((response) => {
-						const allItems = response.data;
-						this.subcriteriaList = allItems.slice(0, 11);
-						// console.log(this.subcriteriaList);
-					});
-				} catch (error) {
-					console.error("Error fetching subcriteria data:", error);
-				}
-			},
-			getAllQuestion() {
-				try {
-					this.$axios.get("/questionAll").then((response) => {
-						this.questionList = response.data;
-						// console.log(this.questionList);
-					});
-				} catch (error) {
-					console.error("Error fetching Question data:", error);
-				}
-			},
-			getAllChoice() {
-				try {
-					this.$axios.get("/choiceAll").then((response) => {
-						this.choiceList = response.data;
-						//   console.log(this.choiceList);
-					});
-				} catch (error) {
-					console.error("Error fetching choice data:", error);
-				}
-			},
-			getAllTeam() {
-				try {
-					this.$axios.get("/getAllTeam").then((response) => {
-						this.teamList = response.data;
-						//   console.log(this.teamList);
-					});
-				} catch (error) {
-					console.error("Error fetching Team data:", error);
-				}
-			},
-
-			toggleSidebar() {
-				this.isSidebarHidden = !this.isSidebarHidden;
-			},
-
-			inputData() {
-				// Mengambil data dari elemen HTML dan menyimpannya dalam variabel
-				const username = this.requestData.user;
-				const teamName = this.requestData.team;
-
-				// Filter the questionList based on user input values
-				const filteredQuestionList = this.questionList.filter((question) => {
-					const questionId = question.questionId;
-					const selectedValue = this.requestData.nilai[questionId];
-					return selectedValue !== undefined && selectedValue !== null;
-				});
-
-				// Loop through the filtered questionList to collect data for nilaiData
-				const nilaiData = filteredQuestionList.map((question) => {
-					const questionId = question.questionId;
-					const nilai = this.requestData.nilai[questionId];
-					return {
-						username: username,
-						teamName: teamName,
-						questionId: questionId,
-						nilai: nilai,
-					};
-				});
-
-				console.log(nilaiData);
-
-				this.$axios
-					.post("/save-nilai", nilaiData)
-					.then((response) => {
-						console.log(response);
-						alert("Data Berhasil disimpan");
-					})
-					.catch((error) => {
-						console.error("Terjadi Kesalahan:", error);
-					})
-					.finally(() => {
-						this.requestData.user = null;
-						this.requestData.team = null;
-						this.requestData.nilai = {};
-						window.scrollTo(0, 0);
-					});
 			},
 		},
 		created() {
-			this.getAllCriteria();
-			this.getAllSubcriteria();
-			this.getAllQuestion();
-			this.getAllChoice();
-			this.getAllTeam();
-
 			const userData = JSON.parse(localStorage.getItem("userData"));
 			if (userData) {
-				this.requestData.user = userData.username;
+				this.user = userData.username;
 			}
+		},
+
+		computed: {
+			teams() {
+				const groupedData = this.nilaiList.reduce((result, item) => {
+					if (!result[item.teamName]) {
+						result[item.teamName] = {
+							name: item.teamName,
+							totalNilai: 0,
+						};
+					}
+					result[item.teamName].totalNilai += item.nilai;
+					return result;
+				}, {});
+				return Object.values(groupedData);
+			},
+		},
+
+		mounted() {
+			this.getNilaiByUser();
 		},
 	};
 </script>

@@ -96,10 +96,10 @@
 	<aside id="sidebar" class="sidebar">
 		<ul class="sidebar-nav" id="sidebar-nav">
 			<li class="nav-item">
-				<a class="nav-link" href="index.html">
+				<router-link class="nav-link" to="/dashboard">
 					<i class="bi bi-grid"></i>
 					<span>Dashboard</span>
-				</a>
+				</router-link>
 			</li>
 			<!-- End Dashboard Nav -->
 
@@ -143,8 +143,8 @@
 			</li>
 			<!-- End Profile Page Nav -->
 
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="pages-faq.html">
+			<li class="nav-item" @click="signOut">
+				<a class="nav-link collapsed">
 					<i class="bi bi-box-arrow-left"></i>
 					<span>Log Out</span>
 				</a>
@@ -160,6 +160,12 @@
 			return {
 				profileName: "",
 			};
+		},
+		methods: {
+			signOut() {
+				localStorage.clear("userData");
+				this.$router.push("/");
+			},
 		},
 		mounted() {
 			(function () {
@@ -487,10 +493,10 @@
 				/**
 				 * Initiate Datatables
 				 */
-				const datatables = select(".datatable", true);
-				datatables.forEach((datatable) => {
-					new simpleDatatables.DataTable(datatable);
-				});
+				// const datatables = select(".datatable", true);
+				// datatables.forEach((datatable) => {
+				// 	new simpleDatatables.DataTable(datatable);
+				// });
 
 				/**
 				 * Autoresize echart charts
