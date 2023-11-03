@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://192.168.42.86:5173/")
-//@CrossOrigin("*")
+//@CrossOrigin("http://192.168.42.86:5173/")
+@CrossOrigin("*")
 
 @RequestMapping("/api")
 public class NilaiController {

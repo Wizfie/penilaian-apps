@@ -40,6 +40,7 @@
 											class="form-select"
 											aria-label="Default select example"
 											v-model="requestData.team"
+											required
 										>
 											<option selected disabled>Pilih Team</option>
 											<option v-for="team in teamList" :value="team.teamName">

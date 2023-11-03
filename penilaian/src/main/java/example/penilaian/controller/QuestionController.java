@@ -13,8 +13,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("http://192.168.42.86:5173/")
-//@CrossOrigin("*")
+//@CrossOrigin("http://192.168.43.176:5173/")
+@CrossOrigin("*")
 
 public class QuestionController {
 

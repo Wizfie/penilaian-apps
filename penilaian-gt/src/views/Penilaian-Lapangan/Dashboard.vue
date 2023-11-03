@@ -45,9 +45,18 @@
 											:key="index"
 										>
 											<th scope="row">{{ index + 1 }}</th>
-											<td>{{ team.name }}</td>
+											<td style="text-transform: uppercase">
+												{{ team.name }}
+											</td>
 											<td>{{ team.totalNilai }}</td>
-											<td><button>View</button></td>
+											<td class="d-flex gap-1">
+												<button class="btn btn-primary btn-sm btn-responsive">
+													View
+												</button>
+												<button class="btn btn-danger btn-sm btn-responsive">
+													Del
+												</button>
+											</td>
 										</tr>
 									</tbody>
 								</table>

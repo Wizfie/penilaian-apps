@@ -12,11 +12,11 @@
 		</div>
 		<!-- End Logo -->
 
-		<nav class="header-nav ms-auto me-5">
+		<nav class="header-nav ms-auto me-3">
 			<ul class="d-flex align-items-center">
 				<!-- End Search Icon-->
 
-				<li class="nav-item dropdown pe-3">
+				<li class="nav-item dropdown">
 					<a
 						class="nav-link nav-profile d-flex align-items-center pe-0"
 						href="#"

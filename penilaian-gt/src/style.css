@@ -6,6 +6,18 @@
 * License: https://bootstrapmade.com/license/
 */
 
+@media (max-width: 767px) {
+	.btn-responsive {
+		width: 100%;
+	}
+}
+
+@media (min-width: 768px) {
+	.btn-responsive {
+		width: 25%;
+	}
+}
+
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
