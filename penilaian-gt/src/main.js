@@ -9,8 +9,8 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 import axios from "axios";
 
-axios.defaults.baseURL = "http://192.168.43.176:8080/api";
-// axios.defaults.baseURL = "http://localhost:8080/api";
+// axios.defaults.baseURL = "http://192.168.43.176:8080/api";
+axios.defaults.baseURL = "http://localhost:8080/api";
 const app = createApp(App);
 
 app.use(router); // Use the router
