@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,6 +25,8 @@ public class Nilai {
     private String teamName;
     private String username;
     private int questionId;
+    @Column(name = "timestamp")
+    private Timestamp timestamp;
 
 
 

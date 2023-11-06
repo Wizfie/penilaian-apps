@@ -22,11 +22,15 @@
 							<div class="card-body">
 								<h5 class="card-title">History Penilaian</h5>
 								<input type="text" v-model="user" />
+								<hr />
+								<router-link class="btn btn-primary" to="/plan"
+									>Beri nilai</router-link
+								>
 							</div>
 						</div>
 						<div class="card">
 							<div class="card-body">
-								<h5 class="card-title">Table with hoverable rows</h5>
+								<!-- <h5 class="card-title">Table with hoverable rows</h5> -->
 
 								<!-- Table with hoverable rows -->
 								<table class="table table-hover-">
@@ -35,6 +39,7 @@
 											<th scope="col">#</th>
 											<th scope="col">Team Name</th>
 											<th scope="col">Nilai</th>
+											<th scope="col">Waktu</th>
 											<th scope="col">Action</th>
 										</tr>
 									</thead>
@@ -46,13 +51,17 @@
 										>
 											<th scope="row">{{ index + 1 }}</th>
 											<td style="text-transform: uppercase">
-												{{ team.name }}
+												{{ team.teamName }}
 											</td>
 											<td>{{ team.totalNilai }}</td>
+											<td>{{ team.timeStamp }}</td>
 											<td class="d-flex gap-1">
-												<button class="btn btn-primary btn-sm btn-responsive">
+												<router-link
+													:to="'/detail/' + team.timeStamp"
+													class="btn btn-primary btn-sm btn-responsive"
+												>
 													View
-												</button>
+												</router-link>
 												<button class="btn btn-danger btn-sm btn-responsive">
 													Del
 												</button>
@@ -110,15 +119,23 @@
 		computed: {
 			teams() {
 				const groupedData = this.nilaiList.reduce((result, item) => {
-					if (!result[item.teamName]) {
-						result[item.teamName] = {
-							name: item.teamName,
+					const key = `${item.teamName}_${item.formattedTimestamp}`;
+					if (!result[key]) {
+						result[key] = {
+							teamName: item.teamName,
+							timeStamp: item.formattedTimestamp,
 							totalNilai: 0,
 						};
 					}
-					result[item.teamName].totalNilai += item.nilai;
+					result[key].totalNilai += item.nilai;
 					return result;
 				}, {});
+
+				for (const key in groupedData) {
+					groupedData[key].totalNilai = parseFloat(
+						groupedData[key].totalNilai.toFixed(2)
+					);
+				}
 				return Object.values(groupedData);
 			},
 		},

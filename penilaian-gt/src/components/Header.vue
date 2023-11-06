@@ -119,7 +119,7 @@
 					data-bs-parent="#sidebar-nav"
 				>
 					<li>
-						<router-link to="/plan">
+						<router-link to="/dashboard">
 							<i class="bi bi-circle-fill"></i><span>Penjurian Lapangan</span>
 						</router-link>
 					</li>

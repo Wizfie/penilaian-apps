@@ -6,6 +6,7 @@ import dashboard from "./views/Penilaian-Lapangan/Dashboard.vue";
 import doPage from "./views/Penilaian-Lapangan/Do-Page.vue";
 import check from "./views/Penilaian-Lapangan/Check-Page.vue";
 import action from "./views/Penilaian-Lapangan/Action-Page.vue";
+import detailNilai from "./views/Penilaian-Lapangan/Edit-Nilai.vue";
 import presentasi from "./views/Penilaian-Lapangan/Presentasi.vue";
 const routes = [
 	{
@@ -39,6 +40,10 @@ const routes = [
 	{
 		path: "/presentasi",
 		component: presentasi,
+	},
+	{
+		path: "/detail/:timestamp",
+		component: detailNilai,
 	},
 ];
 
