@@ -19,8 +19,8 @@ public class Nilai {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int nilaiId;
 
+    private Long nilaiId;
     private double nilai;
     private String teamName;
     private String username;

@@ -1,5 +1,6 @@
 package example.penilaian.service;
 
+import example.penilaian.entity.MultipleChoice;
 import example.penilaian.entity.Nilai;
 import example.penilaian.entity.Question;
 import example.penilaian.model.CustomData;
@@ -13,6 +14,8 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class NilaiService {
@@ -34,6 +37,21 @@ public class NilaiService {
         nilaiRepository.saveAll(nilaiData);
     }
 
+    public List<Nilai> updateNilai(List<Nilai> updatedNilaiList) {
+        List<Nilai> updatedNilaiListResult = new ArrayList<>();
+
+        for (Nilai updatedNilai : updatedNilaiList) {
+            Optional<Nilai> existingNilai = nilaiRepository.findById(updatedNilai.getNilaiId());
+            if (existingNilai.isPresent()) {
+                // Update the nilai value
+                existingNilai.get().setNilai(updatedNilai.getNilai());
+                updatedNilaiListResult.add(nilaiRepository.save(existingNilai.get()));
+            }
+        }
+
+        return updatedNilaiListResult;
+    }
+
 
     public List<CustomData> getNilaiByUser(String username) {
         List<Nilai> nilaiList = nilaiRepository.findByUsername(username);
@@ -46,13 +64,31 @@ public class NilaiService {
             String formattedTimestamp = sdf.format(timestamp);
 
             if (question != null) {
-                CustomData customData = new CustomData(username, nilai.getTeamName(), nilai.getNilai(), question.getQuestionText() ,formattedTimestamp);
+
+
+                // Ambil nilai maksimum dari kumpulan pilihan ganda
+                List<MultipleChoice> choices = new ArrayList<>(question.getChoices());                double maxValue = choices.stream()
+                        .mapToDouble(MultipleChoice::getChoiceValue)
+                        .max()
+                        .orElse(0.0);
+
+                CustomData customData = CustomData.builder()
+                        .nilaiId(nilai.getNilaiId()) // Include nilai_id in the response
+                        .username(username)
+                        .teamName(nilai.getTeamName())
+                        .nilai(nilai.getNilai())
+                        .maxValue(maxValue)
+                        .questionId(nilai.getQuestionId())
+                        .questionText(question.getQuestionText())
+                        .formattedTimestamp(formattedTimestamp)
+                        .build();
                 customDataList.add(customData);
             }
         }
 
         return customDataList;
     }
+
 
 
 

@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `multiple_choice` (
   CONSTRAINT `FKrmvyshef5iv5mp6m2yopn5xat` FOREIGN KEY (`question_id`) REFERENCES `questions` (`question_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table db_logistic.multiple_choice: ~164 rows (approximately)
+-- Dumping data for table db_logistic.multiple_choice: ~156 rows (approximately)
 INSERT INTO `multiple_choice` (`choice_id`, `choice_value`, `question_id`) VALUES
 	(26, 1, 1),
 	(27, 0.75, 1),
@@ -215,7 +215,7 @@ INSERT INTO `multiple_choice` (`choice_id`, `choice_value`, `question_id`) VALUE
 
 -- Dumping structure for table db_logistic.nilai
 CREATE TABLE IF NOT EXISTS `nilai` (
-  `nilai_id` int NOT NULL AUTO_INCREMENT,
+  `nilai_id` bigint NOT NULL AUTO_INCREMENT,
   `nilai` double DEFAULT NULL,
   `team_name` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -224,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `nilai` (
   PRIMARY KEY (`nilai_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=955 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table db_logistic.nilai: ~82 rows (approximately)
+-- Dumping data for table db_logistic.nilai: ~123 rows (approximately)
 INSERT INTO `nilai` (`nilai_id`, `nilai`, `team_name`, `username`, `question_id`, `timestamp`) VALUES
 	(832, 0.3, 'pilot', 'wiz', 1, '2023-11-06 10:39:56.315000'),
 	(833, 0.3, 'pilot', 'wiz', 2, '2023-11-06 10:39:56.315000'),
@@ -251,7 +251,7 @@ INSERT INTO `nilai` (`nilai_id`, `nilai`, `team_name`, `username`, `question_id`
 	(854, 0.6, 'pilot', 'wiz', 23, '2023-11-06 10:39:56.315000'),
 	(855, 2, 'pilot', 'wiz', 24, '2023-11-06 10:39:56.315000'),
 	(856, 10, 'pilot', 'wiz', 25, '2023-11-06 10:39:56.315000'),
-	(857, 5, 'pilot', 'wiz', 26, '2023-11-06 10:39:56.315000'),
+	(857, 5.2, 'pilot', 'wiz', 26, '2023-11-06 10:39:56.315000'),
 	(858, 7.5, 'pilot', 'wiz', 27, '2023-11-06 10:39:56.315000'),
 	(859, 3.75, 'pilot', 'wiz', 28, '2023-11-06 10:39:56.315000'),
 	(860, 3.75, 'pilot', 'wiz', 29, '2023-11-06 10:39:56.315000'),
@@ -291,15 +291,15 @@ INSERT INTO `nilai` (`nilai_id`, `nilai`, `team_name`, `username`, `question_id`
 	(894, 0.3, 'pilot', 'wiz', 22, '2023-11-06 10:42:44.109000'),
 	(895, 2, 'pilot', 'wiz', 23, '2023-11-06 10:42:44.109000'),
 	(896, 2, 'pilot', 'wiz', 24, '2023-11-06 10:42:44.109000'),
-	(897, 5, 'pilot', 'wiz', 25, '2023-11-06 10:42:44.109000'),
-	(898, 5, 'pilot', 'wiz', 26, '2023-11-06 10:42:44.109000'),
-	(899, 10, 'pilot', 'wiz', 27, '2023-11-06 10:42:44.109000'),
+	(897, 3, 'pilot', 'wiz', 25, '2023-11-06 10:42:44.109000'),
+	(898, 3, 'pilot', 'wiz', 26, '2023-11-06 10:42:44.109000'),
+	(899, 5, 'pilot', 'wiz', 27, '2023-11-06 10:42:44.109000'),
 	(900, 3.75, 'pilot', 'wiz', 28, '2023-11-06 10:42:44.109000'),
 	(901, 5, 'pilot', 'wiz', 29, '2023-11-06 10:42:44.109000'),
-	(902, 3.75, 'pilot', 'wiz', 30, '2023-11-06 10:42:44.109000'),
+	(902, 3.5, 'pilot', 'wiz', 30, '2023-11-06 10:42:44.109000'),
 	(903, 1, 'pilot', 'wiz', 31, '2023-11-06 10:42:44.109000'),
 	(904, 3.75, 'pilot', 'wiz', 32, '2023-11-06 10:42:44.109000'),
-	(905, 10, 'pilot', 'wiz', 33, '2023-11-06 10:42:44.109000'),
+	(905, 8, 'pilot', 'wiz', 33, '2023-11-06 10:42:44.109000'),
 	(906, 0.5, 'pilot', 'wiz', 34, '2023-11-06 10:42:44.109000'),
 	(907, 0.5, 'pilot', 'wiz', 35, '2023-11-06 10:42:44.109000'),
 	(908, 0.5, 'pilot', 'wiz', 36, '2023-11-06 10:42:44.109000'),
@@ -307,7 +307,7 @@ INSERT INTO `nilai` (`nilai_id`, `nilai`, `team_name`, `username`, `question_id`
 	(910, 0.3, 'pilot', 'wiz', 38, '2023-11-06 10:42:44.109000'),
 	(911, 1.5, 'pilot', 'wiz', 39, '2023-11-06 10:42:44.109000'),
 	(912, 1.5, 'pilot', 'wiz', 40, '2023-11-06 10:42:44.109000'),
-	(913, 2, 'pilot', 'wiz', 41, '2023-11-06 10:42:44.109000'),
+	(913, 10, 'pilot', 'wiz', 41, '2023-11-06 10:42:44.109000'),
 	(914, 0.75, 'semongko', 'wiz', 1, '2023-11-06 12:58:31.481000'),
 	(915, 1, 'semongko', 'wiz', 2, '2023-11-06 12:58:31.481000'),
 	(916, 0.5, 'semongko', 'wiz', 3, '2023-11-06 12:58:31.481000'),
@@ -336,18 +336,18 @@ INSERT INTO `nilai` (`nilai_id`, `nilai`, `team_name`, `username`, `question_id`
 	(939, 3.6, 'semongko', 'wiz', 26, '2023-11-06 12:58:31.481000'),
 	(940, 3.6, 'semongko', 'wiz', 27, '2023-11-06 12:58:31.481000'),
 	(941, 2.5, 'semongko', 'wiz', 28, '2023-11-06 12:58:31.481000'),
-	(942, 5, 'semongko', 'wiz', 29, '2023-11-06 12:58:31.481000'),
+	(942, 3, 'semongko', 'wiz', 29, '2023-11-06 12:58:31.481000'),
 	(943, 3.75, 'semongko', 'wiz', 30, '2023-11-06 12:58:31.481000'),
 	(944, 3.75, 'semongko', 'wiz', 31, '2023-11-06 12:58:31.481000'),
 	(945, 3.75, 'semongko', 'wiz', 32, '2023-11-06 12:58:31.481000'),
-	(946, 5, 'semongko', 'wiz', 33, '2023-11-06 12:58:31.481000'),
+	(946, 3, 'semongko', 'wiz', 33, '2023-11-06 12:58:31.481000'),
 	(947, 0.75, 'semongko', 'wiz', 34, '2023-11-06 12:58:31.481000'),
 	(948, 0.3, 'semongko', 'wiz', 35, '2023-11-06 12:58:31.481000'),
 	(949, 0.75, 'semongko', 'wiz', 36, '2023-11-06 12:58:31.481000'),
 	(950, 1, 'semongko', 'wiz', 37, '2023-11-06 12:58:31.481000'),
 	(951, 0.75, 'semongko', 'wiz', 38, '2023-11-06 12:58:31.481000'),
 	(952, 1.5, 'semongko', 'wiz', 39, '2023-11-06 12:58:31.481000'),
-	(953, 0.75, 'semongko', 'wiz', 40, '2023-11-06 12:58:31.481000'),
+	(953, 1, 'semongko', 'wiz', 40, '2023-11-06 12:58:31.481000'),
 	(954, 1, 'semongko', 'wiz', 41, '2023-11-06 12:58:31.481000');
 
 -- Dumping structure for table db_logistic.questions
@@ -360,7 +360,7 @@ CREATE TABLE IF NOT EXISTS `questions` (
   CONSTRAINT `FKer5fscwrkeb64njtwe1y8xjvp` FOREIGN KEY (`subcriteria_id`) REFERENCES `subcriteria` (`subcriteria_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table db_logistic.questions: ~41 rows (approximately)
+-- Dumping data for table db_logistic.questions: ~39 rows (approximately)
 INSERT INTO `questions` (`question_id`, `question_text`, `subcriteria_id`) VALUES
 	(1, '1. Melakukan identifikasi dan membuat stratifikasi masalah (problem/persoalan)\r\n', 1),
 	(2, '2. Memilih project improvement/inovasi berdasarkan data & fakta melalui penggunaan quality methode dan tools secara maksimal (baik dan benar)\r\n', 1),

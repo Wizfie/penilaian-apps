@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -19,6 +21,9 @@ public class Question {
     private int questionId;
 
     private String questionText;
+
+    @OneToMany(mappedBy = "question") // Sesuaikan dengan nama field yang sesuai
+    private Set<MultipleChoice> choices;
 
     @ManyToOne
     @JoinColumn(name = "subcriteria_id")

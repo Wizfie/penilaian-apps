@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 	<div>
 		<Header />
 		<main id="main" class="main">
@@ -9,39 +9,43 @@
 							<div class="card-body">
 								<h5 class="card-title">Detail Nilai</h5>
 
-								<!-- Table with stripped rows -->
-								<table class="table datatable">
-									<thead>
-										<tr>
-											<th scope="col">#</th>
-											<th scope="col">Question</th>
-											<th scope="col">Nilai</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr
+								<!-- Form  -->
+								<form @submit.prevent="submitForm">
+									<table class="table-bordered text-center">
+										<thead>
+											<tr>
+												<th scope="col">#</th>
+												<th scope="col">Question</th>
+												<th scope="col">Nilai</th>
+												<th scope="col">Max</th>
+											</tr>
+										</thead>
+										<tbody
 											v-for="(item, index) in nilaiList.filter(
 												(list) => list.formattedTimestamp === timestamp
 											)"
 											:key="index"
 										>
-											<th scope="row">{{ index + 1 }}</th>
-											<td class="col-10">
-												{{ item.questionText }}
-											</td>
-											<td class="col-2">
-												<input
-													min="0"
-													step="0.01"
-													type="number"
-													class="form-control text-center w-50"
-													v-model="item.nilai"
-												/>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-								<!-- End Table with stripped rows -->
+											<tr>
+												<th scope="row">{{ index + 1 }}</th>
+												<td class="col-sm-9">{{ item.questionText }}</td>
+												<td class="col-sm-1">
+													<input
+														type="text"
+														class="form-control text-center w-100 fw-bold"
+														v-model="item.nilai"
+													/>
+												</td>
+												<td class="col-sm-1">{{ item.maxValue }}</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<button type="submit" class="btn btn-primary my-2 w-100">
+										Update Data
+									</button>
+								</form>
+								<!-- End Form -->
 							</div>
 						</div>
 					</div>
@@ -50,8 +54,10 @@
 		</main>
 	</div>
 </template>
+
 <script>
 	import Header from "../../components/Header.vue";
+
 	export default {
 		components: {
 			Header,
@@ -71,10 +77,42 @@
 						.get("/nilai-list?username=" + this.user)
 						.then((response) => {
 							this.nilaiList = response.data;
-							console.log(response.data);
 						});
 				} catch (error) {
 					console.error("Error fetching nilai data:", error);
+				}
+			},
+			submitForm() {
+				const updatedValues = [];
+
+				for (const item of this.nilaiList) {
+					updatedValues.push({
+						nilaiId: item.nilaiId,
+						nilai: item.nilai,
+					});
+				}
+
+				this.$axios
+					.put("/update-nilai", updatedValues)
+					.then((response) => {
+						console.log(response.data);
+						console.log("Data updated successfully");
+						alert("Data updated successfully");
+						this.$router.push("/dashboard");
+					})
+					.catch((error) => {
+						console.error("Error updating data:", error);
+						alert("Error updating data:", error);
+					});
+			},
+			getAllChoice() {
+				try {
+					this.$axios.get("/choiceAll").then((response) => {
+						this.choiceList = response.data;
+						//   console.log(this.choiceList);
+					});
+				} catch (error) {
+					console.error("Error fetching choice data:", error);
 				}
 			},
 		},
@@ -91,4 +129,7 @@
 		},
 	};
 </script>
-<style lang=""></style>
+
+<style>
+	/* CSS styles go here */
+</style>

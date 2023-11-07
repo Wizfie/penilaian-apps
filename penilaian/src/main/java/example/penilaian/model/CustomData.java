@@ -5,18 +5,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class CustomData {
 
+    private Long nilaiId;
     private String username;
     private String teamName;
     private double nilai;
     private String questionText;
+    private int questionId;
+    private double maxValue;
     private String formattedTimestamp;
 
 }

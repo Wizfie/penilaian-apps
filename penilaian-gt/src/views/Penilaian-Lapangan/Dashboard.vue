@@ -50,10 +50,10 @@
 											:key="index"
 										>
 											<th scope="row">{{ index + 1 }}</th>
-											<td style="text-transform: uppercase">
+											<td class="fw-normal" style="text-transform: uppercase">
 												{{ team.teamName }}
 											</td>
-											<td>{{ team.totalNilai }}</td>
+											<td class="fw-bold">{{ team.totalNilai }}</td>
 											<td>{{ team.timeStamp }}</td>
 											<td class="d-flex gap-1">
 												<router-link
