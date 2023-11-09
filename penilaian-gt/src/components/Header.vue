@@ -119,13 +119,18 @@
 					data-bs-parent="#sidebar-nav"
 				>
 					<li>
-						<router-link to="/dashboard">
+						<router-link to="/lapangan">
 							<i class="bi bi-circle-fill"></i><span>Penjurian Lapangan</span>
 						</router-link>
 					</li>
 					<li>
 						<router-link to="/presentasi">
 							<i class="bi bi-circle-fill"></i><span>Penjurian Presentasi</span>
+						</router-link>
+					</li>
+					<li>
+						<router-link to="/admin">
+							<i class="bi bi-circle-fill"></i><span>Admin Panel</span>
 						</router-link>
 					</li>
 				</ul>

@@ -31,7 +31,7 @@ public class UserService {
         users.setNip(request.getNip());
         users.setUsername(request.getUsername());
         users.setPassword(request.getPassword());
-        users.setRole("2");
+        users.setRole(request.getRole());
 
         userRepository.save(users);
     }

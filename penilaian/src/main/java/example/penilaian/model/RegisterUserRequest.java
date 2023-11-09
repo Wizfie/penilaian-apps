@@ -31,4 +31,5 @@ public class RegisterUserRequest {
     @Size(max = 100)
     private String password;
 
+    private String role;
 }

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface SubcriteriaRepository  extends JpaRepository<Subcriteria, Long> {
+public interface SubcriteriaRepository  extends JpaRepository<Subcriteria, Integer> {
 }

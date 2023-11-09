@@ -11,7 +11,9 @@
 
 								<!-- Form  -->
 								<form @submit.prevent="submitForm">
-									<table class="table-bordered text-center">
+									<table
+										class="table table-bordered text-center align-content-center"
+									>
 										<thead>
 											<tr>
 												<th scope="col">#</th>
@@ -20,23 +22,33 @@
 												<th scope="col">Max</th>
 											</tr>
 										</thead>
-										<tbody
-											v-for="(item, index) in nilaiList.filter(
-												(list) => list.formattedTimestamp === timestamp
-											)"
-											:key="index"
-										>
-											<tr>
+										<tbody>
+											<tr
+												v-for="(item, index) in nilaiList.filter(
+													(list) => list.formattedTimestamp === timestamp
+												)"
+												:key="index"
+											>
 												<th scope="row">{{ index + 1 }}</th>
-												<td class="col-sm-9">{{ item.questionText }}</td>
+												<td class="col-sm-10">
+													{{ item.questionText }}
+												</td>
 												<td class="col-sm-1">
 													<input
+														:id="'nilaiInput_' + item.nilaiId"
 														type="text"
 														class="form-control text-center w-100 fw-bold"
 														v-model="item.nilai"
+														@input="TotalNilai"
+														required
 													/>
 												</td>
 												<td class="col-sm-1">{{ item.maxValue }}</td>
+											</tr>
+											<tr>
+												<td colspan="2">Total Nilai</td>
+												<td class="fw-bolder">{{ totalNilai }}</td>
+												<td>-</td>
 											</tr>
 										</tbody>
 									</table>
@@ -67,6 +79,7 @@
 				timestamp: this.$route.params.timestamp,
 				user: null,
 				nilaiList: [],
+				totalNilai: null,
 			};
 		},
 
@@ -77,12 +90,32 @@
 						.get("/nilai-list?username=" + this.user)
 						.then((response) => {
 							this.nilaiList = response.data;
+							this.TotalNilai();
 						});
 				} catch (error) {
 					console.error("Error fetching nilai data:", error);
 				}
 			},
 			submitForm() {
+				for (const item of this.nilaiList.filter(
+					(item) => item.formattedTimestamp === this.timestamp
+				)) {
+					const nilai = parseFloat(item.nilai || 0); // Mengganti koma dengan titik dan mengonversi ke float
+					const maxValue = parseFloat(item.maxValue);
+
+					// console.log("Question:", item.questionText);
+					// console.log("Nilai:", nilai);
+					// console.log("Max Value:", maxValue);
+
+					if (isNaN(nilai) || nilai < 0 || nilai > maxValue) {
+						alert(
+							"Nilai tidak valid untuk pertanyaan nomor: " +
+								item.questionId +
+								"\n\nPastikan Nilai Berupa Angka dan tidak melebihi nilai maksimal"
+						);
+						return;
+					}
+				}
 				const updatedValues = [];
 
 				for (const item of this.nilaiList) {
@@ -105,6 +138,29 @@
 						alert("Error updating data:", error);
 					});
 			},
+
+			TotalNilai() {
+				const filteredNilaiList = this.nilaiList.filter(
+					(item) => item.formattedTimestamp === this.timestamp
+				);
+				// Cek apakah semua nilai adalah angka
+				const allAreNumbers = filteredNilaiList.every(
+					(item) => !isNaN(parseFloat(item.nilai))
+				);
+
+				if (!allAreNumbers) {
+					// Jika ada nilai yang bukan angka, tampilkan pesan error
+					this.totalNilai = "Error";
+				} else {
+					// Jika semua nilai adalah angka, hitung totalnya
+					const total = filteredNilaiList.reduce(
+						(acc, item) => acc + parseFloat(item.nilai || 0),
+						0
+					);
+
+					this.totalNilai = total.toFixed(2);
+				}
+			},
 			getAllChoice() {
 				try {
 					this.$axios.get("/choiceAll").then((response) => {
@@ -122,6 +178,7 @@
 			if (userData) {
 				this.user = userData.username;
 			}
+			this.TotalNilai();
 		},
 
 		mounted() {

@@ -4,7 +4,7 @@
 
 		<main id="main" class="main">
 			<div class="pagetitle">
-				<h1 class="my-4 fs-1">Dashboard</h1>
+				<h1 class="my-4 fs-1">Penilaian Lapangan</h1>
 				<nav>
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">
@@ -20,20 +20,28 @@
 					<div class="col-lg-12">
 						<div class="card">
 							<div class="card-body">
-								<h5 class="card-title">History Penilaian</h5>
-								<input type="text" v-model="user" />
+								<h5 class="card-title text-center fw-bolder fs-3 mb-3">
+									History Penilaian
+								</h5>
 								<hr />
-								<router-link class="btn btn-primary" to="/plan"
-									>Beri nilai</router-link
-								>
+								<div>
+									<p class="fw-normal ms-2">Hello,</p>
+
+									<div class="d-flex justify-content-between p-3">
+										<span class="fw-bolder ms-2"> {{ user }}</span>
+										<router-link
+											style="width: 10rem"
+											class="btn btn-primary"
+											to="/plan"
+											>Beri nilai
+										</router-link>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="card">
 							<div class="card-body">
-								<!-- <h5 class="card-title">Table with hoverable rows</h5> -->
-
-								<!-- Table with hoverable rows -->
-								<table class="table table-hover-">
+								<table class="table table-striped">
 									<thead>
 										<tr>
 											<th scope="col">#</th>
@@ -55,14 +63,18 @@
 											</td>
 											<td class="fw-bold">{{ team.totalNilai }}</td>
 											<td>{{ team.timeStamp }}</td>
-											<td class="d-flex gap-1">
+											<td class="d-flex gap-1 flex-wrap">
 												<router-link
 													:to="'/detail/' + team.timeStamp"
 													class="btn btn-primary btn-sm btn-responsive"
 												>
 													View
 												</router-link>
-												<button class="btn btn-danger btn-sm btn-responsive">
+												<button
+													type="button"
+													@click="deleteNilai(team.timeStamp)"
+													class="btn btn-danger btn-sm btn-responsive"
+												>
 													Del
 												</button>
 											</td>
@@ -70,6 +82,9 @@
 									</tbody>
 								</table>
 								<!-- End Table with hoverable rows -->
+								<center v-if="teams.length === 0" class="fs-3 fw-bold">
+									Tidak data 🧐
+								</center>
 							</div>
 						</div>
 					</div>
@@ -106,6 +121,21 @@
 						});
 				} catch (error) {
 					console.error("Error fetching nilai data:", error);
+				}
+			},
+			async deleteNilai(timestamp) {
+				const timestampString = timestamp.toString();
+				if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+					try {
+						const response = await this.$axios.delete(`/${timestampString}`);
+						if (response.status === 200) {
+							console.log(response.status);
+							this.getNilaiByUser();
+							alert("Delete Success");
+						}
+					} catch (error) {
+						console.error("Error deleting nilai data:", error);
+					}
 				}
 			},
 		},

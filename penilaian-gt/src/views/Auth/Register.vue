@@ -73,7 +73,7 @@
 					username: null,
 					nip: null,
 					password: null,
-					role: "2",
+					role: "user",
 				},
 			};
 		},

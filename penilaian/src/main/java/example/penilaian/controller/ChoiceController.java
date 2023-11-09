@@ -1,7 +1,7 @@
 package example.penilaian.controller;
 
 import example.penilaian.entity.MultipleChoice;
-import example.penilaian.service.MultiplechoiceService;
+import example.penilaian.service.ChoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +15,14 @@ import java.util.List;
 @CrossOrigin("*")
 
 @RequestMapping("/api")
-public class MulltiplechoiceController {
+public class ChoiceController {
 
     @Autowired
-    private MultiplechoiceService multiplechoiceService;
+    private ChoiceService choiceService;
 
     @GetMapping("/choiceAll")
     public List<MultipleChoice> getAllChoice(){
-        return multiplechoiceService.getAllChoice();
+        return choiceService.getAllChoice();
     }
 
 

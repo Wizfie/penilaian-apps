@@ -16,7 +16,7 @@ import lombok.Setter;
 public class MultipleChoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long choiceId;
+    private  int choiceId;
     private Double choiceValue;
 
     @ManyToOne

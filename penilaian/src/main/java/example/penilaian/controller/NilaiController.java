@@ -1,20 +1,19 @@
 package example.penilaian.controller;
 
-
 import example.penilaian.entity.Nilai;
-import example.penilaian.model.CustomData;
-import example.penilaian.model.WebResponse;
+import example.penilaian.model.NilaiByUser;
+import example.penilaian.model.NilaiResponse;
 import example.penilaian.service.NilaiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-//@CrossOrigin("http://192.168.42.86:5173/")
 @CrossOrigin("*")
 
 @RequestMapping("/api")
@@ -24,9 +23,9 @@ public class NilaiController {
     private NilaiService nilaiService;
 
     @PostMapping("/save-nilai")
-    public String saveNilai(@RequestBody List<Nilai> nilaiData){
+    public String saveNilai(@RequestBody List<Nilai> nilaiData) {
         nilaiService.saveNilai(nilaiData);
-        return  "Data Berhasil masuk";
+        return "Data Berhasil masuk";
     }
 
     @PutMapping("/update-nilai")
@@ -39,10 +38,29 @@ public class NilaiController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
     @GetMapping("/nilai-list")
-    public List<CustomData> getCustomDataByUser(@RequestParam String username) {
+    public List<NilaiByUser> getCustomDataByUser(@RequestParam String username) {
         return nilaiService.getNilaiByUser(username);
     }
 
+    @GetMapping("/nilai-getAll")
+    public List<NilaiResponse>getAllNilai(){
+        return nilaiService.getAllNilai();
+    }
+
+    @DeleteMapping("/{timestamp}")
+    public ResponseEntity<String> deleteByTime(@PathVariable Timestamp timestamp) {
+        System.out.println("Timestamp yang diterima: " + timestamp);
+
+        try {
+            nilaiService.deleteNilai(timestamp);
+            return ResponseEntity.ok("Data dengan " + timestamp + " ini Berhasil di hapus");
+
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
 
 }

@@ -1,23 +1,23 @@
 package example.penilaian.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CustomData {
-
-    private Long nilaiId;
-    private String username;
-    private String teamName;
+public class NilaiResponse {
+    private int nilaiId;
     private double nilai;
-    private String questionText;
+    private String teamName;
+    private String username;
     private int questionId;
-    private double maxValue;
-    private String formattedTimestamp;
-
+    private String  timestamp;
+    private String questionText;
 }

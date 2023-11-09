@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CriteriaRepository extends JpaRepository<Criteria , Long> {
+public interface CriteriaRepository extends JpaRepository<Criteria , Integer> {
 
 }

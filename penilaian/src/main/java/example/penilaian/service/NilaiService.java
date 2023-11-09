@@ -3,7 +3,8 @@ package example.penilaian.service;
 import example.penilaian.entity.MultipleChoice;
 import example.penilaian.entity.Nilai;
 import example.penilaian.entity.Question;
-import example.penilaian.model.CustomData;
+import example.penilaian.model.NilaiByUser;
+import example.penilaian.model.NilaiResponse;
 import example.penilaian.repository.NilaiRepository;
 import example.penilaian.repository.QuestionRepository;
 import jakarta.transaction.Transactional;
@@ -15,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class NilaiService {
@@ -53,9 +54,9 @@ public class NilaiService {
     }
 
 
-    public List<CustomData> getNilaiByUser(String username) {
+    public List<NilaiByUser> getNilaiByUser(String username) {
         List<Nilai> nilaiList = nilaiRepository.findByUsername(username);
-        List<CustomData> customDataList = new ArrayList<>();
+        List<NilaiByUser> nilaiByUserList = new ArrayList<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         for (Nilai nilai : nilaiList) {
@@ -67,13 +68,14 @@ public class NilaiService {
 
 
                 // Ambil nilai maksimum dari kumpulan pilihan ganda
-                List<MultipleChoice> choices = new ArrayList<>(question.getChoices());                double maxValue = choices.stream()
+                List<MultipleChoice> choices = new ArrayList<>(question.getChoices());
+                double maxValue = choices.stream()
                         .mapToDouble(MultipleChoice::getChoiceValue)
                         .max()
                         .orElse(0.0);
 
-                CustomData customData = CustomData.builder()
-                        .nilaiId(nilai.getNilaiId()) // Include nilai_id in the response
+                NilaiByUser nilaiByUser = NilaiByUser.builder()
+                        .nilaiId(nilai.getNilaiId()) //
                         .username(username)
                         .teamName(nilai.getTeamName())
                         .nilai(nilai.getNilai())
@@ -82,11 +84,42 @@ public class NilaiService {
                         .questionText(question.getQuestionText())
                         .formattedTimestamp(formattedTimestamp)
                         .build();
-                customDataList.add(customData);
+                nilaiByUserList.add(nilaiByUser);
             }
         }
 
-        return customDataList;
+        return nilaiByUserList;
+    }
+
+
+    public List<NilaiResponse>getAllNilai(){
+        List<Nilai> nilaiList = nilaiRepository.findAll();
+        return nilaiList.stream().map(this::nilaiResponse).collect(Collectors.toList());
+
+    }
+    private NilaiResponse nilaiResponse(Nilai nilai){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedTimestamp = sdf.format(nilai.getTimestamp());
+        return NilaiResponse.builder()
+                .nilaiId(nilai.getNilaiId())
+                .nilai(nilai.getNilai())
+                .teamName(nilai.getTeamName())
+                .username(nilai.getUsername())
+                .questionId(nilai.getQuestionId())
+                .questionText(getQuestionText(nilai.getQuestionId()))
+                .timestamp(formattedTimestamp)
+                .build();
+    }
+
+    private String getQuestionText(int questionId){
+        return questionRepository.findById(questionId).map(Question::getQuestionText).orElse(null);
+    }
+
+
+
+    public void deleteNilai(Timestamp timestamp){
+        nilaiRepository.deleteByTimestamp(timestamp);
     }
 
 

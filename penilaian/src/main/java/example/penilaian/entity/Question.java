@@ -1,6 +1,7 @@
 package example.penilaian.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,12 +23,14 @@ public class Question {
 
     private String questionText;
 
-    @OneToMany(mappedBy = "question") // Sesuaikan dengan nama field yang sesuai
-    private Set<MultipleChoice> choices;
 
     @ManyToOne
     @JoinColumn(name = "subcriteria_id")
     private Subcriteria subcriteria;
 
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "question") // Sesuaikan dengan nama field yang sesuai
+    private Set<MultipleChoice> choices;
 
 }

@@ -16,7 +16,7 @@ import lombok.Setter;
 public class Criteria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long criteriaId;
+    private int criteriaId;
 
     private String criteriaName;
 

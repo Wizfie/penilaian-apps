@@ -15,4 +15,5 @@ public class UserToken {
 
     private String nip;
     private String username;
+    private String role;
 }

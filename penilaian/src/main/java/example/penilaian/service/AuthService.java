@@ -37,6 +37,7 @@ public class AuthService {
             return UserToken.builder()
                     .nip(user.getNip())
                     .username(user.getUsername())
+                    .role(user.getRole())
                     .build();
         } else {
             throw new ResponseStatusException(UNAUTHORIZED, "NIP or Password Salah");
