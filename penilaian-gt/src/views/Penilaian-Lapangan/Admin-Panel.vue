@@ -20,26 +20,26 @@
 					<div class="col-lg-12">
 						<div class="card">
 							<div class="card-body">
-								<h5 class="card-title text-center fw-bolder fs-3 mb-3">
+								<h5 class="card-title text-center fw-bolder fs-3 mb-3 w-100">
 									List Penilaian
 								</h5>
 							</div>
 						</div>
 						<div class="card">
 							<div class="card-body">
-								<table class="table table-striped">
+								<table class="table-bordered text-center flex-wrap">
 									<thead>
-										<tr>
+										<tr class="p-2">
 											<th scope="col">#</th>
 											<th scope="col">Question</th>
 											<th
+												class="m-2 p-1"
 												v-for="(team, index) in nilaiList"
 												:key="index"
 												scope="col"
 											>
-												{{ team.teamName }}
+												{{ team.teamName.toUpperCase() }}
 											</th>
-											<th scope="col">Action</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -47,8 +47,8 @@
 											v-for="(question, qIndex) in uniqueQuestions"
 											:key="qIndex"
 										>
-											<td>{{ qIndex + 1 }}</td>
-											<td>{{ question }}</td>
+											<td class="p-1">{{ qIndex + 1 }}</td>
+											<td class="w-50 p-1">{{ question }}</td>
 											<td v-for="(team, index) in nilaiList" :key="index">
 												<!-- Tampilkan nilai jika ada, jika tidak, tampilkan tanda hubung (-) -->
 												{{
@@ -57,9 +57,20 @@
 													)?.nilai || "-"
 												}}
 											</td>
-											<td>Action</td>
 										</tr>
 									</tbody>
+									<tfoot>
+										<tr class="p-2">
+											<td colspan="2" class="text-center fw-bold">Total</td>
+											<td
+												class="fw-bold p-1"
+												v-for="(team, index) in nilaiList"
+												:key="index"
+											>
+												{{ calculateTeamTotal(team) }}
+											</td>
+										</tr>
+									</tfoot>
 								</table>
 								<!-- <center class="fs-3 fw-bold">
 									Tidak data 🧐
@@ -87,13 +98,18 @@
 		},
 
 		methods: {
+			calculateTeamTotal(team) {
+				const total = team.questions.reduce((total, question) => {
+					return total + (question.nilai || 0);
+				}, 0);
+				return total.toFixed(2);
+			},
+
 			getAllNilai() {
 				try {
 					this.$axios.get("/nilai-getAll").then((response) => {
-						// Inisialisasi objek untuk menyimpan nilai per tim
 						let nilaiByTeam = {};
 
-						// Iterasi melalui data nilai
 						response.data.forEach((nilai) => {
 							if (!nilaiByTeam.hasOwnProperty(nilai.teamName)) {
 								nilaiByTeam[nilai.teamName] = {
@@ -108,13 +124,11 @@
 								nilai: nilai.nilai,
 							});
 
-							// Menambahkan pertanyaan ke array uniqueQuestions jika belum ada
 							if (!this.uniqueQuestions.includes(nilai.questionText)) {
 								this.uniqueQuestions.push(nilai.questionText);
 							}
 						});
 
-						// Konversi objek nilaiByTeam menjadi array
 						this.nilaiList = Object.values(nilaiByTeam);
 					});
 				} catch (error) {

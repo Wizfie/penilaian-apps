@@ -24,24 +24,19 @@
 									History Penilaian
 								</h5>
 								<hr />
-								<div>
-									<p class="fw-normal ms-2">Hello,</p>
-
-									<div class="d-flex justify-content-between p-3">
-										<span class="fw-bolder ms-2"> {{ user }}</span>
-										<router-link
-											style="width: 10rem"
-											class="btn btn-primary"
-											to="/plan"
-											>Beri nilai
-										</router-link>
-									</div>
+								<div class="d-flex justify-content-between p-3">
+									<p class="fw-normal ms-2">
+										Hello, <Span class="fw-bold">{{ user }}</Span>
+									</p>
+									<router-link
+										v-if="role === `user`"
+										style="width: 10rem"
+										class="btn btn-primary"
+										to="/plan"
+										>Beri nilai
+									</router-link>
 								</div>
-							</div>
-						</div>
-						<div class="card">
-							<div class="card-body">
-								<table class="table table-striped">
+								<table v-if="role === `user`" class="table table-striped">
 									<thead>
 										<tr>
 											<th scope="col">#</th>
@@ -80,11 +75,33 @@
 											</td>
 										</tr>
 									</tbody>
+									<center v-if="teams.length === 0" class="fs-3 fw-bold">
+										Tidak data 🧐
+									</center>
 								</table>
 								<!-- End Table with hoverable rows -->
-								<center v-if="teams.length === 0" class="fs-3 fw-bold">
-									Tidak data 🧐
-								</center>
+							</div>
+						</div>
+						<div v-if="role === `admin`" class="card">
+							<div class="card-body">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th scope="col">#</th>
+											<th scope="col">Nama Juri</th>
+											<th scope="col">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>Juri</td>
+											<td>view</td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- End Table with hoverable rows -->
+								<!-- <center class="fs-3 fw-bold">Tidak data 🧐</center> -->
 							</div>
 						</div>
 					</div>
@@ -103,6 +120,7 @@
 		data() {
 			return {
 				user: null,
+				role: null,
 				nilaiList: [],
 			};
 		},
@@ -143,6 +161,7 @@
 			const userData = JSON.parse(localStorage.getItem("userData"));
 			if (userData) {
 				this.user = userData.username;
+				this.role = userData.role;
 			}
 		},
 

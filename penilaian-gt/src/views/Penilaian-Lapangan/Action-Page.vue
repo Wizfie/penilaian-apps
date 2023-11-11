@@ -271,6 +271,7 @@
 					})
 					.catch((error) => {
 						console.error("Terjadi Kesalahan:", error);
+						alert(error);
 					})
 					.finally(() => {
 						this.requestData.team = null;
@@ -280,7 +281,7 @@
 						localStorage.removeItem("inputData2");
 						localStorage.removeItem("inputData3");
 						localStorage.removeItem("inputData4");
-						router.push("/plan");
+						router.push("/lapangan");
 					});
 			},
 		},

@@ -19,12 +19,13 @@ public class Nilai {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int nilaiId;
+
     private double nilai;
     private String teamName;
     private String username;
     private int questionId;
+
     @Column(name = "timestamp")
     private Timestamp timestamp;
 

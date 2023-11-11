@@ -12,7 +12,7 @@
 								<!-- Form  -->
 								<form @submit.prevent="submitForm">
 									<table
-										class="table table-bordered text-center align-content-center"
+										class="table-bordered text-center align-content-center"
 									>
 										<thead>
 											<tr>

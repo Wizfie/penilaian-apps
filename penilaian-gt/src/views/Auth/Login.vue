@@ -67,11 +67,12 @@
 						const userData = {
 							nip: response.data.data.nip,
 							username: response.data.data.username,
+							role: response.data.data.role,
 						};
 						localStorage.setItem("userData", JSON.stringify(userData));
 						alert("Login Berhasil");
 						setTimeout(() => {
-							router.push("/dashboard");
+							router.push("/lapangan");
 						}, 1000);
 					})
 					.catch((error) => {
