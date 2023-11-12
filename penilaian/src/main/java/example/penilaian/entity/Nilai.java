@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @Getter
@@ -27,7 +28,7 @@ public class Nilai {
     private int questionId;
 
     @Column(name = "timestamp")
-    private Timestamp timestamp;
+    private Date timestamp;
 
 
 

@@ -19,5 +19,6 @@ public class NilaiResponse {
     private String username;
     private int questionId;
     private String  timestamp;
+
     private String questionText;
 }

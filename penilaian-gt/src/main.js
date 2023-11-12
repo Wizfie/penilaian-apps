@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import "./style.css";
+import store from "./store";
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -14,6 +15,7 @@ axios.defaults.baseURL = "http://localhost:8080/api";
 const app = createApp(App);
 
 app.use(router); // Use the router
+app.use(store);
 
 app.config.globalProperties.$axios = axios; // axios
 

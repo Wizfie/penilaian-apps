@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,10 +30,12 @@ public class NilaiService {
 
     @Transactional
     public void saveNilai(List<Nilai> nilaiData){
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = sdf.format(new java.util.Date());
+
 
         for (Nilai nilai : nilaiData) {
-            nilai.setTimestamp(timestamp);
+            nilai.setTimestamp(Date.valueOf(formattedDate));
         }
 
         nilaiRepository.saveAll(nilaiData);
@@ -57,11 +60,11 @@ public class NilaiService {
     public List<NilaiByUser> getNilaiByUser(String username) {
         List<Nilai> nilaiList = nilaiRepository.findByUsername(username);
         List<NilaiByUser> nilaiByUserList = new ArrayList<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         for (Nilai nilai : nilaiList) {
             Question question = questionRepository.findById(nilai.getQuestionId()).orElse(null);
-            Timestamp timestamp = nilai.getTimestamp();
+            Date timestamp = nilai.getTimestamp();
             String formattedTimestamp = sdf.format(timestamp);
 
             if (question != null) {
@@ -99,7 +102,7 @@ public class NilaiService {
     }
     private NilaiResponse nilaiResponse(Nilai nilai){
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String formattedTimestamp = sdf.format(nilai.getTimestamp());
         return NilaiResponse.builder()
                 .nilaiId(nilai.getNilaiId())
