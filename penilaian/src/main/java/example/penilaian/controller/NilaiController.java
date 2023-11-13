@@ -4,13 +4,17 @@ import example.penilaian.entity.Nilai;
 import example.penilaian.model.NilaiByUser;
 import example.penilaian.model.NilaiResponse;
 import example.penilaian.service.NilaiService;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
@@ -45,22 +49,29 @@ public class NilaiController {
     }
 
     @GetMapping("/nilai-getAll")
-    public List<NilaiResponse>getAllNilai(){
+    public List<NilaiResponse> getAllNilai() {
         return nilaiService.getAllNilai();
     }
 
-    @DeleteMapping("/{timestamp}")
-    public ResponseEntity<String> deleteByTime(@PathVariable Timestamp timestamp) {
-        System.out.println("Timestamp yang diterima: " + timestamp);
+    @DeleteMapping("/{username}/{teamName}/{timestamp}")
+    public ResponseEntity<String> deleteNilai(
+            @PathVariable String username,
+            @PathVariable String teamName,
+            @PathVariable String timestamp) {
+
+//        System.out.println("Username yang diterima: " + username);
+//        System.out.println("Team Name yang diterima: " + teamName);
+//        System.out.println("Timestamp yang diterima: " + timestamp);
 
         try {
-            nilaiService.deleteNilai(timestamp);
-            return ResponseEntity.ok("Data dengan " + timestamp + " ini Berhasil di hapus");
-
-        } catch (EmptyResultDataAccessException e) {
-            return ResponseEntity.notFound().build();
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            java.sql.Date date = java.sql.Date.valueOf(timestamp);
+            nilaiService.deleteNilai(username, teamName, date);
+            return ResponseEntity.ok("Data dengan " + username +  " - " +  teamName +" - "+ timestamp + " ini Berhasil dihapus");
+        } catch (ServiceException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
 
-    }
 
+    }
 }

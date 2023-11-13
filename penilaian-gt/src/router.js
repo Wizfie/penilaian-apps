@@ -11,55 +11,55 @@ import detailNilai from "./views/Penilaian-Lapangan/Edit-Nilai.vue";
 import presentasi from "./views/Penilaian-Lapangan/Presentasi.vue";
 import adminPanel from "./views/Penilaian-Lapangan/Admin-Panel.vue";
 const routes = [
-  {
-    path: "/",
-    component: Login,
-  },
-  {
-    path: "/register",
-    component: Register,
-  },
-  // {
-  // 	path: "/dashboard",
-  // 	component: dashboard,
-  // },
-  {
-    path: "/lapangan",
-    component: lapangan,
-  },
-  {
-    path: "/plan",
-    component: plan,
-  },
-  {
-    path: "/do",
-    component: doPage,
-  },
-  {
-    path: "/check",
-    component: check,
-  },
-  {
-    path: "/action",
-    component: action,
-  },
-  {
-    path: "/presentasi",
-    component: presentasi,
-  },
-  {
-    path: "/detail/:teamName/:timestamp",
-    component: detailNilai,
-  },
-  {
-    path: "/admin",
-    component: adminPanel,
-  },
+	{
+		path: "/",
+		component: Login,
+	},
+	{
+		path: "/register",
+		component: Register,
+	},
+	// {
+	// 	path: "/dashboard",
+	// 	component: dashboard,
+	// },
+	{
+		path: "/lapangan",
+		component: lapangan,
+	},
+	{
+		path: "/plan",
+		component: plan,
+	},
+	{
+		path: "/do",
+		component: doPage,
+	},
+	{
+		path: "/check",
+		component: check,
+	},
+	{
+		path: "/action",
+		component: action,
+	},
+	{
+		path: "/presentasi",
+		component: presentasi,
+	},
+	{
+		path: "/detail/:teamName/:timestamp",
+		component: detailNilai,
+	},
+	{
+		path: "/admin",
+		component: adminPanel,
+	},
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
+	history: createWebHistory(),
+	routes,
 });
 
 export default router;

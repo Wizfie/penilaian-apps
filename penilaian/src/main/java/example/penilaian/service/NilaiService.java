@@ -8,7 +8,9 @@ import example.penilaian.model.NilaiResponse;
 import example.penilaian.repository.NilaiRepository;
 import example.penilaian.repository.QuestionRepository;
 import jakarta.transaction.Transactional;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -29,17 +31,45 @@ public class NilaiService {
     private QuestionRepository questionRepository;
 
     @Transactional
-    public void saveNilai(List<Nilai> nilaiData){
+    public void saveNilai(List<Nilai> nilaiData) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = sdf.format(new java.util.Date());
-
-
         for (Nilai nilai : nilaiData) {
-            nilai.setTimestamp(Date.valueOf(formattedDate));
-        }
+            // Perbarui nilai timestamp hanya jika belum diisi
+            if (nilai.getTimestamp() == null) {
+                String formattedDate = sdf.format(new java.util.Date());
+                nilai.setTimestamp(Date.valueOf(formattedDate));
+            }
 
-        nilaiRepository.saveAll(nilaiData);
+            // Cek apakah sudah ada data dengan username, timestamp, dan questionId yang sama
+            List<Nilai> existingNilaiList = nilaiRepository.findByUsernameAndTimestampAndQuestionId(
+                    nilai.getUsername(),
+                    nilai.getTimestamp(),
+                    nilai.getQuestionId()
+            );
+
+            if (!existingNilaiList.isEmpty()) {
+                // Jika data sudah ada, update nilai sesuai kebutuhan
+                for (Nilai existingNilai : existingNilaiList) {
+                    // Hanya update jika teamName sama
+                    if (existingNilai.getTeamName().equals(nilai.getTeamName())) {
+                        existingNilai.setNilai(nilai.getNilai());
+                        existingNilai.setTeamName(nilai.getTeamName());
+                        // Update nilai-nilai lainnya sesuai kebutuhan
+                    } else {
+                        // Jika teamName berbeda, maka buat data baru
+                        nilaiRepository.save(nilai);
+                    }
+                }
+                // Simpan kembali ke repository
+                nilaiRepository.saveAll(existingNilaiList);
+            } else {
+                // Jika tidak ada data dengan kombinasi yang sama, langsung simpan data baru
+                nilaiRepository.save(nilai);
+            }
+        }
     }
+
+
 
     public List<Nilai> updateNilai(List<Nilai> updatedNilaiList) {
         List<Nilai> updatedNilaiListResult = new ArrayList<>();
@@ -63,13 +93,17 @@ public class NilaiService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         for (Nilai nilai : nilaiList) {
-            Question question = questionRepository.findById(nilai.getQuestionId()).orElse(null);
             Date timestamp = nilai.getTimestamp();
+
+            // Lepaskan error jika timestamp null
+            if (timestamp == null) {
+                throw new IllegalStateException("Timestamp cannot be null for nilaiId: " + nilai.getNilaiId());
+            }
+
             String formattedTimestamp = sdf.format(timestamp);
+            Question question = questionRepository.findById(nilai.getQuestionId()).orElse(null);
 
             if (question != null) {
-
-
                 // Ambil nilai maksimum dari kumpulan pilihan ganda
                 List<MultipleChoice> choices = new ArrayList<>(question.getChoices());
                 double maxValue = choices.stream()
@@ -78,7 +112,7 @@ public class NilaiService {
                         .orElse(0.0);
 
                 NilaiByUser nilaiByUser = NilaiByUser.builder()
-                        .nilaiId(nilai.getNilaiId()) //
+                        .nilaiId(nilai.getNilaiId())
                         .username(username)
                         .teamName(nilai.getTeamName())
                         .nilai(nilai.getNilai())
@@ -93,6 +127,7 @@ public class NilaiService {
 
         return nilaiByUserList;
     }
+
 
 
     public List<NilaiResponse>getAllNilai(){
@@ -121,9 +156,18 @@ public class NilaiService {
 
 
 
-    public void deleteNilai(Timestamp timestamp){
-        nilaiRepository.deleteByTimestamp(timestamp);
+    @Transactional
+    public void deleteNilai(String username, String teamName, java.sql.Date timestamp) throws ServiceException {
+        try {
+            nilaiRepository.deleteByTimestampAndUsernameAndTeamName(timestamp, username, teamName);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ServiceException("Data tidak ditemukan");
+        } catch (IllegalArgumentException e) {
+            throw new ServiceException("Format timestamp tidak valid");
+        }
     }
+
+
 
 
 
