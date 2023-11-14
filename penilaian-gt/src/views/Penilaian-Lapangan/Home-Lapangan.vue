@@ -86,28 +86,6 @@
 								<!-- End Table with hoverable rows -->
 							</div>
 						</div>
-						<div v-if="role === `admin`" class="card">
-							<div class="card-body">
-								<table class="table table-striped">
-									<thead>
-										<tr>
-											<th scope="col">#</th>
-											<th scope="col">Nama Juri</th>
-											<th scope="col">Action</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>1</td>
-											<td>Juri</td>
-											<td>view</td>
-										</tr>
-									</tbody>
-								</table>
-								<!-- End Table with hoverable rows -->
-								<!-- <center class="fs-3 fw-bold">Tidak data 🧐</center> -->
-							</div>
-						</div>
 					</div>
 				</div>
 			</section>

@@ -1,8 +1,8 @@
-package example.penilaian.controller;
+package example.penilaian.controller.penilaianLapangan;
 
 
-import example.penilaian.entity.Question;
-import example.penilaian.service.QuestionService;
+import example.penilaian.entity.penilaianLapangan.Question;
+import example.penilaian.service.penilaianLapangan.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

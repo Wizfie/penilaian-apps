@@ -1,8 +1,7 @@
-package example.penilaian.controller;
+package example.penilaian.controller.penilaianLapangan;
 
-
-import example.penilaian.entity.Team;
-import example.penilaian.service.TeamService;
+import example.penilaian.entity.penilaianLapangan.MultipleChoice;
+import example.penilaian.service.penilaianLapangan.ChoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +15,15 @@ import java.util.List;
 @CrossOrigin("*")
 
 @RequestMapping("/api")
-public class    TeamController {
+public class ChoiceController {
 
     @Autowired
-    private TeamService teamService;
+    private ChoiceService choiceService;
 
-    @GetMapping("/getAllTeam")
-    public List<Team> getAllTeam(){
-        return teamService.getAllTeam();
+    @GetMapping("/choiceAll")
+    public List<MultipleChoice> getAllChoice(){
+        return choiceService.getAllChoice();
     }
+
+
 }

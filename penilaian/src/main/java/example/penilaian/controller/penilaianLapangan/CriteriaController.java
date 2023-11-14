@@ -1,7 +1,7 @@
-package example.penilaian.controller;
+package example.penilaian.controller.penilaianLapangan;
 
-import example.penilaian.entity.MultipleChoice;
-import example.penilaian.service.ChoiceService;
+import example.penilaian.entity.penilaianLapangan.Criteria;
+import example.penilaian.service.penilaianLapangan.CriteriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,15 +15,14 @@ import java.util.List;
 @CrossOrigin("*")
 
 @RequestMapping("/api")
-public class ChoiceController {
+public class CriteriaController {
 
     @Autowired
-    private ChoiceService choiceService;
+    private CriteriaService criteriaService;
 
-    @GetMapping("/choiceAll")
-    public List<MultipleChoice> getAllChoice(){
-        return choiceService.getAllChoice();
+
+    @GetMapping("/criteriaAll")
+    public List<Criteria> getAllCriteria() {
+        return criteriaService.getAllCriteria();
     }
-
-
 }

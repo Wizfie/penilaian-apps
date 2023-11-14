@@ -128,7 +128,7 @@
 							<i class="bi bi-circle-fill"></i><span>Penjurian Presentasi</span>
 						</router-link>
 					</li>
-					<li>
+					<li v-if="role === `admin`">
 						<router-link to="/admin">
 							<i class="bi bi-circle-fill"></i><span>Admin Panel</span>
 						</router-link>
@@ -163,7 +163,8 @@
 	export default {
 		data() {
 			return {
-				profileName: "",
+				profileName: null,
+				role: null,
 			};
 		},
 		methods: {
@@ -523,6 +524,7 @@
 			const userData = JSON.parse(localStorage.getItem("userData"));
 			if (userData) {
 				this.profileName = userData.username;
+				this.role = userData.role;
 			}
 		},
 	};

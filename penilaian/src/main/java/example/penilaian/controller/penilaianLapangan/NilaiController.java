@@ -1,20 +1,15 @@
-package example.penilaian.controller;
+package example.penilaian.controller.penilaianLapangan;
 
-import example.penilaian.entity.Nilai;
-import example.penilaian.model.NilaiByUser;
-import example.penilaian.model.NilaiResponse;
-import example.penilaian.service.NilaiService;
+import example.penilaian.entity.penilaianLapangan.Nilai;
+import example.penilaian.model.penilaianLapangan.NilaiByUser;
+import example.penilaian.model.penilaianLapangan.NilaiResponse;
+import example.penilaian.service.penilaianLapangan.NilaiService;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
@@ -27,10 +22,16 @@ public class NilaiController {
     private NilaiService nilaiService;
 
     @PostMapping("/save-nilai")
-    public String saveNilai(@RequestBody List<Nilai> nilaiData) {
-        nilaiService.saveNilai(nilaiData);
-        return "Data Berhasil masuk";
+    public ResponseEntity<String> saveNilai(@RequestBody List<Nilai> nilaiData) {
+        System.out.println("Received request with data: " + nilaiData);
+        try {
+            nilaiService.saveNilai(nilaiData);
+            return ResponseEntity.ok("Data berhasil masuk");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Gagal menyimpan data: " + e.getMessage());
+        }
     }
+
 
     @PutMapping("/update-nilai")
     public ResponseEntity<List<Nilai>> updateNilai(@RequestBody List<Nilai> updatedNilaiList) {

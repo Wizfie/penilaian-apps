@@ -3,7 +3,7 @@ package example.penilaian.service;
 import example.penilaian.entity.Users;
 import example.penilaian.model.LoginUserRequest;
 import example.penilaian.model.UserToken;
-import example.penilaian.model.ValidatorService;
+import example.penilaian.model.penilaianLapangan.ValidatorService;
 import example.penilaian.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

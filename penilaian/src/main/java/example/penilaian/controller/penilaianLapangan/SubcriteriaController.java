@@ -1,8 +1,8 @@
-package example.penilaian.controller;
+package example.penilaian.controller.penilaianLapangan;
 
 
-import example.penilaian.entity.Subcriteria;
-import example.penilaian.service.SubcriteriaService;
+import example.penilaian.entity.penilaianLapangan.Subcriteria;
+import example.penilaian.service.penilaianLapangan.SubcriteriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

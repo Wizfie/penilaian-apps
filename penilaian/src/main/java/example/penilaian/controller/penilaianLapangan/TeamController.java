@@ -1,8 +1,8 @@
-package example.penilaian.controller;
+package example.penilaian.controller.penilaianLapangan;
 
-import example.penilaian.entity.Criteria;
-import example.penilaian.model.WebResponse;
-import example.penilaian.service.CriteriaService;
+
+import example.penilaian.entity.penilaianLapangan.Team;
+import example.penilaian.service.penilaianLapangan.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,14 +16,13 @@ import java.util.List;
 @CrossOrigin("*")
 
 @RequestMapping("/api")
-public class CriteriaController {
+public class    TeamController {
 
     @Autowired
-    private CriteriaService criteriaService;
+    private TeamService teamService;
 
-
-    @GetMapping("/criteriaAll")
-    public List<Criteria> getAllCriteria() {
-        return criteriaService.getAllCriteria();
+    @GetMapping("/getAllTeam")
+    public List<Team> getAllTeam(){
+        return teamService.getAllTeam();
     }
 }

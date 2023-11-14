@@ -1,7 +1,7 @@
-package example.penilaian.service;
+package example.penilaian.service.penilaianLapangan;
 
 
-import example.penilaian.entity.Team;
+import example.penilaian.entity.penilaianLapangan.Team;
 import example.penilaian.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package example.penilaian.entity;
+package example.penilaian.entity.penilaianLapangan;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,7 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "questions")
+@Table(name = "questions_lapangan")
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

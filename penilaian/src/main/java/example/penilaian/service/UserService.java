@@ -1,7 +1,7 @@
 package example.penilaian.service;
 
 import example.penilaian.entity.Users;
-import example.penilaian.model.ValidatorService;
+import example.penilaian.model.penilaianLapangan.ValidatorService;
 import jakarta.transaction.Transactional;
 import example.penilaian.model.RegisterUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;

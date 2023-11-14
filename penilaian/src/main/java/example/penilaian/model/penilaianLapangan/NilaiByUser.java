@@ -1,4 +1,4 @@
-package example.penilaian.model;
+package example.penilaian.model.penilaianLapangan;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

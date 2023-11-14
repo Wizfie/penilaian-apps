@@ -1,6 +1,6 @@
-package example.penilaian.service;
+package example.penilaian.service.penilaianLapangan;
 
-import example.penilaian.entity.Criteria;
+import example.penilaian.entity.penilaianLapangan.Criteria;
 import example.penilaian.repository.CriteriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

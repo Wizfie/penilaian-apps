@@ -1,7 +1,7 @@
 package example.penilaian.repository;
 
 
-import example.penilaian.entity.Team;
+import example.penilaian.entity.penilaianLapangan.Team;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-    package example.penilaian.entity;
+    package example.penilaian.entity.penilaianLapangan;
 
 
     import jakarta.persistence.*;
@@ -15,7 +15,7 @@
     @AllArgsConstructor
     @NoArgsConstructor
     @Entity
-    @Table(name = "nilai" )
+    @Table(name = "nilai_lapangan" )
     public class Nilai {
 
         @Id

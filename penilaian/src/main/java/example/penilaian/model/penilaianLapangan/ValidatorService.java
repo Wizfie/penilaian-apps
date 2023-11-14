@@ -1,4 +1,4 @@
-package example.penilaian.model;
+package example.penilaian.model.penilaianLapangan;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;

@@ -1,10 +1,10 @@
-package example.penilaian.service;
+package example.penilaian.service.penilaianLapangan;
 
-import example.penilaian.entity.MultipleChoice;
-import example.penilaian.entity.Nilai;
-import example.penilaian.entity.Question;
-import example.penilaian.model.NilaiByUser;
-import example.penilaian.model.NilaiResponse;
+import example.penilaian.entity.penilaianLapangan.MultipleChoice;
+import example.penilaian.entity.penilaianLapangan.Nilai;
+import example.penilaian.entity.penilaianLapangan.Question;
+import example.penilaian.model.penilaianLapangan.NilaiByUser;
+import example.penilaian.model.penilaianLapangan.NilaiResponse;
 import example.penilaian.repository.NilaiRepository;
 import example.penilaian.repository.QuestionRepository;
 import jakarta.transaction.Transactional;
@@ -14,7 +14,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,31 +32,35 @@ public class NilaiService {
     @Transactional
     public void saveNilai(List<Nilai> nilaiData) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        // Set timestamp outside the loop since it's the same for all Nilai objects
+        String formattedDate = sdf.format(new java.util.Date());
+        Date currentDate = Date.valueOf(formattedDate);
+//        Date testDate = Date.valueOf("2023-11-15");
+
         for (Nilai nilai : nilaiData) {
             // Perbarui nilai timestamp hanya jika belum diisi
             if (nilai.getTimestamp() == null) {
-                String formattedDate = sdf.format(new java.util.Date());
-                nilai.setTimestamp(Date.valueOf(formattedDate));
+                nilai.setTimestamp(currentDate);
+//                nilai.setTimestamp(testDate);
             }
 
             // Cek apakah sudah ada data dengan username, timestamp, dan questionId yang sama
-            List<Nilai> existingNilaiList = nilaiRepository.findByUsernameAndTimestampAndQuestionId(
-                    nilai.getUsername(),
-                    nilai.getTimestamp(),
-                    nilai.getQuestionId()
-            );
+            List<Nilai> existingNilaiList = nilaiRepository
+                    .findByUsernameAndTimestampAndQuestionIdAndTeamName(
+                            nilai.getUsername(),
+                            nilai.getTimestamp(),
+                            nilai.getQuestionId(),
+                            nilai.getTeamName()
+                    );
 
+            // Jika data sudah ada, update nilai sesuai kebutuhan
             if (!existingNilaiList.isEmpty()) {
-                // Jika data sudah ada, update nilai sesuai kebutuhan
                 for (Nilai existingNilai : existingNilaiList) {
                     // Hanya update jika teamName sama
                     if (existingNilai.getTeamName().equals(nilai.getTeamName())) {
                         existingNilai.setNilai(nilai.getNilai());
-                        existingNilai.setTeamName(nilai.getTeamName());
                         // Update nilai-nilai lainnya sesuai kebutuhan
-                    } else {
-                        // Jika teamName berbeda, maka buat data baru
-                        nilaiRepository.save(nilai);
                     }
                 }
                 // Simpan kembali ke repository

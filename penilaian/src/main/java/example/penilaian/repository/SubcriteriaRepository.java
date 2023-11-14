@@ -1,6 +1,6 @@
 package example.penilaian.repository;
 
-import example.penilaian.entity.Subcriteria;
+import example.penilaian.entity.penilaianLapangan.Subcriteria;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
