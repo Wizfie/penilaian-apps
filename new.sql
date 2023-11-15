@@ -36,6 +36,21 @@ INSERT INTO `criteria_lapangan` (`criteria_id`, `criteria_name`) VALUES
 	(6, 'EVALUASI HASIL PERBAIKAN'),
 	(7, 'PENGENDALIAN DAN STANDARISASI');
 
+-- Dumping structure for table db_logistic.criteria_yelyel
+CREATE TABLE IF NOT EXISTS `criteria_yelyel` (
+  `criteria_id` int NOT NULL AUTO_INCREMENT,
+  `criteria_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`criteria_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table db_logistic.criteria_yelyel: ~0 rows (approximately)
+INSERT INTO `criteria_yelyel` (`criteria_id`, `criteria_name`) VALUES
+	(1, 'Kekompakan'),
+	(2, 'Kesesuaian tema/\r\nisi yel - yel'),
+	(3, 'Kreativitas\r\n\r\n\r\n\r\n'),
+	(4, 'Gerakan\r\n\r\n\r\n\r\n\r\n\r\n\r\n'),
+	(5, 'Ketepatan Waktu\r\n\r\n\r\n\r\n\r\n');
+
 -- Dumping structure for table db_logistic.multiple_choice_lapangan
 CREATE TABLE IF NOT EXISTS `multiple_choice_lapangan` (
   `choice_id` int NOT NULL AUTO_INCREMENT,
@@ -219,12 +234,12 @@ CREATE TABLE IF NOT EXISTS `nilai_lapangan` (
   `nilai` double DEFAULT NULL,
   `team_name` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `question_id` int NOT NULL,
+  `question_id` int DEFAULT NULL,
   `timestamp` date DEFAULT NULL,
   PRIMARY KEY (`nilai_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2883 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table db_logistic.nilai_lapangan: ~669 rows (approximately)
+-- Dumping data for table db_logistic.nilai_lapangan: ~697 rows (approximately)
 INSERT INTO `nilai_lapangan` (`nilai_id`, `nilai`, `team_name`, `username`, `question_id`, `timestamp`) VALUES
 	(1735, 0.5, 'ampibi', 'wiz', 1, '2023-11-14'),
 	(1736, 0.3, 'ampibi', 'wiz', 2, '2023-11-14'),
@@ -924,6 +939,25 @@ INSERT INTO `nilai_lapangan` (`nilai_id`, `nilai`, `team_name`, `username`, `que
 	(2881, 1.13, 'coc', 'Sasa', 40, '2023-11-14'),
 	(2882, 2, 'coc', 'Sasa', 41, '2023-11-14');
 
+-- Dumping structure for table db_logistic.point_yelyel
+CREATE TABLE IF NOT EXISTS `point_yelyel` (
+  `point_id` int NOT NULL AUTO_INCREMENT,
+  `point` double DEFAULT NULL,
+  `create_at` datetime(6) DEFAULT NULL,
+  `name_subscriteria` int DEFAULT NULL,
+  `team_name` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  PRIMARY KEY (`point_id`),
+  KEY `FKipxtsm24aqtscmqr78dser3i1` (`name_subscriteria`),
+  KEY `FKmekf4v3fvryuucsbulc7hklsv` (`team_name`),
+  KEY `FKl5tc3i2a1x2mi9sbslymiisld` (`user_id`),
+  CONSTRAINT `FKipxtsm24aqtscmqr78dser3i1` FOREIGN KEY (`name_subscriteria`) REFERENCES `subscriteria_yelyel` (`subscriteria_id`),
+  CONSTRAINT `FKl5tc3i2a1x2mi9sbslymiisld` FOREIGN KEY (`user_id`) REFERENCES `users` (`users_id`),
+  CONSTRAINT `FKmekf4v3fvryuucsbulc7hklsv` FOREIGN KEY (`team_name`) REFERENCES `team_yelyel` (`team_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table db_logistic.point_yelyel: ~0 rows (approximately)
+
 -- Dumping structure for table db_logistic.questions_lapangan
 CREATE TABLE IF NOT EXISTS `questions_lapangan` (
   `question_id` int NOT NULL AUTO_INCREMENT,
@@ -1010,15 +1044,43 @@ INSERT INTO `subcriteria_lapangan` (`subcriteria_id`, `subcriteria_name`, `crite
 	(18, 'R. Menjamin pelaksanaan standar baru\r\n', 7),
 	(19, 'S. Identifikasi & Penetapan Rencana Berikutnya \r\n', 7);
 
--- Dumping structure for table db_logistic.teams
-CREATE TABLE IF NOT EXISTS `teams` (
+-- Dumping structure for table db_logistic.subscriteria_yelyel
+CREATE TABLE IF NOT EXISTS `subscriteria_yelyel` (
+  `subscriteria_id` int NOT NULL AUTO_INCREMENT,
+  `max_point` double DEFAULT NULL,
+  `subscriteria_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `criteria_id` int DEFAULT NULL,
+  `subcriteria_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`subscriteria_id`),
+  KEY `FKksohwv6sso0vd188fp3syl9uw` (`criteria_id`),
+  CONSTRAINT `FKksohwv6sso0vd188fp3syl9uw` FOREIGN KEY (`criteria_id`) REFERENCES `criteria_yelyel` (`criteria_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table db_logistic.subscriteria_yelyel: ~0 rows (approximately)
+INSERT INTO `subscriteria_yelyel` (`subscriteria_id`, `max_point`, `subscriteria_name`, `criteria_id`, `subcriteria_name`) VALUES
+	(1, 10, 'Vokal/Nada', 1, NULL),
+	(2, 15, 'Semangat team \r\n', 1, NULL),
+	(3, 5, 'Kelancaran\r\n \r\n', 1, NULL),
+	(4, 5, 'Profesionalitas\r\n\r\n \r\n', 2, NULL),
+	(5, 10, 'memiliki makna dan berhubungan dengan QCC \r\n\r\n\r\n \r\n', 2, NULL),
+	(6, 5, 'Alur /susunan\r\n\r\n\r\n\r\n \r\n', 3, NULL),
+	(7, 10, 'Originalitas/Unik', 3, NULL),
+	(8, 4, 'Kata kata yang sopan', 3, NULL),
+	(9, 6, 'Memberi semangat kegembiraan', 3, NULL),
+	(10, 10, 'Dinamis/tidak monoton', 4, NULL),
+	(11, 5, 'Gaya tidak berlebihan', 4, NULL),
+	(12, 5, 'Kesesuaian makna', 4, NULL),
+	(13, 10, 'Waktu untuk yel- yel 3 menit\r\n', 5, NULL);
+
+-- Dumping structure for table db_logistic.teams_lapangan
+CREATE TABLE IF NOT EXISTS `teams_lapangan` (
   `team_id` int NOT NULL AUTO_INCREMENT,
   `team_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`team_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table db_logistic.teams: ~9 rows (approximately)
-INSERT INTO `teams` (`team_id`, `team_name`) VALUES
+-- Dumping data for table db_logistic.teams_lapangan: ~9 rows (approximately)
+INSERT INTO `teams_lapangan` (`team_id`, `team_name`) VALUES
 	(1, 'coc'),
 	(2, 'sugoi'),
 	(3, 'aladin'),
@@ -1028,6 +1090,24 @@ INSERT INTO `teams` (`team_id`, `team_name`) VALUES
 	(7, 'semongko'),
 	(8, 'ares'),
 	(9, 'baladewa');
+
+-- Dumping structure for table db_logistic.team_yelyel
+CREATE TABLE IF NOT EXISTS `team_yelyel` (
+  `team_id` int NOT NULL AUTO_INCREMENT,
+  `team_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`team_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table db_logistic.team_yelyel: ~0 rows (approximately)
+INSERT INTO `team_yelyel` (`team_id`, `team_name`) VALUES
+	(1, 'APW'),
+	(2, 'BPW'),
+	(3, 'DPW'),
+	(4, 'RPW'),
+	(5, 'JMW'),
+	(6, 'JXP'),
+	(7, 'JPP'),
+	(8, 'GRM');
 
 -- Dumping structure for table db_logistic.users
 CREATE TABLE IF NOT EXISTS `users` (

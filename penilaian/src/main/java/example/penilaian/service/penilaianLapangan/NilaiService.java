@@ -1,12 +1,12 @@
 package example.penilaian.service.penilaianLapangan;
 
 import example.penilaian.entity.penilaianLapangan.MultipleChoice;
-import example.penilaian.entity.penilaianLapangan.Nilai;
-import example.penilaian.entity.penilaianLapangan.Question;
+import example.penilaian.entity.penilaianLapangan.NilaiLapangan;
+import example.penilaian.entity.penilaianLapangan.QuestionLapangan;
 import example.penilaian.model.penilaianLapangan.NilaiByUser;
 import example.penilaian.model.penilaianLapangan.NilaiResponse;
-import example.penilaian.repository.NilaiRepository;
-import example.penilaian.repository.QuestionRepository;
+import example.penilaian.repository.penilaianLapangan.NilaiRepository;
+import example.penilaian.repository.penilaianLapangan.QuestionRepository;
 import jakarta.transaction.Transactional;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,98 +30,98 @@ public class NilaiService {
     private QuestionRepository questionRepository;
 
     @Transactional
-    public void saveNilai(List<Nilai> nilaiData) {
+    public void saveNilai(List<NilaiLapangan> nilaiLapanganData) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-        // Set timestamp outside the loop since it's the same for all Nilai objects
+        // Set timestamp outside the loop since it's the same for all NilaiLapangan objects
         String formattedDate = sdf.format(new java.util.Date());
         Date currentDate = Date.valueOf(formattedDate);
 //        Date testDate = Date.valueOf("2023-11-15");
 
-        for (Nilai nilai : nilaiData) {
-            // Perbarui nilai timestamp hanya jika belum diisi
-            if (nilai.getTimestamp() == null) {
-                nilai.setTimestamp(currentDate);
-//                nilai.setTimestamp(testDate);
+        for (NilaiLapangan nilaiLapangan : nilaiLapanganData) {
+            // Perbarui nilaiLapangan timestamp hanya jika belum diisi
+            if (nilaiLapangan.getTimestamp() == null) {
+                nilaiLapangan.setTimestamp(currentDate);
+//                nilaiLapangan.setTimestamp(testDate);
             }
 
             // Cek apakah sudah ada data dengan username, timestamp, dan questionId yang sama
-            List<Nilai> existingNilaiList = nilaiRepository
+            List<NilaiLapangan> existingNilaiListLapangan = nilaiRepository
                     .findByUsernameAndTimestampAndQuestionIdAndTeamName(
-                            nilai.getUsername(),
-                            nilai.getTimestamp(),
-                            nilai.getQuestionId(),
-                            nilai.getTeamName()
+                            nilaiLapangan.getUsername(),
+                            nilaiLapangan.getTimestamp(),
+                            nilaiLapangan.getQuestionId(),
+                            nilaiLapangan.getTeamName()
                     );
 
-            // Jika data sudah ada, update nilai sesuai kebutuhan
-            if (!existingNilaiList.isEmpty()) {
-                for (Nilai existingNilai : existingNilaiList) {
+            // Jika data sudah ada, update nilaiLapangan sesuai kebutuhan
+            if (!existingNilaiListLapangan.isEmpty()) {
+                for (NilaiLapangan existingNilaiLapangan : existingNilaiListLapangan) {
                     // Hanya update jika teamName sama
-                    if (existingNilai.getTeamName().equals(nilai.getTeamName())) {
-                        existingNilai.setNilai(nilai.getNilai());
-                        // Update nilai-nilai lainnya sesuai kebutuhan
+                    if (existingNilaiLapangan.getTeamName().equals(nilaiLapangan.getTeamName())) {
+                        existingNilaiLapangan.setNilai(nilaiLapangan.getNilai());
+                        // Update nilaiLapangan-nilaiLapangan lainnya sesuai kebutuhan
                     }
                 }
                 // Simpan kembali ke repository
-                nilaiRepository.saveAll(existingNilaiList);
+                nilaiRepository.saveAll(existingNilaiListLapangan);
             } else {
                 // Jika tidak ada data dengan kombinasi yang sama, langsung simpan data baru
-                nilaiRepository.save(nilai);
+                nilaiRepository.save(nilaiLapangan);
             }
         }
     }
 
 
 
-    public List<Nilai> updateNilai(List<Nilai> updatedNilaiList) {
-        List<Nilai> updatedNilaiListResult = new ArrayList<>();
+    public List<NilaiLapangan> updateNilai(List<NilaiLapangan> updatedNilaiListLapangan) {
+        List<NilaiLapangan> updatedNilaiListResultLapangan = new ArrayList<>();
 
-        for (Nilai updatedNilai : updatedNilaiList) {
-            Optional<Nilai> existingNilai = nilaiRepository.findById(updatedNilai.getNilaiId());
+        for (NilaiLapangan updatedNilaiLapangan : updatedNilaiListLapangan) {
+            Optional<NilaiLapangan> existingNilai = nilaiRepository.findById(updatedNilaiLapangan.getNilaiId());
             if (existingNilai.isPresent()) {
                 // Update the nilai value
-                existingNilai.get().setNilai(updatedNilai.getNilai());
-                updatedNilaiListResult.add(nilaiRepository.save(existingNilai.get()));
+                existingNilai.get().setNilai(updatedNilaiLapangan.getNilai());
+                updatedNilaiListResultLapangan.add(nilaiRepository.save(existingNilai.get()));
             }
         }
 
-        return updatedNilaiListResult;
+        return updatedNilaiListResultLapangan;
     }
 
 
     public List<NilaiByUser> getNilaiByUser(String username) {
-        List<Nilai> nilaiList = nilaiRepository.findByUsername(username);
+        List<NilaiLapangan> nilaiLapanganList = nilaiRepository.findByUsername(username);
         List<NilaiByUser> nilaiByUserList = new ArrayList<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-        for (Nilai nilai : nilaiList) {
-            Date timestamp = nilai.getTimestamp();
+        for (NilaiLapangan nilaiLapangan : nilaiLapanganList) {
+            Date timestamp = nilaiLapangan.getTimestamp();
 
             // Lepaskan error jika timestamp null
             if (timestamp == null) {
-                throw new IllegalStateException("Timestamp cannot be null for nilaiId: " + nilai.getNilaiId());
+                throw new IllegalStateException("Timestamp cannot be null for nilaiId: " + nilaiLapangan.getNilaiId());
             }
 
             String formattedTimestamp = sdf.format(timestamp);
-            Question question = questionRepository.findById(nilai.getQuestionId()).orElse(null);
+            QuestionLapangan questionLapangan = questionRepository.findById(nilaiLapangan.getQuestionId()).orElse(null);
 
-            if (question != null) {
-                // Ambil nilai maksimum dari kumpulan pilihan ganda
-                List<MultipleChoice> choices = new ArrayList<>(question.getChoices());
+            if (questionLapangan != null) {
+                // Ambil nilaiLapangan maksimum dari kumpulan pilihan ganda
+                List<MultipleChoice> choices = new ArrayList<>(questionLapangan.getChoices());
                 double maxValue = choices.stream()
                         .mapToDouble(MultipleChoice::getChoiceValue)
                         .max()
                         .orElse(0.0);
 
                 NilaiByUser nilaiByUser = NilaiByUser.builder()
-                        .nilaiId(nilai.getNilaiId())
+                        .nilaiId(nilaiLapangan.getNilaiId())
                         .username(username)
-                        .teamName(nilai.getTeamName())
-                        .nilai(nilai.getNilai())
+                        .teamName(nilaiLapangan.getTeamName())
+                        .nilai(nilaiLapangan.getNilai())
                         .maxValue(maxValue)
-                        .questionId(nilai.getQuestionId())
-                        .questionText(question.getQuestionText())
+                        .questionId(nilaiLapangan.getQuestionId())
+                        .questionText(questionLapangan.getQuestionText())
                         .formattedTimestamp(formattedTimestamp)
                         .build();
                 nilaiByUserList.add(nilaiByUser);
@@ -134,27 +134,27 @@ public class NilaiService {
 
 
     public List<NilaiResponse>getAllNilai(){
-        List<Nilai> nilaiList = nilaiRepository.findAll();
-        return nilaiList.stream().map(this::nilaiResponse).collect(Collectors.toList());
+        List<NilaiLapangan> nilaiLapanganList = nilaiRepository.findAll();
+        return nilaiLapanganList.stream().map(this::nilaiResponse).collect(Collectors.toList());
 
     }
-    private NilaiResponse nilaiResponse(Nilai nilai){
+    private NilaiResponse nilaiResponse(NilaiLapangan nilaiLapangan){
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedTimestamp = sdf.format(nilai.getTimestamp());
+        String formattedTimestamp = sdf.format(nilaiLapangan.getTimestamp());
         return NilaiResponse.builder()
-                .nilaiId(nilai.getNilaiId())
-                .nilai(nilai.getNilai())
-                .teamName(nilai.getTeamName())
-                .username(nilai.getUsername())
-                .questionId(nilai.getQuestionId())
-                .questionText(getQuestionText(nilai.getQuestionId()))
+                .nilaiId(nilaiLapangan.getNilaiId())
+                .nilai(nilaiLapangan.getNilai())
+                .teamName(nilaiLapangan.getTeamName())
+                .username(nilaiLapangan.getUsername())
+                .questionId(nilaiLapangan.getQuestionId())
+                .questionText(getQuestionText(nilaiLapangan.getQuestionId()))
                 .timestamp(formattedTimestamp)
                 .build();
     }
 
     private String getQuestionText(int questionId){
-        return questionRepository.findById(questionId).map(Question::getQuestionText).orElse(null);
+        return questionRepository.findById(questionId).map(QuestionLapangan::getQuestionText).orElse(null);
     }
 
 

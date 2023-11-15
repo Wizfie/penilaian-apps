@@ -128,6 +128,11 @@
 							<i class="bi bi-circle-fill"></i><span>Penjurian Presentasi</span>
 						</router-link>
 					</li>
+					<li>
+						<router-link to="/Penilaian-yelyel">
+							<i class="bi bi-circle-fill"></i><span>Penjurian Yel-Yel</span>
+						</router-link>
+					</li>
 					<li v-if="role === `admin`">
 						<router-link to="/admin">
 							<i class="bi bi-circle-fill"></i><span>Admin Panel</span>

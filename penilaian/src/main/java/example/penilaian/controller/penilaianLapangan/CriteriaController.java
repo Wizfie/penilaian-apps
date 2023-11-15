@@ -1,6 +1,6 @@
 package example.penilaian.controller.penilaianLapangan;
 
-import example.penilaian.entity.penilaianLapangan.Criteria;
+import example.penilaian.entity.penilaianLapangan.CriteriaLapangan;
 import example.penilaian.service.penilaianLapangan.CriteriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,7 +22,7 @@ public class CriteriaController {
 
 
     @GetMapping("/criteriaAll")
-    public List<Criteria> getAllCriteria() {
+    public List<CriteriaLapangan> getAllCriteria() {
         return criteriaService.getAllCriteria();
     }
 }

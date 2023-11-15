@@ -12,16 +12,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "multiple_choice_lapangan")
-public class MultipleChoice {
+@Table(name = "subcriteria_lapangan")
+public class SubcriteriaLapangan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  int choiceId;
-    private Double choiceValue;
+    private int subcriteriaId;
+
+    private String subcriteriaName;
 
     @ManyToOne
-    @JoinColumn(name = "question_id")
-    private QuestionLapangan questionLapangan;
-
+    @JoinColumn(name = "criteria_id")
+    private CriteriaLapangan criteriaLapangan;
 
 }

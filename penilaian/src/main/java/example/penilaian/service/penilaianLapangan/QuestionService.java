@@ -1,7 +1,7 @@
 package example.penilaian.service.penilaianLapangan;
 
-import example.penilaian.entity.penilaianLapangan.Question;
-import example.penilaian.repository.QuestionRepository;
+import example.penilaian.entity.penilaianLapangan.QuestionLapangan;
+import example.penilaian.repository.penilaianLapangan.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ public class QuestionService {
     private QuestionRepository questionRepository;
 
 
-    public List<Question> getALlQuestion(){
+    public List<QuestionLapangan> getALlQuestion(){
         return questionRepository.findAll();
     }
 

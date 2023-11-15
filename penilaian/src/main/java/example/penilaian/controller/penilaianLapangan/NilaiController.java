@@ -1,6 +1,6 @@
 package example.penilaian.controller.penilaianLapangan;
 
-import example.penilaian.entity.penilaianLapangan.Nilai;
+import example.penilaian.entity.penilaianLapangan.NilaiLapangan;
 import example.penilaian.model.penilaianLapangan.NilaiByUser;
 import example.penilaian.model.penilaianLapangan.NilaiResponse;
 import example.penilaian.service.penilaianLapangan.NilaiService;
@@ -22,10 +22,10 @@ public class NilaiController {
     private NilaiService nilaiService;
 
     @PostMapping("/save-nilai")
-    public ResponseEntity<String> saveNilai(@RequestBody List<Nilai> nilaiData) {
-        System.out.println("Received request with data: " + nilaiData);
+    public ResponseEntity<String> saveNilai(@RequestBody List<NilaiLapangan> nilaiLapanganData) {
+        System.out.println("Received request with data: " + nilaiLapanganData);
         try {
-            nilaiService.saveNilai(nilaiData);
+            nilaiService.saveNilai(nilaiLapanganData);
             return ResponseEntity.ok("Data berhasil masuk");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Gagal menyimpan data: " + e.getMessage());
@@ -34,11 +34,11 @@ public class NilaiController {
 
 
     @PutMapping("/update-nilai")
-    public ResponseEntity<List<Nilai>> updateNilai(@RequestBody List<Nilai> updatedNilaiList) {
-        List<Nilai> updatedNilaiListResult = nilaiService.updateNilai(updatedNilaiList);
+    public ResponseEntity<List<NilaiLapangan>> updateNilai(@RequestBody List<NilaiLapangan> updatedNilaiListLapangan) {
+        List<NilaiLapangan> updatedNilaiListResultLapangan = nilaiService.updateNilai(updatedNilaiListLapangan);
 
-        if (!updatedNilaiListResult.isEmpty()) {
-            return new ResponseEntity<>(updatedNilaiListResult, HttpStatus.OK);
+        if (!updatedNilaiListResultLapangan.isEmpty()) {
+            return new ResponseEntity<>(updatedNilaiListResultLapangan, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -61,7 +61,7 @@ public class NilaiController {
             @PathVariable String timestamp) {
 
 //        System.out.println("Username yang diterima: " + username);
-//        System.out.println("Team Name yang diterima: " + teamName);
+//        System.out.println("TeamsLapangan Name yang diterima: " + teamName);
 //        System.out.println("Timestamp yang diterima: " + timestamp);
 
         try {

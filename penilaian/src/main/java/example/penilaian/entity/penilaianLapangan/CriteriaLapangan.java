@@ -1,6 +1,5 @@
 package example.penilaian.entity.penilaianLapangan;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,16 +11,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "multiple_choice_lapangan")
-public class MultipleChoice {
+@Table(name = "criteria_lapangan")
+
+public class CriteriaLapangan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  int choiceId;
-    private Double choiceValue;
+    private int criteriaId;
 
-    @ManyToOne
-    @JoinColumn(name = "question_id")
-    private QuestionLapangan questionLapangan;
-
+    private String criteriaName;
 
 }

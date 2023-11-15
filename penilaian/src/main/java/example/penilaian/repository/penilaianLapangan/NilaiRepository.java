@@ -1,6 +1,6 @@
-package example.penilaian.repository;
+package example.penilaian.repository.penilaianLapangan;
 
-import example.penilaian.entity.penilaianLapangan.Nilai;
+import example.penilaian.entity.penilaianLapangan.NilaiLapangan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,10 +9,10 @@ import java.util.List;
 
 
 @Repository
-public interface NilaiRepository extends JpaRepository<Nilai, Integer> {
+public interface NilaiRepository extends JpaRepository<NilaiLapangan, Integer> {
 
-   List<Nilai> findByUsername(String username);
-   List<Nilai> findByUsernameAndTimestampAndQuestionIdAndTeamName(
+   List<NilaiLapangan> findByUsername(String username);
+   List<NilaiLapangan> findByUsernameAndTimestampAndQuestionIdAndTeamName(
            String username,
            Date timestamp,
            int questionId,
@@ -24,7 +24,7 @@ public interface NilaiRepository extends JpaRepository<Nilai, Integer> {
 
 //   @Transactional
 //   @Modifying
-//   @Query("DELETE FROM Nilai n WHERE n.timestamp = ?1")
+//   @Query("DELETE FROM NilaiLapangan n WHERE n.timestamp = ?1")
 //   void deleteByTimestamp(Date timestamp);
 //
 //   void deleteByTimestampAndUsernameAndNamaTeam(Date timestamp, String username, String namaTeam);

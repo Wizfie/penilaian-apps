@@ -1,5 +1,6 @@
 package example.penilaian.entity.penilaianLapangan;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,13 +12,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "criteria_lapangan")
-
-public class Criteria {
+@Table(name = "teams_lapangan")
+public class TeamsLapangan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int criteriaId;
+    private  int teamId;
 
-    private String criteriaName;
+    private String teamName;
+
 
 }

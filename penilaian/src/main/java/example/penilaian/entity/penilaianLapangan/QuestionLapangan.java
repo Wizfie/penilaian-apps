@@ -16,7 +16,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "questions_lapangan")
-public class Question {
+public class QuestionLapangan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int questionId;
@@ -26,11 +26,11 @@ public class Question {
 
     @ManyToOne
     @JoinColumn(name = "subcriteria_id")
-    private Subcriteria subcriteria;
+    private SubcriteriaLapangan subcriteriaLapangan;
 
 
     @JsonIgnore
-    @OneToMany(mappedBy = "question") // Sesuaikan dengan nama field yang sesuai
+    @OneToMany(mappedBy = "questionLapangan") // Sesuaikan dengan nama field yang sesuai
     private Set<MultipleChoice> choices;
 
 }

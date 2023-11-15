@@ -2,7 +2,7 @@ package example.penilaian.service.penilaianLapangan;
 
 
 import example.penilaian.entity.penilaianLapangan.MultipleChoice;
-import example.penilaian.repository.ChoiceRepository;
+import example.penilaian.repository.penilaianLapangan.ChoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

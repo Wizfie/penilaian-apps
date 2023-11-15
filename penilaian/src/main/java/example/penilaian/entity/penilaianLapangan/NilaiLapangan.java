@@ -8,7 +8,6 @@
     import lombok.Setter;
 
     import java.sql.Date;
-    import java.sql.Timestamp;
 
     @Getter
     @Setter
@@ -16,7 +15,7 @@
     @NoArgsConstructor
     @Entity
     @Table(name = "nilai_lapangan" )
-    public class Nilai {
+    public class NilaiLapangan {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

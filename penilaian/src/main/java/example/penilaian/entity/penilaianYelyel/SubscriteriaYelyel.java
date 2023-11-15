@@ -1,7 +1,6 @@
-package example.penilaian.entity.penilaianLapangan;
+package example.penilaian.entity.penilaianYelyel;
 
 
-import example.penilaian.entity.penilaianLapangan.Criteria;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,16 +12,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "subcriteria_lapangan")
-public class Subcriteria {
+@Table(name = "subscriteria_yelyel")
+public class SubscriteriaYelyel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int subcriteriaId;
+    private int SubscriteriaId;
 
-    private String subcriteriaName;
+    private String SubscriteriaName;
+    private Double MaxPoint;
 
     @ManyToOne
     @JoinColumn(name = "criteria_id")
-    private Criteria criteria;
+    private CriteriaYelyel criteriaYelyel;
 
 }

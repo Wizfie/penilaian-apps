@@ -1,7 +1,7 @@
 package example.penilaian.controller.penilaianLapangan;
 
 
-import example.penilaian.entity.penilaianLapangan.Question;
+import example.penilaian.entity.penilaianLapangan.QuestionLapangan;
 import example.penilaian.service.penilaianLapangan.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +21,7 @@ public class QuestionController {
     private QuestionService questionService;
 
     @GetMapping("/questionAll")
-    public List<Question> getAllQuestion(){
+    public List<QuestionLapangan> getAllQuestion(){
         return questionService.getALlQuestion();
     }
 }

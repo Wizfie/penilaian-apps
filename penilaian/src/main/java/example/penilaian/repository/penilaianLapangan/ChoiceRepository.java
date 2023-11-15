@@ -1,4 +1,4 @@
-package example.penilaian.repository;
+package example.penilaian.repository.penilaianLapangan;
 
 import example.penilaian.entity.penilaianLapangan.MultipleChoice;
 import org.springframework.data.jpa.repository.JpaRepository;
