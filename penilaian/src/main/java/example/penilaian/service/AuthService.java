@@ -32,8 +32,6 @@ public class AuthService {
         if (user.getPassword().equals(request.getPassword())) {
             // Password cocok, Anda dapat mengizinkan akses ke pengguna.
 
-            // Buat objek UserToken dengan nip dan username dari pengguna yang login.
-
             return UserToken.builder()
                     .nip(user.getNip())
                     .username(user.getUsername())

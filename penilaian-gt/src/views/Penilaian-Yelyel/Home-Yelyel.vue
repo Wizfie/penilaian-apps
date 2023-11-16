@@ -1,4 +1,4 @@
-<template lang="">
+<template>
 	<div>
 		<Header></Header>
 		<main id="main" class="main">
@@ -12,42 +12,56 @@
 				</div>
 			</div>
 			<div class="card">
-				<div class="card-header"><h5 class="p-2">Penilaian Yel-Yel</h5></div>
+				<div class="card-header">
+					<h5 class="p-2">Penilaian Yel-Yel</h5>
+				</div>
 				<div class="card-body">
 					<div class="table-responsive">
 						<table class="table table-bordered">
 							<thead>
 								<tr class="fs-5 fw-bold text-center">
-									<th colspan="7">Teams</th>
+									<th>No</th>
+									<th class="col-5 text-center">Question</th>
+									<th>Max</th>
+									<!-- Kolom untuk setiap tim -->
+									<template
+										v-for="(team, teamIndex) in TeamData"
+										:key="teamIndex"
+									>
+										<th class="text-center">{{ team.teamName }}</th>
+									</template>
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="text-center">
-									<th class="">No</th>
-									<th class="col-5">Question</th>
-									<th class="">Max</th>
-									<!-- hasil vfor misalnya  -->
-									<th>Name team A</th>
-									<th>Name team B</th>
-									<th>Name team C</th>
-									<th>Name team D</th>
-									<th>Name team E</th>
-									<th>Name team F</th>
-									<!-- hasil vfor misalnya  -->
-								</tr>
-								<tr>
-									<td class="text-center">1</td>
-									<td class="col-6 text-wrap question-cell">
-										Question Text ddadawdawdknlawkdnawdawd
-									</td>
-									<td class="text-center">Max Point</td>
-									<td class="text-center">Nilai team A</td>
-									<td class="text-center">Nilai team B</td>
-									<td class="text-center">Nilai team C</td>
-									<td class="text-center">Nilai team D</td>
-									<td class="text-center">Nilai team E</td>
-									<td class="text-center">Nilai team F</td>
-								</tr>
+								<!-- Iterasi untuk setiap kriteria -->
+								<template v-for="(criteria, index) in QuestionData">
+									<tr
+										v-for="(subscriteria, subIndex) in criteria.subscriteria"
+										:key="subIndex"
+									>
+										<td class="text-center">{{ index + 1 }}</td>
+										<td class="col-6 text-wrap question-cell">
+											{{ subscriteria.subsName }}
+										</td>
+										<td class="text-center">{{ subscriteria.maxPoint }}</td>
+
+										<!-- Kolom input untuk setiap tim di setiap pertanyaan -->
+										<template
+											v-for="(team, teamIndex) in TeamData"
+											:key="teamIndex"
+										>
+											<td class="text-center">
+												<input
+													type="text"
+													class="form-control"
+													v-model="inputValues[index][teamIndex]"
+												/>
+											</td>
+										</template>
+										<!-- Akhir iterasi untuk input tim di setiap pertanyaan -->
+									</tr>
+								</template>
+								<!-- Akhir iterasi untuk setiap kriteria -->
 							</tbody>
 						</table>
 					</div>
@@ -56,6 +70,7 @@
 		</main>
 	</div>
 </template>
+
 <script>
 	import Header from "../../components/Header.vue";
 	export default {
@@ -65,7 +80,9 @@
 
 		data() {
 			return {
-				QuestionData: null,
+				inputValues: [],
+				QuestionData: [],
+				TeamData: [],
 				TokenUser: {
 					nip: null,
 					user: null,
@@ -73,21 +90,36 @@
 				},
 			};
 		},
+
 		methods: {
 			async getQuestion() {
 				try {
-					await this.$Axios.get("/question/all").then((response) => {
-						this.QuestionData === response.data;
-						console.log(this.QuestionData);
-					});
+					const response = await this.$axios.get("/question/all");
+					this.QuestionData = response.data;
+					this.inputValues = Array(this.QuestionData.length)
+						.fill([])
+						.map(() => Array(this.TeamData.length).fill(0));
+					console.log(this.inputValues);
+					console.log(this.QuestionData);
 				} catch (error) {
-					console.error("Error Fetch questionData " + error);
+					console.error("Error fetching Question data:", error);
+				}
+			},
+
+			async getTeamsAll() {
+				try {
+					const response = await this.$axios.get("/teams/all");
+					this.TeamData = response.data;
+					console.log(this.TeamData);
+				} catch (error) {
+					console.error("Error fetching Teams data:", error);
 				}
 			},
 		},
 
 		created() {
 			this.getQuestion();
+			this.getTeamsAll();
 			const userData = JSON.parse(localStorage.getItem("userData"));
 			if (userData) {
 				this.TokenUser.user = userData.username;
@@ -97,10 +129,11 @@
 		},
 	};
 </script>
+
 <style scoped>
 	@media (max-width: 767px) {
 		.question-cell {
-			width: 40%; /* Atur lebar kolom agar mengisi lebar layar pada layar kecil */
+			width: 40%;
 		}
 	}
 </style>

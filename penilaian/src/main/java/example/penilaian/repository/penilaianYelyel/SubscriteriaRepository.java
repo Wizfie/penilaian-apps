@@ -6,9 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
-public interface SubscriteriaYelyelRepository extends JpaRepository<SubscriteriaYelyel , Integer> {
+public interface SubscriteriaRepository extends JpaRepository<SubscriteriaYelyel , Integer> {
     List<SubscriteriaYelyel> findByCriteriaYelyel(CriteriaYelyel criteria);
+
+    Optional<SubscriteriaYelyel> findBysubscriteriaName(String subscriteriaName);
+
 }

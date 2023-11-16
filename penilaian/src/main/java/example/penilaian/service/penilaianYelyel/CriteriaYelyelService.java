@@ -6,7 +6,7 @@ import example.penilaian.entity.penilaianYelyel.SubscriteriaYelyel;
 import example.penilaian.model.penilaianYelyel.CriteriaResponseDTO;
 import example.penilaian.model.penilaianYelyel.SubscriteriaResponseDTO;
 import example.penilaian.repository.penilaianYelyel.CriteriaYelyelRepository;
-import example.penilaian.repository.penilaianYelyel.SubscriteriaYelyelRepository;
+import example.penilaian.repository.penilaianYelyel.SubscriteriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class CriteriaYelyelService {
     private CriteriaYelyelRepository criteriaRepository;
 
     @Autowired
-    private SubscriteriaYelyelRepository subcriteriaRepository;
+    private SubscriteriaRepository subcriteriaRepository;
 
     public List<CriteriaResponseDTO> getAllQuestion() {
         List<CriteriaYelyel> criteriaList = criteriaRepository.findAll();

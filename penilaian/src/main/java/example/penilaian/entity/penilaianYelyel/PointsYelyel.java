@@ -33,11 +33,11 @@ public class PointsYelyel {
     private TeamsYelyel teamsYelyel;
 
     @ManyToOne
-    @JoinColumn(name = "name_subscriteria")
+    @JoinColumn(name = "subscriteria_name")
     private SubscriteriaYelyel subscriteriaYelyel;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "username")
     private Users users;
 
     @CreatedDate

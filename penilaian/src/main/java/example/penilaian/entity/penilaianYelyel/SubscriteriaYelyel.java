@@ -16,10 +16,10 @@ import lombok.Setter;
 public class SubscriteriaYelyel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int SubscriteriaId;
+    private int subscriteriaId;
 
-    private String SubscriteriaName;
-    private Double MaxPoint;
+    private String subscriteriaName;
+    private Double maxPoint;
 
     @ManyToOne
     @JoinColumn(name = "criteria_id")
