@@ -22,11 +22,5 @@ public interface NilaiRepository extends JpaRepository<NilaiLapangan, Integer> {
    void deleteByTimestampAndUsernameAndTeamName(Date timestamp, String username, String teamName);
 
 
-//   @Transactional
-//   @Modifying
-//   @Query("DELETE FROM NilaiLapangan n WHERE n.timestamp = ?1")
-//   void deleteByTimestamp(Date timestamp);
-//
-//   void deleteByTimestampAndUsernameAndNamaTeam(Date timestamp, String username, String namaTeam);
 
 }

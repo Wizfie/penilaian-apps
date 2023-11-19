@@ -11,8 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface SubscriteriaRepository extends JpaRepository<SubscriteriaYelyel , Integer> {
-    List<SubscriteriaYelyel> findByCriteriaYelyel(CriteriaYelyel criteria);
 
-    Optional<SubscriteriaYelyel> findBysubscriteriaName(String subscriteriaName);
-
+    Optional<Object> findBysubscriteriaName(String subscriteriaName);
 }

@@ -33,7 +33,6 @@ public class NilaiService {
     public void saveNilai(List<NilaiLapangan> nilaiLapanganData) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-        // Set timestamp outside the loop since it's the same for all NilaiLapangan objects
         String formattedDate = sdf.format(new java.util.Date());
         Date currentDate = Date.valueOf(formattedDate);
 //        Date testDate = Date.valueOf("2023-11-15");

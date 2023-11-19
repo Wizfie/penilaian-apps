@@ -1,18 +1,12 @@
 package example.penilaian.entity.penilaianYelyel;
 
 
-import example.penilaian.entity.Users;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.Locale;
 
 @Getter
 @Setter
@@ -26,21 +20,12 @@ public class PointsYelyel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int pointId;
 
+    private String subscriteriaName;
     private Double point;
 
-    @ManyToOne
-    @JoinColumn(name = "team_name")
-    private TeamsYelyel teamsYelyel;
+    private String teamName;
+    private String username;
 
-    @ManyToOne
-    @JoinColumn(name = "subscriteria_name")
-    private SubscriteriaYelyel subscriteriaYelyel;
-
-    @ManyToOne
-    @JoinColumn(name = "username")
-    private Users users;
-
-    @CreatedDate
-    private LocalDateTime createAt;
+    private Date createAt;
 
 }

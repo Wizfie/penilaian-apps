@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 //@CrossOrigin("http://192.168.43.176:5173/")
-@CrossOrigin("*")
 
 @RestController
 public class AuthController {

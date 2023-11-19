@@ -3,22 +3,17 @@
     <Header></Header>
     <main id="main" class="main">
       <div class="card">
-        <div
-          class="card-body d-flex justify-content-between align-content-center"
-        >
+        <div class="card-body">
           <p class="card-subtitle">
             Hello,
             <span class="fw-bold fs-6">{{ TokenUser.user.toUpperCase() }}</span>
             <br />
           </p>
-          <router-link to="/input-point" class="btn btn-primary"
-            >Buat Penilaian</router-link
-          >
         </div>
       </div>
       <div class="card">
         <div class="card-header">
-          <h5 class="p-2">History</h5>
+          <h5 class="p-2">Penilaian Yel-Yel</h5>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -48,7 +43,9 @@
                       </td>
                       <td class="text-center">{{ question.maxPoint }}</td>
 
+                      <!-- Kolom input untuk setiap tim di setiap pertanyaan -->
                       <template
+                        class="w-100"
                         v-for="(team, teamIndex) in TeamData"
                         :key="teamIndex"
                       >
@@ -57,8 +54,8 @@
                             type="number"
                             min="0"
                             class="form-control"
-                            :id="'input-' + index + '-' + teamIndex"
-                            v-model="inputValues[index][teamIndex]"
+                            :value="inputValues[index][teamIndex]"
+                            @input="updateInputValue(index, teamIndex, $event)"
                           />
                         </td>
                       </template>
@@ -100,34 +97,70 @@ export default {
   methods: {
     async saveData() {
       try {
-        const dataToSend = [];
+        const pointData = [];
 
-        this.QuestionData.forEach((question, index) => {
-          this.TeamData.forEach((team, teamIndex) => {
-            dataToSend.push({
-              subscriteriaName: question.subscriteriaName,
-              point: this.inputValues[index][teamIndex],
-              teamName: team.teamName,
-              username: this.TokenUser.user,
+        if (this.QuestionData.length > 0 && this.TeamData.length > 0) {
+          // const currentDate = new Date();
+          // const year = currentDate.getFullYear();
+          // const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+          // const day = String(currentDate.getDate()).padStart(2, "0");
+
+          // const formattedDate = `${year}-${month}-${day}`;
+          // const testDate = "2023-11-20";
+
+          let exceededMaxPoint = false; // Menambahkan variabel penanda untuk nilai melebihi maxPoint
+
+          this.QuestionData.forEach((question, questionIndex) => {
+            this.TeamData.forEach((team, teamIndex) => {
+              const inputValue = this.inputValues[questionIndex][teamIndex];
+              const maxPoint = question.maxPoint;
+
+              if (inputValue !== "") {
+                const data = {
+                  subscriteriaName: question.subscriteriaName,
+                  point: inputValue,
+                  teamName: team.teamName,
+                  // createAt: testDate,
+                  username: this.TokenUser.user,
+                };
+                pointData.push(data);
+
+                if (inputValue > maxPoint) {
+                  alert(
+                    `Nilai untuk ${team.teamName} melebihi Max Point yang ditetapkan.`
+                  );
+                  exceededMaxPoint = true; // Set penanda jika nilai melebihi maxPoint
+                }
+              }
             });
           });
-        });
 
-        // Send the data to the Spring backend
-        const response = await this.$axios.post("/savePoint", dataToSend);
-        console.log("Data sent to Spring backend:", response.data);
-        alert("Saved");
+          if (!exceededMaxPoint) {
+            // Jika tidak ada nilai melebihi maxPoint, kirim data
+            const response = await this.$axios.post(
+              "http://localhost:8080/api/savePoint",
+              pointData
+            );
+            console.log(response.data);
+            alert("Data Saved");
+          }
+        }
       } catch (error) {
-        console.error("Error sending data to Spring backend:", error);
-        alert("failed");
+        console.error("Error saving data:", error);
+        alert("Failed Save Data ! " + error);
       }
     },
-    initializeInputValues() {
-      // Inisialisasi inputValues untuk setiap pertanyaan
-      this.inputValues = this.QuestionData.map(() => {
-        return this.TeamData.map(() => 0); // Inisialisasi dengan nilai 0 untuk setiap tim
-      });
+
+    updateInputValue(questionIndex, teamIndex, event) {
+      // Pastikan array inputValues[questionIndex] sudah tersedia sebelum mengakses teamIndex
+      if (!this.inputValues[questionIndex]) {
+        this.inputValues[questionIndex] = [];
+      }
+
+      // Tetapkan nilai langsung ke dalam array
+      this.inputValues[questionIndex][teamIndex] = event.target.value;
     },
+
     async getQuestion() {
       try {
         const response = await this.$axios.get("/question");
@@ -144,9 +177,12 @@ export default {
       try {
         const response = await this.$axios.get("/teams/all");
         this.TeamData = response.data;
-        this.initializeInputValues();
 
         // Setelah mendapatkan kedua data yang diperlukan, inisialisasikan inputValues
+        this.inputValues = Array.from(
+          { length: this.QuestionData.length },
+          () => Array.from({ length: this.TeamData.length }, () => "")
+        );
       } catch (error) {
         console.error("Error fetching Teams data:", error);
       }
@@ -154,6 +190,7 @@ export default {
   },
 
   created() {
+    this.getTeamsAll();
     this.getQuestion();
 
     const userData = JSON.parse(localStorage.getItem("userData"));
