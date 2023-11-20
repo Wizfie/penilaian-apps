@@ -20,6 +20,7 @@ CREATE DATABASE IF NOT EXISTS `db_logistic` /*!40100 DEFAULT CHARACTER SET utf8m
 USE `db_logistic`;
 
 -- Dumping structure for table db_logistic.criteria_lapangan
+DROP TABLE IF EXISTS `criteria_lapangan`;
 CREATE TABLE IF NOT EXISTS `criteria_lapangan` (
   `criteria_id` int NOT NULL AUTO_INCREMENT,
   `criteria_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -27,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `criteria_lapangan` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table db_logistic.criteria_lapangan: ~7 rows (approximately)
+DELETE FROM `criteria_lapangan`;
 INSERT INTO `criteria_lapangan` (`criteria_id`, `criteria_name`) VALUES
 	(1, 'PEMILIHAN & TUJUAN PROYEK PERBAIKAN '),
 	(2, 'PENETAPAN TARGET PROYEK PERBAIKAN'),
@@ -37,13 +39,15 @@ INSERT INTO `criteria_lapangan` (`criteria_id`, `criteria_name`) VALUES
 	(7, 'PENGENDALIAN DAN STANDARISASI');
 
 -- Dumping structure for table db_logistic.criteria_yelyel
+DROP TABLE IF EXISTS `criteria_yelyel`;
 CREATE TABLE IF NOT EXISTS `criteria_yelyel` (
   `criteria_id` int NOT NULL AUTO_INCREMENT,
-  `criteria_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `criteria_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`criteria_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table db_logistic.criteria_yelyel: ~0 rows (approximately)
+-- Dumping data for table db_logistic.criteria_yelyel: ~5 rows (approximately)
+DELETE FROM `criteria_yelyel`;
 INSERT INTO `criteria_yelyel` (`criteria_id`, `criteria_name`) VALUES
 	(1, 'Kekompakan '),
 	(2, 'Kesesuaian tema/'),
@@ -52,6 +56,7 @@ INSERT INTO `criteria_yelyel` (`criteria_id`, `criteria_name`) VALUES
 	(5, 'Ketepatan Waktu');
 
 -- Dumping structure for table db_logistic.multiple_choice_lapangan
+DROP TABLE IF EXISTS `multiple_choice_lapangan`;
 CREATE TABLE IF NOT EXISTS `multiple_choice_lapangan` (
   `choice_id` int NOT NULL AUTO_INCREMENT,
   `choice_value` double DEFAULT NULL,
@@ -62,6 +67,7 @@ CREATE TABLE IF NOT EXISTS `multiple_choice_lapangan` (
 ) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table db_logistic.multiple_choice_lapangan: ~164 rows (approximately)
+DELETE FROM `multiple_choice_lapangan`;
 INSERT INTO `multiple_choice_lapangan` (`choice_id`, `choice_value`, `question_id`) VALUES
 	(26, 1, 1),
 	(27, 0.75, 1),
@@ -229,6 +235,7 @@ INSERT INTO `multiple_choice_lapangan` (`choice_id`, `choice_value`, `question_i
 	(189, 0.5, 41);
 
 -- Dumping structure for table db_logistic.nilai_lapangan
+DROP TABLE IF EXISTS `nilai_lapangan`;
 CREATE TABLE IF NOT EXISTS `nilai_lapangan` (
   `nilai_id` int NOT NULL AUTO_INCREMENT,
   `nilai` double DEFAULT NULL,
@@ -240,6 +247,7 @@ CREATE TABLE IF NOT EXISTS `nilai_lapangan` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2883 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table db_logistic.nilai_lapangan: ~697 rows (approximately)
+DELETE FROM `nilai_lapangan`;
 INSERT INTO `nilai_lapangan` (`nilai_id`, `nilai`, `team_name`, `username`, `question_id`, `timestamp`) VALUES
 	(1735, 0.5, 'ampibi', 'wiz', 1, '2023-11-14'),
 	(1736, 0.3, 'ampibi', 'wiz', 2, '2023-11-14'),
@@ -940,17 +948,19 @@ INSERT INTO `nilai_lapangan` (`nilai_id`, `nilai`, `team_name`, `username`, `que
 	(2882, 2, 'coc', 'Sasa', 41, '2023-11-14');
 
 -- Dumping structure for table db_logistic.point_yelyel
+DROP TABLE IF EXISTS `point_yelyel`;
 CREATE TABLE IF NOT EXISTS `point_yelyel` (
   `point_id` int NOT NULL AUTO_INCREMENT,
   `subscriteria_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `point` double DEFAULT NULL,
-  `team_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `username` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `team_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `create_at` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`point_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table db_logistic.point_yelyel: ~0 rows (approximately)
+-- Dumping data for table db_logistic.point_yelyel: ~208 rows (approximately)
+DELETE FROM `point_yelyel`;
 INSERT INTO `point_yelyel` (`point_id`, `subscriteria_name`, `point`, `team_name`, `username`, `create_at`) VALUES
 	(1, 'Vokal/Nada', 1, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
 	(2, 'Vokal/Nada', 1, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
@@ -1162,6 +1172,7 @@ INSERT INTO `point_yelyel` (`point_id`, `subscriteria_name`, `point`, `team_name
 	(208, 'Waktu untuk yel- yel 3 menit', 2, 'GRM', 'wiz', '2023-11-20 00:00:00.000000');
 
 -- Dumping structure for table db_logistic.questions_lapangan
+DROP TABLE IF EXISTS `questions_lapangan`;
 CREATE TABLE IF NOT EXISTS `questions_lapangan` (
   `question_id` int NOT NULL AUTO_INCREMENT,
   `question_text` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -1172,50 +1183,52 @@ CREATE TABLE IF NOT EXISTS `questions_lapangan` (
 ) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table db_logistic.questions_lapangan: ~41 rows (approximately)
+DELETE FROM `questions_lapangan`;
 INSERT INTO `questions_lapangan` (`question_id`, `question_text`, `subcriteria_id`) VALUES
-	(1, '1. Melakukan identifikasi dan membuat stratifikasi masalah (problem/persoalan)\r\n', 1),
-	(2, '2. Memilih project improvement/inovasi berdasarkan data & fakta melalui penggunaan quality methode dan tools secara maksimal (baik dan benar)\r\n', 1),
-	(3, '3. Menjelaskan alasan kenapa proyek perbaikan tersebut dipilih\r\n', 1),
-	(4, '1. Menjelaskan proyek perbaikan (improvement/inovasi) yang terseleksi mempunyai potensi pengaruh positif terhadap tujuan (strategi) perusahaan\r\n\r\n', 2),
-	(5, '2. Teridentifikasi tingkat kesulitan (kompleksitas) masalah / pelaksanaan perbaikan dari proyek yang terseleksi\r\n\r\n', 2),
-	(6, '3. Tercermin harapan Customer dan/atau Stakeholders terhadap proyek perbaikan (improvement/inovasi) yang akan dilaksanakan\r\n\r\n', 2),
-	(7, '1. Mengidentifikasi Stakeholders yang bisa involve (terlibat) maupun yang dapat memberikan support dalam proyek perbaikan (improvement/inovasi)\r\n', 3),
-	(8, '2. Mengidentifikasi Stakeholders yang resisten (menghambat), sehingga menjadikan tantangan terhadap proyek perbaikan (improvement/inovasi) \r\n', 3),
-	(9, '3. Menjelaskan bagaimana mereka (stakeholders) akan bisa memberikan dampak positif terhadap proyek perbaikan (Improvement/inovasi)\r\n', 3),
-	(10, '1. Target (sasaran) yang ditetapkan mencakup QCDSMP\r\n', 4),
-	(11, '2. Penetapan sasaran jangka pendek, dan sasaran tersebut menjadi bagian dari tujuan perbaikan\r\n', 4),
+	(1, '\r\n\r\n\r\nMelakukan identifikasi dan membuat stratifikasi masalah (problem/persoalan)\r\n', 1),
+	(2, 'Memilih project improvement/inovasi berdasarkan data & fakta melalui penggunaan quality methode dan tools secara maksimal (baik dan benar)\r\n', 1),
+	(3, 'Menjelaskan alasan kenapa proyek perbaikan tersebut dipilih\r\n', 1),
+	(4, 'Menjelaskan proyek perbaikan (improvement/inovasi) yang terseleksi mempunyai potensi pengaruh positif terhadap tujuan (strategi) perusahaan\r\n\r\n', 2),
+	(5, 'Teridentifikasi tingkat kesulitan (kompleksitas) masalah / pelaksanaan perbaikan dari proyek yang terseleksi\r\n\r\n', 2),
+	(6, 'Tercermin harapan Customer dan/atau Stakeholders terhadap proyek perbaikan (improvement/inovasi) yang akan dilaksanakan\r\n\r\n', 2),
+	(7, 'Mengidentifikasi Stakeholders yang bisa involve (terlibat) maupun yang dapat memberikan support dalam proyek perbaikan (improvement/inovasi)\r\n', 3),
+	(8, 'Mengidentifikasi Stakeholders yang resisten (menghambat), sehingga menjadikan tantangan terhadap proyek perbaikan (improvement/inovasi) \r\n', 3),
+	(9, 'Menjelaskan bagaimana mereka (stakeholders) akan bisa memberikan dampak positif terhadap proyek perbaikan (Improvement/inovasi)\r\n', 3),
+	(10, 'Target (sasaran) yang ditetapkan mencakup QCDSMP\r\n', 4),
+	(11, 'Penetapan sasaran jangka pendek, dan sasaran tersebut menjadi bagian dari tujuan perbaikan\r\n', 4),
 	(12, 'Target (sasaran) jelas dan menantang\r\n\r\n', 5),
 	(13, 'Prediksi manfaat dan masalah potensial\r\n\r\n', 6),
 	(14, 'Verifikasi stakeholders yang terkait dengan proyek perbaikan\r\n\r\n', 7),
-	(15, '1. Akar masalah teridentifikasi dengan jelas dan dapat dibuktikan\r\n', 8),
-	(16, '2. Munculnya akar penyebab dari akar masalah pada suatu faktor yang telah dikembangkan\r\n', 8),
-	(17, '3. Identifikasi dan validasi (memiliki akurasi penentuan) faktor penyebab dominan (akar penyebab masalah utama)\r\n', 8),
-	(18, '4. Kesesuaian masalah dengan prioritas penanganan faktor penyebab dominan\r\n', 8),
+	(15, 'Akar masalah teridentifikasi dengan jelas dan dapat dibuktikan', 8),
+	(16, 'Munculnya akar penyebab dari akar masalah pada suatu faktor yang telah dikembangkan\r\n', 8),
+	(17, 'Identifikasi dan validasi (memiliki akurasi penentuan) faktor penyebab dominan (akar penyebab masalah utama)\r\n', 8),
+	(18, 'Kesesuaian masalah dengan prioritas penanganan faktor penyebab dominan\r\n', 8),
 	(19, 'Aktualisasi dan keterlibatan team & stakeholders dalam mengembangkan pola hubungan sebab akibat\r\n', 9),
-	(20, '1. Menjelaskan metode dan quality tools yang digunakan untuk mencari dan memilih ide perbaikan serta menentukan penanggulangan\r\n', 10),
-	(21, '2. Menjelaskan kreatifitas team & stakeholders dalam menemukan alternatif solusi (improvement actions) dan parameter kelebihan serta analisa resiko (kekurangannya)\r\n', 10),
-	(22, '3. Menjelaskan keterlibatan team & stakeholders dalam menemukan alternatif solusi (improvement actions) dan parameter kelebihan serta analisa resiko (kekurangannya)\r\n', 10),
-	(23, '1. Menjelaskan tentang final solutions/improvement actions, validasi dan benefit/kemampuan dalam menjawab kebutuhan yang diharapkan terhadap inovasi/improvement actions yang akan dilakukan\r\n', 11),
-	(24, '2. Menguraikan detail rencana project (5W2H), termasuk distribusi peranan dan keterlibatan stakeholders dalam melakukan perbaikan \r\n', 11),
-	(25, '1. Memiliki sistem pantau (monitoring) atas proses pelaksanaan tindakan perbaikan yang dilakukan\r\n', 12),
-	(26, '2. Menjelaskan bagaimana mengidentifikasikan serta mengalokasikan hambatan-hambatan (baik yang nyata atau potensial) yang muncul, serta memastikan keterlibatan team & stakeholders untuk meyepakati (buy-in) atas corrective action yang telah ditentukan serta dampaknya\r\n', 12),
+	(20, 'Menjelaskan metode dan quality tools yang digunakan untuk mencari dan memilih ide perbaikan serta menentukan penanggulangan\r\n', 10),
+	(21, 'Menjelaskan kreatifitas team & stakeholders dalam menemukan alternatif solusi (improvement actions) dan parameter kelebihan serta analisa resiko (kekurangannya)\r\n', 10),
+	(22, 'Menjelaskan keterlibatan team & stakeholders dalam menemukan alternatif solusi (improvement actions) dan parameter kelebihan serta analisa resiko (kekurangannya)\r\n', 10),
+	(23, 'Menjelaskan tentang final solutions/improvement actions, validasi dan benefit/kemampuan dalam menjawab kebutuhan yang diharapkan terhadap inovasi/improvement actions yang akan dilakukan\r\n', 11),
+	(24, 'Menguraikan detail rencana project (5W2H), termasuk distribusi peranan dan keterlibatan stakeholders dalam melakukan perbaikan \r\n', 11),
+	(25, 'Memiliki sistem pantau (monitoring) atas proses pelaksanaan tindakan perbaikan yang dilakukan\r\n', 12),
+	(26, 'Menjelaskan bagaimana mengidentifikasikan serta mengalokasikan hambatan-hambatan (baik yang nyata atau potensial) yang muncul, serta memastikan keterlibatan team & stakeholders untuk meyepakati (buy-in) atas corrective action yang telah ditentukan serta dampaknya\r\n', 12),
 	(27, 'Semua anggota Tim memahami perubahan-perubahan yang terjadi di dalam improvement yang dibuat terhadap kondisi sebelumnya (kondisi awal)\r\n', 13),
-	(28, '1. Ada analisis komparasi yg valid & tepat serta kesimpulan analisis/faktor penyebab yg belum teratasi\r\n', 14),
-	(29, '2. Tools yang dipakai, alasan penggunaan & hasilnya\r\n', 14),
-	(30, '1. Manfaat tangible & intangible\r\n', 15),
-	(31, '2. Ada hasil-hasil positif lain yang timbul, tapi bukan sasaran penanggulangan/perbaikan yang telah dilaksanakan\r\n', 15),
-	(32, '3. Ada analisis dampak terhadap hasil-hasil lain (apakah hasil perbaikan menimbulkan efek samping?) Bila ada, bagaimana tindakan untuk eliminasi hal tersebut? Hasilnya efisien?\r\n', 15),
+	(28, 'Ada analisis komparasi yg valid & tepat serta kesimpulan analisis/faktor penyebab yg belum teratasi\r\n', 14),
+	(29, 'Tools yang dipakai, alasan penggunaan & hasilnya\r\n', 14),
+	(30, 'Manfaat tangible & intangible\r\n', 15),
+	(31, 'Ada hasil-hasil positif lain yang timbul, tapi bukan sasaran penanggulangan/perbaikan yang telah dilaksanakan\r\n', 15),
+	(32, 'Ada analisis dampak terhadap hasil-hasil lain (apakah hasil perbaikan menimbulkan efek samping?) Bila ada, bagaimana tindakan untuk eliminasi hal tersebut? Hasilnya efisien?\r\n', 15),
 	(33, 'Proyek perbaikan memberikan kontribusi/ dampak nyata terhadap tujuan perusahaan/plant/divisi/departement  dan stakeholders\r\n', 16),
-	(34, '1. Pendekatan sistem atas standar baru\r\nmeliputi standar masukan, proses dan hasil. Dan standar baru tersebut mudah dipahami (informatif)\r\n', 17),
-	(35, '2. Kualitas standar pengendalian dan pencegahan terhadap timbulnya masalah (lama atau baru)\r\n', 17),
-	(36, '3. Standar baru lebih efektif dan aplikatif dari pada sebelumnya\r\n', 17),
-	(37, '4. Standar baru telah dikomunikasikan, sudah diserah terimakan dan dapat diterapkan di tempat lain\r\n', 17),
-	(38, '5. Bila terjadi non-conformance (ada peringatan otomatis/tidak otomatis/tidak ada peringatan)\r\n', 17),
-	(39, '1. Memiliki kegiatan/tahapan/aktifitas yang menjamin pelaksanaan standar baru secara efektif', 18),
-	(40, '2. Memiliki cara melakukan monitoring dan mengevaluasi standar baru\r\n', 18),
+	(34, 'Pendekatan sistem atas standar baru\r\nmeliputi standar masukan, proses dan hasil. Dan standar baru tersebut mudah dipahami (informatif)\r\n', 17),
+	(35, 'Kualitas standar pengendalian dan pencegahan terhadap timbulnya masalah (lama atau baru)\r\n', 17),
+	(36, 'Standar baru lebih efektif dan aplikatif dari pada sebelumnya\r\n', 17),
+	(37, 'Standar baru telah dikomunikasikan, sudah diserah terimakan dan dapat diterapkan di tempat lain\r\n', 17),
+	(38, 'Bila terjadi non-conformance (ada peringatan otomatis/tidak otomatis/tidak ada peringatan)\r\n', 17),
+	(39, 'Memiliki kegiatan/tahapan/aktifitas yang menjamin pelaksanaan standar baru secara efektif', 18),
+	(40, 'Memiliki cara melakukan monitoring dan mengevaluasi standar baru\r\n', 18),
 	(41, 'Identifikasi & Penetapan Rencana Berikutnya \r\n', 19);
 
 -- Dumping structure for table db_logistic.subcriteria_lapangan
+DROP TABLE IF EXISTS `subcriteria_lapangan`;
 CREATE TABLE IF NOT EXISTS `subcriteria_lapangan` (
   `subcriteria_id` int NOT NULL AUTO_INCREMENT,
   `subcriteria_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -1226,6 +1239,7 @@ CREATE TABLE IF NOT EXISTS `subcriteria_lapangan` (
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table db_logistic.subcriteria_lapangan: ~19 rows (approximately)
+DELETE FROM `subcriteria_lapangan`;
 INSERT INTO `subcriteria_lapangan` (`subcriteria_id`, `subcriteria_name`, `criteria_id`) VALUES
 	(1, 'A. Menjelaskan methode, quality tools dan data dalam memilih suatu project\r\n', 1),
 	(2, 'B. Tema terkait dengan tujuan & strategi bisnis/perusahaan', 1),
@@ -1248,17 +1262,19 @@ INSERT INTO `subcriteria_lapangan` (`subcriteria_id`, `subcriteria_name`, `crite
 	(19, 'S. Identifikasi & Penetapan Rencana Berikutnya \r\n', 7);
 
 -- Dumping structure for table db_logistic.subscriteria_yelyel
+DROP TABLE IF EXISTS `subscriteria_yelyel`;
 CREATE TABLE IF NOT EXISTS `subscriteria_yelyel` (
   `subscriteria_id` int NOT NULL AUTO_INCREMENT,
   `max_point` double DEFAULT NULL,
-  `subscriteria_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `subscriteria_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `criteria_id` int DEFAULT NULL,
   PRIMARY KEY (`subscriteria_id`),
   KEY `FKksohwv6sso0vd188fp3syl9uw` (`criteria_id`),
   CONSTRAINT `FKksohwv6sso0vd188fp3syl9uw` FOREIGN KEY (`criteria_id`) REFERENCES `criteria_yelyel` (`criteria_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table db_logistic.subscriteria_yelyel: ~0 rows (approximately)
+-- Dumping data for table db_logistic.subscriteria_yelyel: ~13 rows (approximately)
+DELETE FROM `subscriteria_yelyel`;
 INSERT INTO `subscriteria_yelyel` (`subscriteria_id`, `max_point`, `subscriteria_name`, `criteria_id`) VALUES
 	(1, 10, 'Vokal/Nada', 1),
 	(2, 15, 'Semangat team ', 1),
@@ -1275,6 +1291,7 @@ INSERT INTO `subscriteria_yelyel` (`subscriteria_id`, `max_point`, `subscriteria
 	(13, 10, 'Waktu untuk yel- yel 3 menit', 5);
 
 -- Dumping structure for table db_logistic.teams_lapangan
+DROP TABLE IF EXISTS `teams_lapangan`;
 CREATE TABLE IF NOT EXISTS `teams_lapangan` (
   `team_id` int NOT NULL AUTO_INCREMENT,
   `team_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -1282,6 +1299,7 @@ CREATE TABLE IF NOT EXISTS `teams_lapangan` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table db_logistic.teams_lapangan: ~9 rows (approximately)
+DELETE FROM `teams_lapangan`;
 INSERT INTO `teams_lapangan` (`team_id`, `team_name`) VALUES
 	(1, 'coc'),
 	(2, 'sugoi'),
@@ -1294,13 +1312,15 @@ INSERT INTO `teams_lapangan` (`team_id`, `team_name`) VALUES
 	(9, 'baladewa');
 
 -- Dumping structure for table db_logistic.team_yelyel
+DROP TABLE IF EXISTS `team_yelyel`;
 CREATE TABLE IF NOT EXISTS `team_yelyel` (
   `team_id` int NOT NULL AUTO_INCREMENT,
-  `team_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `team_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`team_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table db_logistic.team_yelyel: ~0 rows (approximately)
+-- Dumping data for table db_logistic.team_yelyel: ~8 rows (approximately)
+DELETE FROM `team_yelyel`;
 INSERT INTO `team_yelyel` (`team_id`, `team_name`) VALUES
 	(1, 'APW'),
 	(2, 'BPW'),
@@ -1312,6 +1332,7 @@ INSERT INTO `team_yelyel` (`team_id`, `team_name`) VALUES
 	(8, 'GRM');
 
 -- Dumping structure for table db_logistic.users
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `users_id` int NOT NULL AUTO_INCREMENT,
   `nip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -1322,7 +1343,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `UK_e72fwutcg2xou2qg41w9bn5ed` (`nip`)
 ) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table db_logistic.users: ~4 rows (approximately)
+-- Dumping data for table db_logistic.users: ~5 rows (approximately)
+DELETE FROM `users`;
 INSERT INTO `users` (`users_id`, `nip`, `username`, `password`, `role`) VALUES
 	(1, '1', 'admin', 'admin', 'admin'),
 	(69, '123', 'wiz', '123', 'user'),
