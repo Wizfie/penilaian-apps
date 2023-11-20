@@ -10,66 +10,84 @@ import detailNilai from "./views/Penilaian-Lapangan/Edit-Nilai.vue";
 import presentasi from "./views/Penilaian-Lapangan/Presentasi.vue";
 import adminPanel from "./views/Penilaian-Lapangan/Admin-Panel.vue";
 import HomeYelyel from "./views/Penilaian-Yelyel/Home-Yelyel.vue";
-import InputNPoint from "./views/Penilaian-Yelyel/Input-Yelyel.vue";
+import AdminYelyel from "./views/Penilaian-Yelyel/Admin-Yelyel.vue";
 
 const routes = [
-  {
-    path: "/",
-    component: Login,
-  },
-  {
-    path: "/register",
-    component: Register,
-  },
-  // {
-  // 	path: "/dashboard",
-  // 	component: dashboard,
-  // },
-  {
-    path: "/lapangan",
-    component: lapangan,
-  },
-  {
-    path: "/plan",
-    component: plan,
-  },
-  {
-    path: "/do",
-    component: doPage,
-  },
-  {
-    path: "/check",
-    component: check,
-  },
-  {
-    path: "/action",
-    component: action,
-  },
-  {
-    path: "/presentasi",
-    component: presentasi,
-  },
-  {
-    path: "/Penilaian-yelyel",
-    component: HomeYelyel,
-  },
-  {
-    path: "/input-point",
-    component: InputNPoint,
-  },
-  {
-    path: "/detail/:teamName/:timestamp",
-    component: detailNilai,
-  },
-  {
-    path: "/admin",
-    component: adminPanel,
-  },
+	{
+		path: "/",
+		component: Login,
+	},
+	{
+		path: "/register",
+		component: Register,
+	},
+	// {
+	// 	path: "/dashboard",
+	// 	component: dashboard,
+	// },
+	{
+		path: "/lapangan",
+		component: lapangan,
+		beforeEnter: checkAuthorization,
+	},
+	{
+		path: "/plan",
+		component: plan,
+		beforeEnter: checkAuthorization,
+	},
+	{
+		path: "/do",
+		component: doPage,
+		beforeEnter: checkAuthorization,
+	},
+	{
+		path: "/check",
+		component: check,
+		beforeEnter: checkAuthorization,
+	},
+	{
+		path: "/action",
+		component: action,
+		beforeEnter: checkAuthorization,
+	},
+	{
+		path: "/presentasi",
+		component: presentasi,
+		beforeEnter: checkAuthorization,
+	},
+	{
+		path: "/Penilaian-yelyel",
+		component: HomeYelyel,
+		beforeEnter: checkAuthorization,
+	},
+	{
+		path: "/Admin-point",
+		component: AdminYelyel,
+		beforeEnter: checkAuthorization,
+	},
+	{
+		path: "/detail/:teamName/:timestamp",
+		component: detailNilai,
+		beforeEnter: checkAuthorization,
+	},
+	{
+		path: "/admin",
+		component: adminPanel,
+		beforeEnter: checkAuthorization,
+	},
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
+	history: createWebHistory(),
+	routes,
 });
+
+function checkAuthorization(to, from, next) {
+	if (localStorage.getItem("userData")) {
+		next();
+	} else {
+		next("/");
+	}
+}
 
 export default router;
