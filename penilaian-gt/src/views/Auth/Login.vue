@@ -120,7 +120,7 @@
 						localStorage.setItem("userData", JSON.stringify(userData));
 						alert("Login Berhasil");
 						setTimeout(() => {
-							router.push("/lapangan");
+							router.push("/dashboard");
 						}, 1000);
 					})
 					.catch((error) => {
