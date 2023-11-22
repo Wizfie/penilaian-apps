@@ -24,7 +24,7 @@
 					<div
 						class="card-header d-flex justify-content-between align-content-center"
 					>
-						<h5 class="my-auto fw-bold">Form Yel-yel</h5>
+						<h5 class="my-auto fw-bold">Penilaian Yel-yel</h5>
 						<button type="submit" class="btn btn-primary p-2 m-2 w-auto">
 							Submit
 						</button>
