@@ -37,7 +37,7 @@ public class PointController {
     {
         Date sqlStartDate = Date.valueOf(startDate);
 
-        List<TeamScoreDTO> teamScores = pointService.getAverageAndTotalScoresByTeamAndDate(sqlStartDate );
+        List<TeamScoreDTO> teamScores = pointService.getAverageAndTotalScoresByTeamAndDate(sqlStartDate);
 
         if (teamScores.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

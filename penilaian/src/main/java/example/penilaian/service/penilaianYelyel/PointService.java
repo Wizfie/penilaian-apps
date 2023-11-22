@@ -54,6 +54,10 @@ public class PointService {
         }
     }
 
+
+
+
+
     public List<TeamScoreDTO> getAverageAndTotalScoresByTeamAndDate(Date startDate) {
         List<Object[]> resultList = pointRepository.getAverageScoresAndTotalScoresByTeamNameAndCreateAt(startDate);
 
