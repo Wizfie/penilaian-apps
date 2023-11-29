@@ -20,7 +20,6 @@ CREATE DATABASE IF NOT EXISTS `db_logistic` /*!40100 DEFAULT CHARACTER SET utf8m
 USE `db_logistic`;
 
 -- Dumping structure for table db_logistic.criteria_lapangan
-DROP TABLE IF EXISTS `criteria_lapangan`;
 CREATE TABLE IF NOT EXISTS `criteria_lapangan` (
   `criteria_id` int NOT NULL AUTO_INCREMENT,
   `criteria_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -39,7 +38,6 @@ INSERT INTO `criteria_lapangan` (`criteria_id`, `criteria_name`) VALUES
 	(7, 'PENGENDALIAN DAN STANDARISASI');
 
 -- Dumping structure for table db_logistic.criteria_yelyel
-DROP TABLE IF EXISTS `criteria_yelyel`;
 CREATE TABLE IF NOT EXISTS `criteria_yelyel` (
   `criteria_id` int NOT NULL AUTO_INCREMENT,
   `criteria_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -55,8 +53,25 @@ INSERT INTO `criteria_yelyel` (`criteria_id`, `criteria_name`) VALUES
 	(4, 'Gerakan'),
 	(5, 'Ketepatan Waktu');
 
+-- Dumping structure for table db_logistic.items_presentasi
+CREATE TABLE IF NOT EXISTS `items_presentasi` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table db_logistic.items_presentasi: ~7 rows (approximately)
+DELETE FROM `items_presentasi`;
+INSERT INTO `items_presentasi` (`id`, `title`) VALUES
+	(1, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view'),
+	(2, 'Metode  dan tools yang digunakan dalam pengembangan solusi dan inovasi/improvement actions'),
+	(3, 'Standarisasi'),
+	(4, 'Teknik Penyampaian /\r\nKejelasan Presentasi'),
+	(5, 'Keharmonisan penggunaan alat bantu'),
+	(6, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)'),
+	(7, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)');
+
 -- Dumping structure for table db_logistic.multiple_choice_lapangan
-DROP TABLE IF EXISTS `multiple_choice_lapangan`;
 CREATE TABLE IF NOT EXISTS `multiple_choice_lapangan` (
   `choice_id` int NOT NULL AUTO_INCREMENT,
   `choice_value` double DEFAULT NULL,
@@ -235,7 +250,6 @@ INSERT INTO `multiple_choice_lapangan` (`choice_id`, `choice_value`, `question_i
 	(189, 0.5, 41);
 
 -- Dumping structure for table db_logistic.nilai_lapangan
-DROP TABLE IF EXISTS `nilai_lapangan`;
 CREATE TABLE IF NOT EXISTS `nilai_lapangan` (
   `nilai_id` int NOT NULL AUTO_INCREMENT,
   `nilai` double DEFAULT NULL,
@@ -947,232 +961,139 @@ INSERT INTO `nilai_lapangan` (`nilai_id`, `nilai`, `team_name`, `username`, `que
 	(2881, 1.13, 'coc', 'Sasa', 40, '2023-11-14'),
 	(2882, 2, 'coc', 'Sasa', 41, '2023-11-14');
 
+-- Dumping structure for table db_logistic.points_presentasi
+CREATE TABLE IF NOT EXISTS `points_presentasi` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `max_value` double NOT NULL DEFAULT (0),
+  `text` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `items_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKaptxy5d0fnlbtyq8owo00vxy1` (`items_id`),
+  CONSTRAINT `FKaptxy5d0fnlbtyq8owo00vxy1` FOREIGN KEY (`items_id`) REFERENCES `items_presentasi` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table db_logistic.points_presentasi: ~24 rows (approximately)
+DELETE FROM `points_presentasi`;
+INSERT INTO `points_presentasi` (`id`, `max_value`, `text`, `items_id`) VALUES
+	(1, 5, 'Tidak berhubungan dengan tujuan (strategi) perusahaan dan tidak terlihat urgensi atau  tingkat kepentingan permasalahan (bukan sebagai KPI yang paling critical untuk diperbaiki, tidak menjadi temuan audit, tidak terdapat dalam risk register, bukan merupakan complaint atau voice of customer)', 1),
+	(2, 10, 'Permasalahan merupakan sesuatu yang urgen untuk diperbaiki, namun tidak terlihat kepentingannya dari perspektif organisasi atau perusahaan (bukan merupakan bagian dari strategi, bukan sebagai KPI yang paling critical untuk diperbaiki, tidak menjadi temuan audit, tidak terdapat dalam risk register, bukan merupakan complaint atau voice of customer)', 1),
+	(3, 15, 'Permasalahan merupakan sesuatu yang urgent untuk diperbaiki, dan penting  untuk segera diperbaiki dari perspektif organisasi atau perusahaan  (salah satu atau lebih dari : bagian dari strategi, KPI yang paling critical untuk diperbaiki, temuan audit,  terdapat dalam risk register,  merupakan complaint atau voice of customer)', 1),
+	(4, 20, 'Permasalahan merupakan sesuatu terkait dengan strategi dan urgent untuk diperbaiki (dan (merupakan KPI yang paling critical untuk diperbaiki, temuan audit,  terdapat dalam risk register,  merupakan complaint atau voice of customer)', 1),
+	(5, 5, 'Setiap akar penyebab hanya tersedia satu solusi tanpa adanya pertimbangan / penjelasan dari aspek manfaat atau efektifiastnya, biaya yang dibutuhkan dan aspek teknis lainnya, serta terdapat timeline due date implementasi yang jelas dan PIC pelaksananya (5W2H+1T - What, How, Why, When, Where, Who, How Much+Target)', 2),
+	(6, 10, 'Setiap akar penyebab hanya tersedia satu solusi, dilakukan analisa, namun analisa untuk memilih solusi tidak dilakukan dengan baik atau hanya memperhitungkan sebagian dari  aspek manfaat atau efektifitastnya, biaya yang dibutuhkan dan aspek teknis lainnya, serta terdapat timeline  due date implementasi yang jelas dan PIC pelaksananya (5W2H1T - What, How, Why, When, Where, Who, How Much+ Target)', 2),
+	(7, 15, 'Ter identifikasi proses penentuan  masalah-masalah pada analisa kondisi yang ada (anakonda) dan dilakukan dengan baik,spesifik ke masalahnya serta komprehensif (tidak ada yang tertinggal tidak dianalisa, mencakup semua aspek 4M1E-Man,Machine, Method, Material, Environment),dan analisa sebab akibat (why-why) runut sehingga akar penyebab dapat diidentifikasi,dibuktikan,dijelaskan,akar penyebab yang mana yang memberi kontribusi terbesar terhadap permasalahan.dan memilih solusi yang dipilih tidak dilakukan dengan baik atau hanya memperhitungkan sebagian dari  aspek manfaat atau efektifitasnya, biaya yang dibutuhkan dan aspek teknis lainnya, serta terdapat timeline  due date implementasi yang jelas dan PIC pelaksananya (5W2H+1T - What, How, Why, When, Where, Who, How Much + Target)', 2),
+	(8, 20, 'Ter identifikasi proses penentuan  masalah-masalah pada analisa kondisi yang ada (anakonda) dan dilakukan dengan baik,spesifik ke masalahnya serta komprehensif (tidak ada yang tertinggal tidak dianalisa, mencakup semua aspek 4M1E-Man,Machine, Method, Material, Environment),dan analisa sebab akibat (why-why) runut sehingga akar penyebab dapat diidentifikasi,dibuktikan,dijelaskan,akar penyebab yang mana yang memberi kontribusi terbesar terhadap permasalahan.dan adanya opsi opsi/solusi-solusi  perbaikan yang akan dilakukan pada setiap akar penyebab serta memilih solusi yang dipilih dilakukan dengan baik  dari  aspek teknis, manfaat , efektifitas,biaya yang dibutuhkan , serta terdapat timeline  due date implementasi yang jelas dan PIC pelaksananya (5W2H+1T - What, How, Why, When, Where, Who, How Much + Target)', 2),
+	(9, 2.5, 'Tidak ada standarisasi (IKL,SOP,No drawing,dll..) yang dibuat', 3),
+	(10, 5, 'Terdapat standarisasi (IKL,SOP,No drawing,dll..) dari beberapa perbaikan yang dilakukan ', 3),
+	(11, 7.5, 'Terdapat standarisasi (IKL,SOP,No drawing,dll..) dari semua perbaikan yang dilakukan', 3),
+	(12, 10, 'Terdapat standarisasi (IKL,SOP,No drawing,dll..) dari semua perbaikan yang dilakukan dan adanya bukti sosialisasi', 3),
+	(13, 4.5, 'inti dari improvement tidak tersampaikan  (bahasa yang dipakai sulit untuk dipahami)', 4),
+	(14, 9, 'Inti dari improvement tersampaikan (bahasa yang dipakai mudah untuk dipahami)', 4),
+	(15, 13.5, 'Inti dari improvement tersampaikan dengan langkah langkah yang benar', 4),
+	(16, 18, 'Inti dari improvement tersampaikan dengan langkah langkah yang benar \r\n    dengan Menggunakan Video / Animasi / peraga yang tepat \r\n    dan memperjelas kasus yang dihadapi', 4),
+	(17, 5, 'Tidak mendukung  dengan materi/topik', 5),
+	(18, 10, 'Kurang mendukung  dalam penyampaian materi/topik', 5),
+	(19, 15, 'Saling mengisi dan membantu dalam penyampaian materi / topik  dan membantu ', 5),
+	(20, 5, 'Pembagian peran hanya juru bicara yang mendominasi presentasi', 6),
+	(21, 10, 'semua anggota berperan dan proaktif ', 6),
+	(22, 2.3, '< 9:30 - > 10:30', 7),
+	(23, 4.7, '9:30 - 10:30', 7),
+	(24, 7, '9:50 - 10:10', 7);
+
 -- Dumping structure for table db_logistic.point_yelyel
-DROP TABLE IF EXISTS `point_yelyel`;
 CREATE TABLE IF NOT EXISTS `point_yelyel` (
   `point_id` int NOT NULL AUTO_INCREMENT,
   `subscriteria_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `point` double DEFAULT NULL,
   `team_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `create_at` datetime(6) DEFAULT NULL,
+  `create_at` date DEFAULT NULL,
   PRIMARY KEY (`point_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1387 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table db_logistic.point_yelyel: ~208 rows (approximately)
+-- Dumping data for table db_logistic.point_yelyel: ~78 rows (approximately)
 DELETE FROM `point_yelyel`;
 INSERT INTO `point_yelyel` (`point_id`, `subscriteria_name`, `point`, `team_name`, `username`, `create_at`) VALUES
-	(1, 'Vokal/Nada', 1, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(2, 'Vokal/Nada', 1, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(3, 'Vokal/Nada', 1, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(4, 'Vokal/Nada', 1, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(5, 'Vokal/Nada', 1, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(6, 'Vokal/Nada', 1, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(7, 'Vokal/Nada', 1, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(8, 'Vokal/Nada', 1, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(9, 'Semangat team ', 1, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(10, 'Semangat team ', 1, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(11, 'Semangat team ', 1, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(12, 'Semangat team ', 1, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(13, 'Semangat team ', 1, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(14, 'Semangat team ', 1, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(15, 'Semangat team ', 1, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(16, 'Semangat team ', 1, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(17, 'Kelancaran', 1, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(18, 'Kelancaran', 1, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(19, 'Kelancaran', 1, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(20, 'Kelancaran', 1, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(21, 'Kelancaran', 1, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(22, 'Kelancaran', 1, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(23, 'Kelancaran', 1, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(24, 'Kelancaran', 1, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(25, 'Profesionalitas', 1, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(26, 'Profesionalitas', 1, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(27, 'Profesionalitas', 1, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(28, 'Profesionalitas', 1, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(29, 'Profesionalitas', 1, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(30, 'Profesionalitas', 1, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(31, 'Profesionalitas', 1, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(32, 'Profesionalitas', 1, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(33, 'memiliki makna dan berhubungan dengan QCC ', 1, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(34, 'memiliki makna dan berhubungan dengan QCC ', 1, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(35, 'memiliki makna dan berhubungan dengan QCC ', 1, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(36, 'memiliki makna dan berhubungan dengan QCC ', 1, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(37, 'memiliki makna dan berhubungan dengan QCC ', 1, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(38, 'memiliki makna dan berhubungan dengan QCC ', 1, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(39, 'memiliki makna dan berhubungan dengan QCC ', 1, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(40, 'memiliki makna dan berhubungan dengan QCC ', 1, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(41, 'Alur /susunan', 1, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(42, 'Alur /susunan', 1, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(43, 'Alur /susunan', 1, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(44, 'Alur /susunan', 1, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(45, 'Alur /susunan', 1, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(46, 'Alur /susunan', 1, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(47, 'Alur /susunan', 1, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(48, 'Alur /susunan', 1, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(49, 'Originalitas/Unik', 1, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(50, 'Originalitas/Unik', 1, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(51, 'Originalitas/Unik', 1, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(52, 'Originalitas/Unik', 1, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(53, 'Originalitas/Unik', 1, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(54, 'Originalitas/Unik', 1, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(55, 'Originalitas/Unik', 1, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(56, 'Originalitas/Unik', 1, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(57, 'Kata kata yang sopan', 1, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(58, 'Kata kata yang sopan', 1, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(59, 'Kata kata yang sopan', 1, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(60, 'Kata kata yang sopan', 1, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(61, 'Kata kata yang sopan', 1, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(62, 'Kata kata yang sopan', 1, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(63, 'Kata kata yang sopan', 1, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(64, 'Kata kata yang sopan', 1, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(65, 'Memberi semangat kegembiraan', 1, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(66, 'Memberi semangat kegembiraan', 1, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(67, 'Memberi semangat kegembiraan', 1, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(68, 'Memberi semangat kegembiraan', 1, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(69, 'Memberi semangat kegembiraan', 1, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(70, 'Memberi semangat kegembiraan', 1, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(71, 'Memberi semangat kegembiraan', 1, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(72, 'Memberi semangat kegembiraan', 1, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(73, 'Dinamis/tidak monoton', 1, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(74, 'Dinamis/tidak monoton', 1, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(75, 'Dinamis/tidak monoton', 1, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(76, 'Dinamis/tidak monoton', 1, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(77, 'Dinamis/tidak monoton', 1, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(78, 'Dinamis/tidak monoton', 1, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(79, 'Dinamis/tidak monoton', 1, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(80, 'Dinamis/tidak monoton', 1, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(81, 'Gaya tidak berlebihan', 1, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(82, 'Gaya tidak berlebihan', 1, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(83, 'Gaya tidak berlebihan', 1, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(84, 'Gaya tidak berlebihan', 1, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(85, 'Gaya tidak berlebihan', 1, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(86, 'Gaya tidak berlebihan', 1, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(87, 'Gaya tidak berlebihan', 1, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(88, 'Gaya tidak berlebihan', 1, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(89, 'Kesesuaian makna', 1, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(90, 'Kesesuaian makna', 1, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(91, 'Kesesuaian makna', 1, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(92, 'Kesesuaian makna', 1, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(93, 'Kesesuaian makna', 1, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(94, 'Kesesuaian makna', 1, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(95, 'Kesesuaian makna', 1, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(96, 'Kesesuaian makna', 1, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(97, 'Waktu untuk yel- yel 3 menit', 1, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(98, 'Waktu untuk yel- yel 3 menit', 1, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(99, 'Waktu untuk yel- yel 3 menit', 1, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(100, 'Waktu untuk yel- yel 3 menit', 1, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(101, 'Waktu untuk yel- yel 3 menit', 1, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(102, 'Waktu untuk yel- yel 3 menit', 1, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(103, 'Waktu untuk yel- yel 3 menit', 1, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(104, 'Waktu untuk yel- yel 3 menit', 1, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(105, 'Vokal/Nada', 2, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(106, 'Vokal/Nada', 2, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(107, 'Vokal/Nada', 2, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(108, 'Vokal/Nada', 2, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(109, 'Vokal/Nada', 2, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(110, 'Vokal/Nada', 2, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(111, 'Vokal/Nada', 2, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(112, 'Vokal/Nada', 2, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(113, 'Semangat team ', 2, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(114, 'Semangat team ', 2, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(115, 'Semangat team ', 2, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(116, 'Semangat team ', 2, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(117, 'Semangat team ', 2, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(118, 'Semangat team ', 2, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(119, 'Semangat team ', 2, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(120, 'Semangat team ', 2, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(121, 'Kelancaran', 2, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(122, 'Kelancaran', 2, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(123, 'Kelancaran', 2, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(124, 'Kelancaran', 2, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(125, 'Kelancaran', 2, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(126, 'Kelancaran', 2, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(127, 'Kelancaran', 2, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(128, 'Kelancaran', 2, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(129, 'Profesionalitas', 2, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(130, 'Profesionalitas', 2, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(131, 'Profesionalitas', 2, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(132, 'Profesionalitas', 2, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(133, 'Profesionalitas', 2, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(134, 'Profesionalitas', 2, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(135, 'Profesionalitas', 2, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(136, 'Profesionalitas', 2, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(137, 'memiliki makna dan berhubungan dengan QCC ', 2, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(138, 'memiliki makna dan berhubungan dengan QCC ', 2, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(139, 'memiliki makna dan berhubungan dengan QCC ', 2, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(140, 'memiliki makna dan berhubungan dengan QCC ', 2, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(141, 'memiliki makna dan berhubungan dengan QCC ', 2, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(142, 'memiliki makna dan berhubungan dengan QCC ', 2, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(143, 'memiliki makna dan berhubungan dengan QCC ', 2, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(144, 'memiliki makna dan berhubungan dengan QCC ', 2, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(145, 'Alur /susunan', 2, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(146, 'Alur /susunan', 2, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(147, 'Alur /susunan', 2, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(148, 'Alur /susunan', 2, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(149, 'Alur /susunan', 2, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(150, 'Alur /susunan', 2, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(151, 'Alur /susunan', 2, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(152, 'Alur /susunan', 2, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(153, 'Originalitas/Unik', 2, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(154, 'Originalitas/Unik', 2, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(155, 'Originalitas/Unik', 2, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(156, 'Originalitas/Unik', 2, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(157, 'Originalitas/Unik', 2, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(158, 'Originalitas/Unik', 2, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(159, 'Originalitas/Unik', 2, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(160, 'Originalitas/Unik', 2, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(161, 'Kata kata yang sopan', 2, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(162, 'Kata kata yang sopan', 2, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(163, 'Kata kata yang sopan', 2, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(164, 'Kata kata yang sopan', 2, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(165, 'Kata kata yang sopan', 2, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(166, 'Kata kata yang sopan', 2, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(167, 'Kata kata yang sopan', 2, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(168, 'Kata kata yang sopan', 2, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(169, 'Memberi semangat kegembiraan', 2, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(170, 'Memberi semangat kegembiraan', 2, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(171, 'Memberi semangat kegembiraan', 2, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(172, 'Memberi semangat kegembiraan', 2, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(173, 'Memberi semangat kegembiraan', 2, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(174, 'Memberi semangat kegembiraan', 2, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(175, 'Memberi semangat kegembiraan', 2, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(176, 'Memberi semangat kegembiraan', 2, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(177, 'Dinamis/tidak monoton', 2, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(178, 'Dinamis/tidak monoton', 2, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(179, 'Dinamis/tidak monoton', 2, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(180, 'Dinamis/tidak monoton', 2, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(181, 'Dinamis/tidak monoton', 2, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(182, 'Dinamis/tidak monoton', 2, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(183, 'Dinamis/tidak monoton', 2, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(184, 'Dinamis/tidak monoton', 2, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(185, 'Gaya tidak berlebihan', 2, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(186, 'Gaya tidak berlebihan', 2, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(187, 'Gaya tidak berlebihan', 2, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(188, 'Gaya tidak berlebihan', 2, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(189, 'Gaya tidak berlebihan', 2, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(190, 'Gaya tidak berlebihan', 2, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(191, 'Gaya tidak berlebihan', 2, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(192, 'Gaya tidak berlebihan', 2, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(193, 'Kesesuaian makna', 2, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(194, 'Kesesuaian makna', 2, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(195, 'Kesesuaian makna', 2, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(196, 'Kesesuaian makna', 2, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(197, 'Kesesuaian makna', 2, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(198, 'Kesesuaian makna', 2, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(199, 'Kesesuaian makna', 2, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(200, 'Kesesuaian makna', 2, 'GRM', 'wiz', '2023-11-20 00:00:00.000000'),
-	(201, 'Waktu untuk yel- yel 3 menit', 2, 'APW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(202, 'Waktu untuk yel- yel 3 menit', 2, 'BPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(203, 'Waktu untuk yel- yel 3 menit', 2, 'DPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(204, 'Waktu untuk yel- yel 3 menit', 2, 'RPW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(205, 'Waktu untuk yel- yel 3 menit', 2, 'JMW', 'wiz', '2023-11-20 00:00:00.000000'),
-	(206, 'Waktu untuk yel- yel 3 menit', 2, 'JXP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(207, 'Waktu untuk yel- yel 3 menit', 2, 'JPP', 'wiz', '2023-11-20 00:00:00.000000'),
-	(208, 'Waktu untuk yel- yel 3 menit', 2, 'GRM', 'wiz', '2023-11-20 00:00:00.000000');
+	(1309, 'Vokal/Nada', 7, 'APW', 'harry', '2023-11-23'),
+	(1310, 'Semangat team ', 10, 'APW', 'harry', '2023-11-23'),
+	(1311, 'Kelancaran', 3, 'APW', 'harry', '2023-11-23'),
+	(1312, 'Profesionalitas', 4, 'APW', 'harry', '2023-11-23'),
+	(1313, 'Memiliki makna dan berhubungan dengan QCC ', 7, 'APW', 'harry', '2023-11-23'),
+	(1314, 'Alur /susunan', 3, 'APW', 'harry', '2023-11-23'),
+	(1315, 'Originalitas/Unik', 7, 'APW', 'harry', '2023-11-23'),
+	(1316, 'Kata kata yang sopan', 3, 'APW', 'harry', '2023-11-23'),
+	(1317, 'Memberi semangat kegembiraan', 4, 'APW', 'harry', '2023-11-23'),
+	(1318, 'Dinamis/tidak monoton', 7, 'APW', 'harry', '2023-11-23'),
+	(1319, 'Gaya tidak berlebihan', 3, 'APW', 'harry', '2023-11-23'),
+	(1320, 'Kesesuaian makna', 3, 'APW', 'harry', '2023-11-23'),
+	(1321, 'Waktu untuk yel- yel 3 menit', 7, 'APW', 'harry', '2023-11-23'),
+	(1322, 'Vokal/Nada', 8, 'BPW', 'harry', '2023-11-23'),
+	(1323, 'Semangat team ', 12, 'BPW', 'harry', '2023-11-23'),
+	(1324, 'Kelancaran', 4, 'BPW', 'harry', '2023-11-23'),
+	(1325, 'Profesionalitas', 4, 'BPW', 'harry', '2023-11-23'),
+	(1326, 'Memiliki makna dan berhubungan dengan QCC ', 8, 'BPW', 'harry', '2023-11-23'),
+	(1327, 'Alur /susunan', 4, 'BPW', 'harry', '2023-11-23'),
+	(1328, 'Originalitas/Unik', 9, 'BPW', 'harry', '2023-11-23'),
+	(1329, 'Kata kata yang sopan', 3, 'BPW', 'harry', '2023-11-23'),
+	(1330, 'Memberi semangat kegembiraan', 5, 'BPW', 'harry', '2023-11-23'),
+	(1331, 'Dinamis/tidak monoton', 8, 'BPW', 'harry', '2023-11-23'),
+	(1332, 'Gaya tidak berlebihan', 4, 'BPW', 'harry', '2023-11-23'),
+	(1333, 'Kesesuaian makna', 4, 'BPW', 'harry', '2023-11-23'),
+	(1334, 'Waktu untuk yel- yel 3 menit', 7, 'BPW', 'harry', '2023-11-23'),
+	(1335, 'Vokal/Nada', 8, 'JXP', 'harry', '2023-11-23'),
+	(1336, 'Semangat team ', 11, 'JXP', 'harry', '2023-11-23'),
+	(1337, 'Kelancaran', 4, 'JXP', 'harry', '2023-11-23'),
+	(1338, 'Profesionalitas', 3, 'JXP', 'harry', '2023-11-23'),
+	(1339, 'Memiliki makna dan berhubungan dengan QCC ', 7, 'JXP', 'harry', '2023-11-23'),
+	(1340, 'Alur /susunan', 3, 'JXP', 'harry', '2023-11-23'),
+	(1341, 'Originalitas/Unik', 7, 'JXP', 'harry', '2023-11-23'),
+	(1342, 'Kata kata yang sopan', 3, 'JXP', 'harry', '2023-11-23'),
+	(1343, 'Memberi semangat kegembiraan', 4, 'JXP', 'harry', '2023-11-23'),
+	(1344, 'Dinamis/tidak monoton', 7, 'JXP', 'harry', '2023-11-23'),
+	(1345, 'Gaya tidak berlebihan', 3, 'JXP', 'harry', '2023-11-23'),
+	(1346, 'Kesesuaian makna', 3, 'JXP', 'harry', '2023-11-23'),
+	(1347, 'Waktu untuk yel- yel 3 menit', 7, 'JXP', 'harry', '2023-11-23'),
+	(1348, 'Vokal/Nada', 8, 'RPW', 'harry', '2023-11-23'),
+	(1349, 'Semangat team ', 13, 'RPW', 'harry', '2023-11-23'),
+	(1350, 'Kelancaran', 4, 'RPW', 'harry', '2023-11-23'),
+	(1351, 'Profesionalitas', 4, 'RPW', 'harry', '2023-11-23'),
+	(1352, 'Memiliki makna dan berhubungan dengan QCC ', 9, 'RPW', 'harry', '2023-11-23'),
+	(1353, 'Alur /susunan', 4, 'RPW', 'harry', '2023-11-23'),
+	(1354, 'Originalitas/Unik', 9, 'RPW', 'harry', '2023-11-23'),
+	(1355, 'Kata kata yang sopan', 4, 'RPW', 'harry', '2023-11-23'),
+	(1356, 'Memberi semangat kegembiraan', 6, 'RPW', 'harry', '2023-11-23'),
+	(1357, 'Dinamis/tidak monoton', 9, 'RPW', 'harry', '2023-11-23'),
+	(1358, 'Gaya tidak berlebihan', 4, 'RPW', 'harry', '2023-11-23'),
+	(1359, 'Kesesuaian makna', 4, 'RPW', 'harry', '2023-11-23'),
+	(1360, 'Waktu untuk yel- yel 3 menit', 7, 'RPW', 'harry', '2023-11-23'),
+	(1361, 'Vokal/Nada', 7, 'DPW', 'harry', '2023-11-23'),
+	(1362, 'Semangat team ', 11, 'DPW', 'harry', '2023-11-23'),
+	(1363, 'Kelancaran', 3, 'DPW', 'harry', '2023-11-23'),
+	(1364, 'Profesionalitas', 4, 'DPW', 'harry', '2023-11-23'),
+	(1365, 'Memiliki makna dan berhubungan dengan QCC ', 8, 'DPW', 'harry', '2023-11-23'),
+	(1366, 'Alur /susunan', 3, 'DPW', 'harry', '2023-11-23'),
+	(1367, 'Originalitas/Unik', 7, 'DPW', 'harry', '2023-11-23'),
+	(1368, 'Kata kata yang sopan', 3, 'DPW', 'harry', '2023-11-23'),
+	(1369, 'Memberi semangat kegembiraan', 4, 'DPW', 'harry', '2023-11-23'),
+	(1370, 'Dinamis/tidak monoton', 7, 'DPW', 'harry', '2023-11-23'),
+	(1371, 'Gaya tidak berlebihan', 4, 'DPW', 'harry', '2023-11-23'),
+	(1372, 'Kesesuaian makna', 3, 'DPW', 'harry', '2023-11-23'),
+	(1373, 'Waktu untuk yel- yel 3 menit', 8, 'DPW', 'harry', '2023-11-23'),
+	(1374, 'Vokal/Nada', 7, 'JMW', 'harry', '2023-11-23'),
+	(1375, 'Semangat team ', 11, 'JMW', 'harry', '2023-11-23'),
+	(1376, 'Kelancaran', 3, 'JMW', 'harry', '2023-11-23'),
+	(1377, 'Profesionalitas', 3, 'JMW', 'harry', '2023-11-23'),
+	(1378, 'Memiliki makna dan berhubungan dengan QCC ', 7, 'JMW', 'harry', '2023-11-23'),
+	(1379, 'Alur /susunan', 3, 'JMW', 'harry', '2023-11-23'),
+	(1380, 'Originalitas/Unik', 7, 'JMW', 'harry', '2023-11-23'),
+	(1381, 'Kata kata yang sopan', 3, 'JMW', 'harry', '2023-11-23'),
+	(1382, 'Memberi semangat kegembiraan', 4, 'JMW', 'harry', '2023-11-23'),
+	(1383, 'Dinamis/tidak monoton', 7, 'JMW', 'harry', '2023-11-23'),
+	(1384, 'Gaya tidak berlebihan', 3, 'JMW', 'harry', '2023-11-23'),
+	(1385, 'Kesesuaian makna', 3, 'JMW', 'harry', '2023-11-23'),
+	(1386, 'Waktu untuk yel- yel 3 menit', 7, 'JMW', 'harry', '2023-11-23');
 
 -- Dumping structure for table db_logistic.questions_lapangan
-DROP TABLE IF EXISTS `questions_lapangan`;
 CREATE TABLE IF NOT EXISTS `questions_lapangan` (
   `question_id` int NOT NULL AUTO_INCREMENT,
   `question_text` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -1227,8 +1148,23 @@ INSERT INTO `questions_lapangan` (`question_id`, `question_text`, `subcriteria_i
 	(40, 'Memiliki cara melakukan monitoring dan mengevaluasi standar baru\r\n', 18),
 	(41, 'Identifikasi & Penetapan Rencana Berikutnya \r\n', 19);
 
+-- Dumping structure for table db_logistic.score_presentasi
+CREATE TABLE IF NOT EXISTS `score_presentasi` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `score` double DEFAULT NULL,
+  `points_id` int DEFAULT NULL,
+  `users_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK61sk3ctg8kwdpdv5c691h9c18` (`points_id`),
+  KEY `FKq5ko62v06c38hfk6wv6urrkds` (`users_id`),
+  CONSTRAINT `FK61sk3ctg8kwdpdv5c691h9c18` FOREIGN KEY (`points_id`) REFERENCES `points_presentasi` (`id`),
+  CONSTRAINT `FKq5ko62v06c38hfk6wv6urrkds` FOREIGN KEY (`users_id`) REFERENCES `users` (`users_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table db_logistic.score_presentasi: ~0 rows (approximately)
+DELETE FROM `score_presentasi`;
+
 -- Dumping structure for table db_logistic.subcriteria_lapangan
-DROP TABLE IF EXISTS `subcriteria_lapangan`;
 CREATE TABLE IF NOT EXISTS `subcriteria_lapangan` (
   `subcriteria_id` int NOT NULL AUTO_INCREMENT,
   `subcriteria_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -1262,7 +1198,6 @@ INSERT INTO `subcriteria_lapangan` (`subcriteria_id`, `subcriteria_name`, `crite
 	(19, 'S. Identifikasi & Penetapan Rencana Berikutnya \r\n', 7);
 
 -- Dumping structure for table db_logistic.subscriteria_yelyel
-DROP TABLE IF EXISTS `subscriteria_yelyel`;
 CREATE TABLE IF NOT EXISTS `subscriteria_yelyel` (
   `subscriteria_id` int NOT NULL AUTO_INCREMENT,
   `max_point` double DEFAULT NULL,
@@ -1280,7 +1215,7 @@ INSERT INTO `subscriteria_yelyel` (`subscriteria_id`, `max_point`, `subscriteria
 	(2, 15, 'Semangat team ', 1),
 	(3, 5, 'Kelancaran', 1),
 	(4, 5, 'Profesionalitas', 2),
-	(5, 10, 'memiliki makna dan berhubungan dengan QCC ', 2),
+	(5, 10, 'Memiliki makna dan berhubungan dengan QCC ', 2),
 	(6, 5, 'Alur /susunan', 3),
 	(7, 10, 'Originalitas/Unik', 3),
 	(8, 4, 'Kata kata yang sopan', 3),
@@ -1290,36 +1225,34 @@ INSERT INTO `subscriteria_yelyel` (`subscriteria_id`, `max_point`, `subscriteria
 	(12, 5, 'Kesesuaian makna', 4),
 	(13, 10, 'Waktu untuk yel- yel 3 menit', 5);
 
--- Dumping structure for table db_logistic.teams_lapangan
-DROP TABLE IF EXISTS `teams_lapangan`;
-CREATE TABLE IF NOT EXISTS `teams_lapangan` (
+-- Dumping structure for table db_logistic.teams
+CREATE TABLE IF NOT EXISTS `teams` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table db_logistic.teams: ~9 rows (approximately)
+DELETE FROM `teams`;
+INSERT INTO `teams` (`id`, `name`) VALUES
+	(1, 'COC'),
+	(2, 'SUGOI'),
+	(3, 'ALADIN'),
+	(4, 'AMPIBI'),
+	(5, 'TERASI'),
+	(6, 'PILOT'),
+	(7, 'SEMONGKO'),
+	(8, 'ARES'),
+	(9, 'BALADEWA');
+
+-- Dumping structure for table db_logistic.team_yelyel
+CREATE TABLE IF NOT EXISTS `team_yelyel` (
   `team_id` int NOT NULL AUTO_INCREMENT,
   `team_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`team_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table db_logistic.teams_lapangan: ~9 rows (approximately)
-DELETE FROM `teams_lapangan`;
-INSERT INTO `teams_lapangan` (`team_id`, `team_name`) VALUES
-	(1, 'coc'),
-	(2, 'sugoi'),
-	(3, 'aladin'),
-	(4, 'ampibi'),
-	(5, 'terasi'),
-	(6, 'pilot'),
-	(7, 'semongko'),
-	(8, 'ares'),
-	(9, 'baladewa');
-
--- Dumping structure for table db_logistic.team_yelyel
-DROP TABLE IF EXISTS `team_yelyel`;
-CREATE TABLE IF NOT EXISTS `team_yelyel` (
-  `team_id` int NOT NULL AUTO_INCREMENT,
-  `team_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`team_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- Dumping data for table db_logistic.team_yelyel: ~8 rows (approximately)
+-- Dumping data for table db_logistic.team_yelyel: ~6 rows (approximately)
 DELETE FROM `team_yelyel`;
 INSERT INTO `team_yelyel` (`team_id`, `team_name`) VALUES
 	(1, 'APW'),
@@ -1327,30 +1260,27 @@ INSERT INTO `team_yelyel` (`team_id`, `team_name`) VALUES
 	(3, 'DPW'),
 	(4, 'RPW'),
 	(5, 'JMW'),
-	(6, 'JXP'),
-	(7, 'JPP'),
-	(8, 'GRM');
+	(6, 'JXP');
 
 -- Dumping structure for table db_logistic.users
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `users_id` int NOT NULL AUTO_INCREMENT,
-  `nip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `nip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`users_id`),
   UNIQUE KEY `UK_e72fwutcg2xou2qg41w9bn5ed` (`nip`)
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table db_logistic.users: ~5 rows (approximately)
+-- Dumping data for table db_logistic.users: ~3 rows (approximately)
 DELETE FROM `users`;
 INSERT INTO `users` (`users_id`, `nip`, `username`, `password`, `role`) VALUES
 	(1, '1', 'admin', 'admin', 'admin'),
-	(69, '123', 'wiz', '123', 'user'),
-	(75, '2222', 'bagas', '2222', 'user'),
-	(76, '1111', 'Sasa', '1111', 'user'),
-	(78, '444', 'jaja', '444', 'user');
+	(90, '1001', 'avis', 'yel123', 'user'),
+	(91, '1002', 'frisda', 'yel123', 'user'),
+	(92, '1003', 'harry', 'yel123', 'user'),
+	(93, '10', 'wiz', '10', 'user');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

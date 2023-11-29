@@ -19,5 +19,8 @@ public interface PointRepository extends JpaRepository <PointsYelyel , Integer> 
 
     @Query("SELECT p.teamName, AVG(p.point), SUM(p.point) FROM PointsYelyel p WHERE p.createAt = :startDate  GROUP BY p.teamName")
     List<Object[]> getAverageScoresAndTotalScoresByTeamNameAndCreateAt(@Param("startDate") Date startDate);
+
+    List<PointsYelyel> findByUsername(String username);
+
 }
 

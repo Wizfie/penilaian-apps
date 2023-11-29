@@ -94,4 +94,8 @@ public class PointService {
         return pointRepository.findAll();
     }
 
+    public List<PointsYelyel> getByUsername(String username){
+        return pointRepository.findByUsername(username);
+    }
 }
+

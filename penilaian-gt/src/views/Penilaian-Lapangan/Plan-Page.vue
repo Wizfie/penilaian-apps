@@ -215,7 +215,7 @@
 			},
 			getAllTeam() {
 				try {
-					this.$axios.get("/getAllTeam").then((response) => {
+					this.$axios.get("/teams-all").then((response) => {
 						this.teamList = response.data;
 						console.log(this.teamList);
 					});
@@ -250,7 +250,14 @@
 				console.log(nilaiData);
 				// this.$store.commit("setSelectedTeam", this.selectedTeam);
 				localStorage.setItem("inputData1", JSON.stringify(nilaiData));
+				localStorage.setItem("savedData", JSON.stringify(this.requestData));
 				router.push("/do");
+			},
+
+			getChoicesForQuestion(questionId) {
+				return this.choiceList.filter(
+					(choice) => choice.questionLapangan.questionId === questionId
+				);
 			},
 		},
 		created() {
@@ -261,12 +268,13 @@
 			this.getAllTeam();
 
 			const userData = JSON.parse(localStorage.getItem("userData"));
-			const savedData = JSON.parse(localStorage.getItem("inputData1"));
 			if (userData) {
 				this.requestData.user = userData.username;
 			}
-			if (savedData) {
-				this.requestData.team = savedData[0].teamName;
+			const savedData = JSON.parse(localStorage.getItem("savedData"));
+			if (savedData && savedData.nilai) {
+				this.requestData.nilai = savedData.nilai;
+				console.log(this.requestData.nilai);
 			}
 		},
 	};

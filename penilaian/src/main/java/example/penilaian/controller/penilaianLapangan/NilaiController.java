@@ -59,7 +59,7 @@ public class NilaiController {
             @PathVariable String timestamp) {
 
 //        System.out.println("Username yang diterima: " + username);
-//        System.out.println("TeamsLapangan Name yang diterima: " + teamName);
+//        System.out.println("Teams Name yang diterima: " + teamName);
 //        System.out.println("Timestamp yang diterima: " + timestamp);
 
         try {

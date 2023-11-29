@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
 import login from "./views/Auth/login.vue";
 import register from "./views/Auth/register.vue";
+import dashboard from "./views/Dashboard.vue";
 import plan from "./views/Penilaian-Lapangan/Plan-Page.vue";
 import lapangan from "./views/Penilaian-Lapangan/Home-Lapangan.vue";
 import doPage from "./views/Penilaian-Lapangan/Do-Page.vue";
 import check from "./views/Penilaian-Lapangan/Check-Page.vue";
 import action from "./views/Penilaian-Lapangan/Action-Page.vue";
 import detailNilai from "./views/Penilaian-Lapangan/Edit-Nilai.vue";
-import presentasi from "./views/Penilaian-Lapangan/Presentasi.vue";
 import historyLapangan from "./views/Admin/History-Lapangan.vue";
 import historyYelyel from "./views/Admin/History-Yelyel.vue";
 import penilaianYelyel from "./views/Penilaian-Yelyel/Home-Yelyel.vue";
-import dashboard from "./views/Dashboard.vue";
+import homePresentasi from "./views/Presentasi/Home-Presentasi.vue";
 
 const routes = [
 	{
@@ -53,12 +53,7 @@ const routes = [
 		beforeEnter: checkAuthorization,
 	},
 	{
-		path: "/presentasi",
-		component: presentasi,
-		beforeEnter: checkAuthorization,
-	},
-	{
-		path: "/Penilaian-yelyel",
+		path: "/penilaian-yelyel",
 		component: penilaianYelyel,
 		beforeEnter: checkAuthorization,
 	},
@@ -75,6 +70,12 @@ const routes = [
 	{
 		path: "/history-yelyel",
 		component: historyYelyel,
+		beforeEnter: checkAuthorization,
+	},
+
+	{
+		path: "/presentasi",
+		component: homePresentasi,
 		beforeEnter: checkAuthorization,
 	},
 ];
