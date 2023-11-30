@@ -1,32 +1,39 @@
-package example.penilaian.entity.presentasi;
+    package example.penilaian.entity.presentasi;
 
-import example.penilaian.entity.Users;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+    import example.penilaian.entity.Teams;
+    import example.penilaian.entity.Users;
+    import jakarta.persistence.*;
+    import lombok.AllArgsConstructor;
+    import lombok.Getter;
+    import lombok.NoArgsConstructor;
+    import lombok.Setter;
+    import org.springframework.data.annotation.CreatedDate;
 
-@Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "score_presentasi")
-public class Score {
+    import java.sql.Date;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Entity
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Table(name = "score_presentasi")
+    public class Score {
 
-    private Double score;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "points_id")
-    private Points points;
+        private String title;
 
-    @ManyToOne
-    @JoinColumn(name = "users_id")
-    private Users users;
+        private Double score;
 
-}
+        private String username;
+
+        private String teamName;
+
+
+
+        @Temporal(TemporalType.DATE)
+        private Date createdAt;
+
+    }

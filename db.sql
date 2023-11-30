@@ -57,19 +57,20 @@ INSERT INTO `criteria_yelyel` (`criteria_id`, `criteria_name`) VALUES
 CREATE TABLE IF NOT EXISTS `items_presentasi` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `max_score` double DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table db_logistic.items_presentasi: ~7 rows (approximately)
 DELETE FROM `items_presentasi`;
-INSERT INTO `items_presentasi` (`id`, `title`) VALUES
-	(1, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view'),
-	(2, 'Metode  dan tools yang digunakan dalam pengembangan solusi dan inovasi/improvement actions'),
-	(3, 'Standarisasi'),
-	(4, 'Teknik Penyampaian /\r\nKejelasan Presentasi'),
-	(5, 'Keharmonisan penggunaan alat bantu'),
-	(6, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)'),
-	(7, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)');
+INSERT INTO `items_presentasi` (`id`, `title`, `max_score`) VALUES
+	(1, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view', 20),
+	(2, 'Metode  dan tools yang digunakan dalam pengembangan solusi dan inovasi/improvement actions', 20),
+	(3, 'Standarisasi', 10),
+	(4, 'Teknik Penyampaian /\r\nKejelasan Presentasi', 18),
+	(5, 'Keharmonisan penggunaan alat bantu', 15),
+	(6, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)', 10),
+	(7, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 7);
 
 -- Dumping structure for table db_logistic.multiple_choice_lapangan
 CREATE TABLE IF NOT EXISTS `multiple_choice_lapangan` (
@@ -1151,14 +1152,12 @@ INSERT INTO `questions_lapangan` (`question_id`, `question_text`, `subcriteria_i
 -- Dumping structure for table db_logistic.score_presentasi
 CREATE TABLE IF NOT EXISTS `score_presentasi` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `score` double DEFAULT NULL,
-  `points_id` int DEFAULT NULL,
-  `users_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK61sk3ctg8kwdpdv5c691h9c18` (`points_id`),
-  KEY `FKq5ko62v06c38hfk6wv6urrkds` (`users_id`),
-  CONSTRAINT `FK61sk3ctg8kwdpdv5c691h9c18` FOREIGN KEY (`points_id`) REFERENCES `points_presentasi` (`id`),
-  CONSTRAINT `FKq5ko62v06c38hfk6wv6urrkds` FOREIGN KEY (`users_id`) REFERENCES `users` (`users_id`)
+  `team_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table db_logistic.score_presentasi: ~0 rows (approximately)

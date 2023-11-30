@@ -7,12 +7,17 @@
 				<h1 class="fs-1">Penilaian Presentasi QCC</h1>
 			</div>
 
-			<form @submit.prevent="">
+			<form @submit.prevent="sendScore">
 				<h4>Hello, <span>Wiz</span></h4>
 
 				<div class="input-group mb-3">
 					<label class="input-group-text" for="teams-select">Pilih Team</label>
-					<select class="form-select" id="teams-select" required>
+					<select
+						class="form-select"
+						id="teams-select"
+						required
+						v-model="selectedTeam"
+					>
 						<option disabled selected>List Teams</option>
 						<option v-for="team in teamList" :value="team.name">
 							{{ team.name }}
@@ -32,10 +37,19 @@
 								<strong>{{ index + 1 + ". 	" }}</strong
 								>{{ item.text }} <br />
 								<strong>{{ "Point Max = " + item.maxValue }}</strong>
+								<br />
+								<strong>{{ "Score Max = " + item.items.maxScore }}</strong>
 							</li>
 						</ol>
 						<div class="card-footer">
-							<input type="number" class="form-control" placeholder="Answer" />
+							<input
+								type="number"
+								:id="'input-' + title + '-' + index"
+								class="form-control"
+								placeholder="Answer"
+								v-model="score[title + '-' + index]"
+								required
+							/>
 						</div>
 					</div>
 				</div>
@@ -56,10 +70,66 @@
 				questionData: [],
 				teamList: [],
 				questionByTitle: {},
+				selectedTeam: null,
+				score: {},
+
+				tokenUser: {
+					nip: null,
+					name: null,
+					role: null,
+				},
 			};
 		},
 
 		methods: {
+			sendScore() {
+				const evaluationData = {
+					username: this.tokenUser.name,
+					teamName: this.selectedTeam,
+					evaluations: [],
+					createdAt: null, // Sesuaikan nilainya sesuai kebutuhan
+				};
+
+				let isInvalidScore = false; // Menandakan jika terdapat skor yang tidak valid
+
+				for (const title in this.questionByTitle) {
+					this.questionByTitle[title].forEach((item, index) => {
+						const scoreKey = `${title}-${index}`;
+						const scoreValue = this.score[scoreKey] || 0; // Default to 0 if score is not provided
+						const maxScore = item.items.maxScore;
+
+						// Validasi skor
+						if (scoreValue < 0 || scoreValue > maxScore) {
+							isInvalidScore = true; // Set isInvalidScore menjadi true jika ada skor yang tidak valid
+							// Tampilkan pesan peringatan
+							alert(
+								`Invalid score for ${item.items.title}. Please enter a score between 0 and ${maxScore}.`
+							);
+						}
+
+						// Ensure the score is within the range of 0 and maximum allowable score
+						const limitedScore = Math.max(0, Math.min(scoreValue, maxScore));
+
+						evaluationData.evaluations.push({
+							title: title,
+							score: limitedScore,
+						});
+					});
+				}
+
+				if (!isInvalidScore) {
+					try {
+						this.$axios.post("/save-score", evaluationData).then((response) => {
+							console.log(response);
+							alert("Score saved");
+						});
+					} catch (error) {
+						console.log("Failed to save score: " + error);
+						alert("Failed to save score");
+					}
+				}
+			},
+
 			getTeams() {
 				try {
 					this.$axios.get("/teams-all").then((response) => {
@@ -99,6 +169,19 @@
 		created() {
 			this.getQuestion();
 			this.getTeams();
+
+			try {
+				const userData = JSON.parse(localStorage.getItem("userData"));
+				if (userData) {
+					this.tokenUser.name = userData.username;
+					this.tokenUser.nip = userData.nip;
+					this.tokenUser.role = userData.role;
+
+					console.log(this.tokenUser);
+				}
+			} catch (error) {
+				console.log("fail fetch userData " + error);
+			}
 		},
 	};
 </script>

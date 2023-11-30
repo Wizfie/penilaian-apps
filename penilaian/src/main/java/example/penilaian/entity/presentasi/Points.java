@@ -1,5 +1,6 @@
 package example.penilaian.entity.presentasi;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class Points {
     private Double maxValue;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "items_id")
     private Items items;
 }

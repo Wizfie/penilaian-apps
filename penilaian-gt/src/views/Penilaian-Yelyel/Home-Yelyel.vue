@@ -251,7 +251,7 @@
 						teamName: this.selectedTeam,
 						username: this.tokenUser.user,
 						point: this.pointData[index],
-						createdAt: null, // Ambil poin dari input
+						createdAt: null,
 					}));
 
 					const invalidIndex = this.questionData.findIndex((quest, index) => {
