@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ScoreService {
@@ -18,39 +19,42 @@ public class ScoreService {
     @Transactional
     public void saveScore(List<Score> evaluations) {
         try {
+            java.util.Date currentDate = new java.util.Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String formattedDate = sdf.format(new java.util.Date());
-            java.sql.Date currentDate = java.sql.Date.valueOf(formattedDate);
 
             for (Score eval : evaluations) {
-                // Check if createdAt is null, set it to the current date
+
+                // Cek dan set nilai createdAt jika null
                 if (eval.getCreatedAt() == null) {
-                    eval.setCreatedAt(currentDate);
+                    String formattedDate = sdf.format(currentDate);
+                    eval.setCreatedAt(Date.valueOf(formattedDate));
                 }
 
-                // Retrieve existing data based on username, teamName, and createdAt from the current eval
-                List<Score> existingScores = scoreRepository.findByUsernameAndTeamNameAndCreatedAt(eval.getUsername(), eval.getTeamName(), eval.getCreatedAt());
+                // Validasi tanggal createdAt
+                if (eval.getCreatedAt().after(new Date(currentDate.getTime()))) {
+                    throw new IllegalArgumentException("Invalid createdAt date for " + eval.getTitle() +
+                            ". Please enter a valid createdAt date.");
+                }
 
-                if (!existingScores.isEmpty()) {
-                    // Replace existing data
-                    for (Score existingScore : existingScores) {
-                        existingScore.setUsername(eval.getUsername());
-                        existingScore.setTeamName(eval.getTeamName());
-                        existingScore.setTitle(eval.getTitle());
-                        existingScore.setScore(eval.getScore());
-                        existingScore.setCreatedAt(eval.getCreatedAt());
-                        scoreRepository.save(existingScore);
-                    }
+                Optional<Score> existingScore = scoreRepository.findByTitleAndUsernameAndTeamNameAndCreatedAt(
+                        eval.getTitle(), eval.getUsername(), eval.getTeamName(), eval.getCreatedAt());
+
+                if (existingScore.isPresent()) {
+                    Score existing = existingScore.get();
+                    existing.setScore(eval.getScore());
+                    scoreRepository.save(existing);
                 } else {
-                    // Create new record
                     scoreRepository.save(eval);
                 }
             }
         } catch (Exception e) {
-            // Handle error/exception here (log the error, throw custom exception, etc.)
-            e.printStackTrace(); // Example: Printing stack trace
-            // You can throw a custom exception or handle the error accordingly
-            // For example: throw new CustomException("Error occurred while saving scores");
+            e.printStackTrace();
+            throw new RuntimeException("Error occurred while saving scores");
         }
+    }
+
+
+    public void addScores(List<Score> scores) {
+        scoreRepository.saveAll(scores);
     }
 }

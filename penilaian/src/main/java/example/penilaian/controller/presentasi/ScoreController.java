@@ -29,4 +29,14 @@ public class ScoreController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while saving scores");
         }
     }
+
+    @PostMapping("/add")
+    public ResponseEntity<String> addScores(@RequestBody List<Score> scores) {
+        try {
+            scoreService.addScores(scores);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Score data added successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add score data");
+        }
+    }
 }
