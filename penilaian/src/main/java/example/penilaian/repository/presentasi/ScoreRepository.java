@@ -15,4 +15,9 @@ public interface ScoreRepository extends JpaRepository<Score , Integer> {
 
 
     Optional<Score> findByTitleAndUsernameAndTeamNameAndCreatedAt(String title, String username, String teamName, Date createdAt);
+
+    List<Score> findAllByNip(String nip);
+
+
+
 }

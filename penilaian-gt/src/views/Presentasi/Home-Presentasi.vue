@@ -7,9 +7,16 @@
 				<h1 class="fs-1">Penilaian Presentasi QCC</h1>
 			</div>
 
-			<form @submit.prevent="sendScore">
-				<h4>Hello, <span>Wiz</span></h4>
+			<div class="card">
+				<div class="card-body d-flex justify-content-between">
+					<h4>Hello, <span>Wiz</span></h4>
+					<div @click="toggleHistory()" class="btn btn-success">
+						{{ btnHistory }}
+					</div>
+				</div>
+			</div>
 
+			<form v-if="!showHistory" @submit.prevent="sendScore">
 				<div class="input-group mb-3">
 					<label class="input-group-text" for="teams-select">Pilih Team</label>
 					<select
@@ -54,8 +61,45 @@
 						</div>
 					</div>
 				</div>
+				<div class="mb-2">
+					<Strong>Total Score: {{ totalScore }}</Strong>
+				</div>
 				<button class="btn btn-primary w-100">Submit</button>
 			</form>
+			<div v-if="showHistory" class="card">
+				<div class="card-header fw-bold">History Presentasi</div>
+				<div class="card-body">
+					<Label class="form-label p-2 fw-semibold">Filter By Date</Label>
+					<div class="d-flex p-2 gap-2 col-lg-6 col-12">
+						<input type="date" v-model="startDate" class="form-control" />
+						<input type="date" v-model="endDate" class="form-control" />
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>Team</th>
+									<th>Score</th>
+									<th>Created</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="(item, index) in dataBynip" :key="index">
+									<td>{{ index + 1 }}</td>
+									<td>{{ item.teamName }}</td>
+									<td>{{ item.totalScore }}</td>
+									<td>{{ item.createdAt }}</td>
+									<td><button class="btn btn-primary">View</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 		</main>
 	</div>
 </template>
@@ -68,11 +112,17 @@
 
 		data() {
 			return {
+				btnHistory: "History",
+				showHistory: false,
+				scoreByNip: [],
 				questionData: [],
 				teamList: [],
 				questionByTitle: {},
 				selectedTeam: null,
 				score: {},
+				totalScore: 0,
+				startDate: null,
+				endDate: null,
 
 				tokenUser: {
 					nip: null,
@@ -83,6 +133,27 @@
 		},
 
 		methods: {
+			getByNip() {
+				try {
+					this.$axios
+						.get(`/score/byNip/${this.tokenUser.nip}`)
+						.then((response) => {
+							console.log(response.data);
+							this.scoreByNip = response.data;
+						});
+				} catch (error) {
+					console.log("Fail getByNip " + error);
+				}
+			},
+
+			toggleHistory() {
+				this.showHistory = !this.showHistory;
+				this.btnHistory = this.showHistory ? "Back" : "History";
+				if (this.showHistory) {
+					this.getByNip();
+				}
+			},
+
 			sendScore() {
 				const evaluationData = [];
 
@@ -105,15 +176,24 @@
 						title: title,
 						score: limitedScore,
 						username: this.tokenUser.name,
+						nip: this.tokenUser.nip,
 						teamName: this.selectedTeam,
 						createdAt: new Date().toISOString().slice(0, 10), // Format tanggal "YYYY-MM-DD"
 					});
 				}
 
 				try {
-					this.$axios.post("/save-score", evaluationData).then((response) => {
-						console.log(response);
+					this.$axios.post("/score/save", evaluationData).then((response) => {
+						console.log(response.data);
+						this.getByNip();
 						alert("Score saved");
+
+						for (const key in this.score) {
+							this.score[key] = ""; // Mengatur nilai input ke string kosong ('')
+						}
+
+						this.totalScore = 0;
+						window.scrollTo(0, 0);
 					});
 				} catch (error) {
 					console.log("Failed to save score: " + error);
@@ -135,7 +215,7 @@
 			getQuestion() {
 				try {
 					this.$axios.get("/items-presentasi").then((response) => {
-						console.log(response.data);
+						// console.log(response.data);
 						this.questionData = response.data;
 						// console.log(this.questionData);
 					});
@@ -145,10 +225,63 @@
 			},
 		},
 
-		created() {
-			this.getQuestion();
-			this.getTeams();
+		computed: {
+			dataBynip() {
+				const groupedData = this.scoreByNip.reduce((result, item) => {
+					const key = `${item.teamName}_${item.createdAt}`;
+					if (!result[key]) {
+						result[key] = {
+							teamName: item.teamName,
+							createdAt: item.createdAt,
+							totalScore: 0,
+						};
+					}
 
+					result[key].totalScore += item.score;
+					return result;
+				}, {});
+
+				for (const key in groupedData) {
+					groupedData[key].totalScore = parseFloat(
+						groupedData[key].totalScore.toFixed(2)
+					);
+				}
+				// Mengubah objek menjadi array dan mengurutkannya berdasarkan createdAt
+				const sortedData = Object.values(groupedData).sort((a, b) => {
+					return new Date(b.createdAt) - new Date(a.createdAt);
+				});
+
+				// Filter data berdasarkan rentang tanggal jika tanggal sudah dipilih
+				if (this.startDate && this.endDate) {
+					const start = new Date(this.startDate);
+					const end = new Date(this.endDate);
+					return sortedData.filter((item) => {
+						const itemDate = new Date(item.createdAt);
+						return itemDate >= start && itemDate <= end;
+					});
+				} else {
+					return sortedData;
+				}
+			},
+
+			totalScoreInput() {
+				let total = 0;
+				for (const question of this.questionData) {
+					const title = question.title;
+					const scoreValue = this.score[title] || 0;
+					total += Math.max(0, Math.min(scoreValue, question.maxScore));
+				}
+				return total;
+			},
+		},
+		watch: {
+			totalScoreInput(newTotal, oldTotal) {
+				// Memperbarui total skor saat nilai skor diubah
+				this.totalScore = newTotal;
+			},
+		},
+
+		created() {
 			try {
 				const userData = JSON.parse(localStorage.getItem("userData"));
 				if (userData) {
@@ -156,11 +289,15 @@
 					this.tokenUser.nip = userData.nip;
 					this.tokenUser.role = userData.role;
 
-					console.log(this.tokenUser);
+					// console.log(this.tokenUser);
 				}
 			} catch (error) {
 				console.log("fail fetch userData " + error);
 			}
+
+			this.getQuestion();
+			this.getTeams();
+			this.getByNip();
 		},
 	};
 </script>

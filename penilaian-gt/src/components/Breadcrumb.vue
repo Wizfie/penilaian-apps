@@ -1,13 +1,13 @@
 <template>
 	<nav style="--bs-breadcrumb-divider: '-'">
 		<ol class="breadcrumb fs-5">
-			<li class="breadcrumb-item">
-				<router-link
-					:class="{ active: $route.path === '/dashboard' }"
-					to="/dashboard"
-					><a>Home</a></router-link
-				>
-			</li>
+			<!-- <li class="breadcrumb-item">
+					<router-link
+						:class="{ active: $route.path === '/dashboard' }"
+						to="/dashboard"
+						><a>Home</a></router-link
+					>
+				</li> -->
 			<li class="breadcrumb-item">
 				<router-link :class="{ active: $route.path === '/plan' }" to="/plan"
 					><a>Plan</a></router-link
