@@ -1010,7 +1010,7 @@ CREATE TABLE IF NOT EXISTS `point_yelyel` (
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `create_at` date DEFAULT NULL,
   PRIMARY KEY (`point_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1387 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1400 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table db_logistic.point_yelyel: ~78 rows (approximately)
 DELETE FROM `point_yelyel`;
@@ -1092,7 +1092,20 @@ INSERT INTO `point_yelyel` (`point_id`, `subscriteria_name`, `point`, `team_name
 	(1383, 'Dinamis/tidak monoton', 7, 'JMW', 'harry', '2023-11-23'),
 	(1384, 'Gaya tidak berlebihan', 3, 'JMW', 'harry', '2023-11-23'),
 	(1385, 'Kesesuaian makna', 3, 'JMW', 'harry', '2023-11-23'),
-	(1386, 'Waktu untuk yel- yel 3 menit', 7, 'JMW', 'harry', '2023-11-23');
+	(1386, 'Waktu untuk yel- yel 3 menit', 7, 'JMW', 'harry', '2023-11-23'),
+	(1387, 'Vokal/Nada', 10, 'RPW', 'wiz', '2023-12-05'),
+	(1388, 'Semangat team ', 10, 'RPW', 'wiz', '2023-12-05'),
+	(1389, 'Kelancaran', 5, 'RPW', 'wiz', '2023-12-05'),
+	(1390, 'Profesionalitas', 5, 'RPW', 'wiz', '2023-12-05'),
+	(1391, 'Memiliki makna dan berhubungan dengan QCC ', 5, 'RPW', 'wiz', '2023-12-05'),
+	(1392, 'Alur /susunan', 5, 'RPW', 'wiz', '2023-12-05'),
+	(1393, 'Originalitas/Unik', 5, 'RPW', 'wiz', '2023-12-05'),
+	(1394, 'Kata kata yang sopan', 1, 'RPW', 'wiz', '2023-12-05'),
+	(1395, 'Memberi semangat kegembiraan', 5, 'RPW', 'wiz', '2023-12-05'),
+	(1396, 'Dinamis/tidak monoton', 5, 'RPW', 'wiz', '2023-12-05'),
+	(1397, 'Gaya tidak berlebihan', 5, 'RPW', 'wiz', '2023-12-05'),
+	(1398, 'Kesesuaian makna', 5, 'RPW', 'wiz', '2023-12-05'),
+	(1399, 'Waktu untuk yel- yel 3 menit', 5, 'RPW', 'wiz', '2023-12-05');
 
 -- Dumping structure for table db_logistic.questions_lapangan
 CREATE TABLE IF NOT EXISTS `questions_lapangan` (
@@ -1158,75 +1171,34 @@ CREATE TABLE IF NOT EXISTS `score_presentasi` (
   `username` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `nip` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` date DEFAULT NULL,
+  `max_score` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table db_logistic.score_presentasi: ~63 rows (approximately)
+-- Dumping data for table db_logistic.score_presentasi: ~70 rows (approximately)
 DELETE FROM `score_presentasi`;
-INSERT INTO `score_presentasi` (`id`, `title`, `score`, `team_name`, `username`, `nip`, `created_at`) VALUES
-	(15, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view', 8, 'AMPIBI', 'wiz', '10', '2023-12-04'),
-	(16, 'Metode  dan tools yang digunakan dalam pengembangan solusi dan inovasi/improvement actions', 17, 'AMPIBI', 'wiz', '10', '2023-12-04'),
-	(17, 'Standarisasi', 10, 'AMPIBI', 'wiz', '10', '2023-12-04'),
-	(18, 'Teknik Penyampaian /\r\nKejelasan Presentasi', 10, 'AMPIBI', 'wiz', '10', '2023-12-04'),
-	(19, 'Keharmonisan penggunaan alat bantu', 10, 'AMPIBI', 'wiz', '10', '2023-12-04'),
-	(20, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)', 10, 'AMPIBI', 'wiz', '10', '2023-12-04'),
-	(21, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 2, 'AMPIBI', 'wiz', '10', '2023-12-04'),
-	(22, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view', 10, 'PILOT', 'dude', '11', '2023-12-04'),
-	(23, 'Metode  dan tools yang digunakan dalam pengembangan solusi dan inovasi/improvement actions', 10, 'PILOT', 'dude', '11', '2023-12-04'),
-	(24, 'Standarisasi', 10, 'PILOT', 'dude', '11', '2023-12-04'),
-	(25, 'Teknik Penyampaian /\r\nKejelasan Presentasi', 10, 'PILOT', 'dude', '11', '2023-12-04'),
-	(26, 'Keharmonisan penggunaan alat bantu', 10, 'PILOT', 'dude', '11', '2023-12-04'),
-	(27, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)', 1, 'PILOT', 'dude', '11', '2023-12-04'),
-	(28, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 1, 'PILOT', 'dude', '11', '2023-12-04'),
-	(29, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view', 10, 'ARES', 'dude', '11', '2023-12-04'),
-	(30, 'Metode  dan tools yang digunakan dalam pengembangan solusi dan inovasi/improvement actions', 10, 'ARES', 'dude', '11', '2023-12-04'),
-	(31, 'Standarisasi', 10, 'ARES', 'dude', '11', '2023-12-04'),
-	(32, 'Teknik Penyampaian /\r\nKejelasan Presentasi', 10, 'ARES', 'dude', '11', '2023-12-04'),
-	(33, 'Keharmonisan penggunaan alat bantu', 10, 'ARES', 'dude', '11', '2023-12-04'),
-	(34, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)', 9, 'ARES', 'dude', '11', '2023-12-04'),
-	(35, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 2, 'ARES', 'dude', '11', '2023-12-04'),
-	(36, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view', 5, 'TERASI', 'dude', '11', '2023-12-04'),
-	(37, 'Metode  dan tools yang digunakan dalam pengembangan solusi dan inovasi/improvement actions', 5, 'TERASI', 'dude', '11', '2023-12-04'),
-	(38, 'Standarisasi', 5, 'TERASI', 'dude', '11', '2023-12-04'),
-	(39, 'Teknik Penyampaian /\r\nKejelasan Presentasi', 5, 'TERASI', 'dude', '11', '2023-12-04'),
-	(40, 'Keharmonisan penggunaan alat bantu', 5, 'TERASI', 'dude', '11', '2023-12-04'),
-	(41, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)', 5, 'TERASI', 'dude', '11', '2023-12-04'),
-	(42, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 5, 'TERASI', 'dude', '11', '2023-12-04'),
-	(43, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view', 1, 'COC', 'dude', '11', '2023-12-04'),
-	(44, 'Metode  dan tools yang digunakan dalam pengembangan solusi dan inovasi/improvement actions', 1, 'COC', 'dude', '11', '2023-12-04'),
-	(45, 'Standarisasi', 1, 'COC', 'dude', '11', '2023-12-04'),
-	(46, 'Teknik Penyampaian /\r\nKejelasan Presentasi', 1, 'COC', 'dude', '11', '2023-12-04'),
-	(47, 'Keharmonisan penggunaan alat bantu', 1, 'COC', 'dude', '11', '2023-12-04'),
-	(48, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)', 1, 'COC', 'dude', '11', '2023-12-04'),
-	(49, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 1, 'COC', 'dude', '11', '2023-12-04'),
-	(50, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view', 4, 'SUGOI', 'dude', '11', '2023-12-04'),
-	(51, 'Metode  dan tools yang digunakan dalam pengembangan solusi dan inovasi/improvement actions', 15, 'SUGOI', 'dude', '11', '2023-12-04'),
-	(52, 'Standarisasi', 5, 'SUGOI', 'dude', '11', '2023-12-04'),
-	(53, 'Teknik Penyampaian /\r\nKejelasan Presentasi', 5, 'SUGOI', 'dude', '11', '2023-12-04'),
-	(54, 'Keharmonisan penggunaan alat bantu', 5, 'SUGOI', 'dude', '11', '2023-12-04'),
-	(55, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)', 5, 'SUGOI', 'dude', '11', '2023-12-04'),
-	(56, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 5, 'SUGOI', 'dude', '11', '2023-12-04'),
-	(57, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view', 5, 'ALADIN', 'dude', '11', '2023-12-04'),
-	(58, 'Metode  dan tools yang digunakan dalam pengembangan solusi dan inovasi/improvement actions', 5, 'ALADIN', 'dude', '11', '2023-12-04'),
-	(59, 'Standarisasi', 5, 'ALADIN', 'dude', '11', '2023-12-04'),
-	(60, 'Teknik Penyampaian /\r\nKejelasan Presentasi', 5, 'ALADIN', 'dude', '11', '2023-12-04'),
-	(61, 'Keharmonisan penggunaan alat bantu', 5, 'ALADIN', 'dude', '11', '2023-12-04'),
-	(62, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)', 5, 'ALADIN', 'dude', '11', '2023-12-04'),
-	(63, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 5, 'ALADIN', 'dude', '11', '2023-12-04'),
-	(64, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view', 1, 'SEMONGKO', 'dude', '11', '2023-12-04'),
-	(65, 'Metode  dan tools yang digunakan dalam pengembangan solusi dan inovasi/improvement actions', 1, 'SEMONGKO', 'dude', '11', '2023-12-04'),
-	(66, 'Standarisasi', 1, 'SEMONGKO', 'dude', '11', '2023-12-04'),
-	(67, 'Teknik Penyampaian /\r\nKejelasan Presentasi', 1, 'SEMONGKO', 'dude', '11', '2023-12-04'),
-	(68, 'Keharmonisan penggunaan alat bantu', 1, 'SEMONGKO', 'dude', '11', '2023-12-04'),
-	(69, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)', 1, 'SEMONGKO', 'dude', '11', '2023-12-04'),
-	(70, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 1, 'SEMONGKO', 'dude', '11', '2023-12-04'),
-	(71, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view', 5, 'SEMONGKO', 'dude', '11', '2023-12-05'),
-	(72, 'Metode  dan tools yang digunakan dalam pengembangan solusi dan inovasi/improvement actions', 5, 'SEMONGKO', 'dude', '11', '2023-12-05'),
-	(73, 'Standarisasi', 5, 'SEMONGKO', 'dude', '11', '2023-12-05'),
-	(74, 'Teknik Penyampaian /\r\nKejelasan Presentasi', 5, 'SEMONGKO', 'dude', '11', '2023-12-05'),
-	(75, 'Keharmonisan penggunaan alat bantu', 5, 'SEMONGKO', 'dude', '11', '2023-12-05'),
-	(76, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)', 5, 'SEMONGKO', 'dude', '11', '2023-12-05'),
-	(77, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 5, 'SEMONGKO', 'dude', '11', '2023-12-05');
+INSERT INTO `score_presentasi` (`id`, `title`, `score`, `team_name`, `username`, `nip`, `created_at`, `max_score`) VALUES
+	(85, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view', 10, 'SUGOI', 'dude', '11', '2023-12-05', '20'),
+	(86, 'Metode  dan tools yang digunakan dalam pengembangan solusi dan inovasi/improvement actions', 10, 'SUGOI', 'dude', '11', '2023-12-05', '20'),
+	(87, 'Standarisasi', 10, 'SUGOI', 'dude', '11', '2023-12-05', '10'),
+	(88, 'Teknik Penyampaian /\r\nKejelasan Presentasi', 10, 'SUGOI', 'dude', '11', '2023-12-05', '18'),
+	(89, 'Keharmonisan penggunaan alat bantu', 10, 'SUGOI', 'dude', '11', '2023-12-05', '15'),
+	(90, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)', 10, 'SUGOI', 'dude', '11', '2023-12-05', '10'),
+	(91, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 2, 'SUGOI', 'dude', '11', '2023-12-05', '7'),
+	(92, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view', 5.2, 'AMPIBI', 'wiz', '10', '2023-12-05', '20'),
+	(93, 'Metode  dan tools yang digunakan dalam pengembangan solusi dan inovasi/improvement actions', 3, 'AMPIBI', 'wiz', '10', '2023-12-05', '20'),
+	(94, 'Standarisasi', 10, 'AMPIBI', 'wiz', '10', '2023-12-05', '10'),
+	(95, 'Teknik Penyampaian /\r\nKejelasan Presentasi', 10, 'AMPIBI', 'wiz', '10', '2023-12-05', '18'),
+	(96, 'Keharmonisan penggunaan alat bantu', 10, 'AMPIBI', 'wiz', '10', '2023-12-05', '15'),
+	(97, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)', 10, 'AMPIBI', 'wiz', '10', '2023-12-05', '10'),
+	(98, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 3, 'AMPIBI', 'wiz', '10', '2023-12-05', '7'),
+	(99, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view', 9, 'SEMONGKO', 'wiz', '10', '2023-12-05', '20'),
+	(100, 'Metode  dan tools yang digunakan dalam pengembangan solusi dan inovasi/improvement actions', 9, 'SEMONGKO', 'wiz', '10', '2023-12-05', '20'),
+	(101, 'Standarisasi', 9, 'SEMONGKO', 'wiz', '10', '2023-12-05', '10'),
+	(102, 'Teknik Penyampaian /\r\nKejelasan Presentasi', 9, 'SEMONGKO', 'wiz', '10', '2023-12-05', '18'),
+	(103, 'Keharmonisan penggunaan alat bantu', 9, 'SEMONGKO', 'wiz', '10', '2023-12-05', '15'),
+	(104, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)', 9, 'SEMONGKO', 'wiz', '10', '2023-12-05', '10'),
+	(105, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 1, 'SEMONGKO', 'wiz', '10', '2023-12-05', '7');
 
 -- Dumping structure for table db_logistic.subcriteria_lapangan
 CREATE TABLE IF NOT EXISTS `subcriteria_lapangan` (
@@ -1335,7 +1307,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`users_id`),
   UNIQUE KEY `UK_e72fwutcg2xou2qg41w9bn5ed` (`nip`)
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table db_logistic.users: ~6 rows (approximately)
 DELETE FROM `users`;
@@ -1345,7 +1317,8 @@ INSERT INTO `users` (`users_id`, `nip`, `username`, `password`, `role`) VALUES
 	(90, '1001', 'avis', 'yel123', 'user'),
 	(91, '1002', 'frisda', 'yel123', 'user'),
 	(92, '1003', 'harry', 'yel123', 'user'),
-	(93, '10', 'wiz', '10', 'user');
+	(93, '10', 'wiz', '10', 'user'),
+	(94, '020200', 'nana', 'nana', 'user');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

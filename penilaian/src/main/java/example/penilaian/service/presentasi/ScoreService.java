@@ -36,6 +36,10 @@ public class ScoreService {
                     eval.setCreatedAt(Date.valueOf(formattedDate));
                 }
 
+                if (eval.getScore() == null ) {
+                    throw new IllegalArgumentException("Score cannot be empty or null.");
+                }
+
                 // Validasi tanggal createdAt
                 if (eval.getCreatedAt().after(new Date(currentDate.getTime()))) {
                     throw new IllegalArgumentException("Invalid createdAt date for " + eval.getTitle() +

@@ -29,6 +29,8 @@
 
         private String username;
 
+        private String maxScore;
+
         private  String  nip;
 
         private String teamName;

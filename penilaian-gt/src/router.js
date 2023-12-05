@@ -12,6 +12,7 @@ import historyLapangan from "./views/Admin/History-Lapangan.vue";
 import historyYelyel from "./views/Admin/History-Yelyel.vue";
 import penilaianYelyel from "./views/Penilaian-Yelyel/Home-Yelyel.vue";
 import homePresentasi from "./views/Presentasi/Home-Presentasi.vue";
+import detailPresentasi from "./views/Presentasi/Details-Presentasi.vue";
 
 const routes = [
 	{
@@ -76,6 +77,11 @@ const routes = [
 	{
 		path: "/presentasi",
 		component: homePresentasi,
+		beforeEnter: checkAuthorization,
+	},
+	{
+		path: "/presentasi/detail-presentasi",
+		component: detailPresentasi,
 		beforeEnter: checkAuthorization,
 	},
 ];

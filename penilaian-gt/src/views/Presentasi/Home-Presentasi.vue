@@ -77,7 +77,7 @@
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
-						<table class="table table-striped">
+						<table class="table table-group-divider">
 							<thead>
 								<tr>
 									<th>No</th>
@@ -88,12 +88,22 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr v-for="(item, index) in dataBynip" :key="index">
+								<tr v-for="(item, index) in dataBynip" :key="index" class="">
 									<td>{{ index + 1 }}</td>
 									<td>{{ item.teamName }}</td>
 									<td>{{ item.totalScore }}</td>
 									<td>{{ item.createdAt }}</td>
-									<td><button class="btn btn-primary">View</button></td>
+									<td>
+										<router-link
+											class="btn btn-secondary"
+											:to="{
+												path: '/presentasi/detail-presentasi',
+												query: { team: item.teamName, date: item.createdAt },
+											}"
+										>
+											Details
+										</router-link>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -178,6 +188,7 @@
 						username: this.tokenUser.name,
 						nip: this.tokenUser.nip,
 						teamName: this.selectedTeam,
+						maxScore: maxScore,
 						createdAt: new Date().toISOString().slice(0, 10), // Format tanggal "YYYY-MM-DD"
 					});
 				}
