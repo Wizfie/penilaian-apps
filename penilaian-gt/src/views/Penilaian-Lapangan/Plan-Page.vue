@@ -261,15 +261,15 @@
 			},
 		},
 		created() {
-			this.getAllCriteria();
-			this.getAllSubcriteria();
-			this.getAllQuestion();
-			this.getAllChoice();
-			this.getAllTeam();
-
 			const userData = JSON.parse(localStorage.getItem("userData"));
 			if (userData) {
 				this.requestData.user = userData.username;
+
+				this.getAllCriteria();
+				this.getAllSubcriteria();
+				this.getAllQuestion();
+				this.getAllChoice();
+				this.getAllTeam();
 			}
 			const savedData = JSON.parse(localStorage.getItem("savedData"));
 			if (savedData && savedData.nilai) {

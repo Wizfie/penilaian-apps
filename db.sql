@@ -19,16 +19,32 @@
 CREATE DATABASE IF NOT EXISTS `db_logistic` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db_logistic`;
 
+-- Dumping structure for table db_logistic.answer
+CREATE TABLE IF NOT EXISTS `answer` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `nip` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `selected_option` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `team_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `question_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK7mluqeoggakn10mca9veouh1p` (`question_id`),
+  CONSTRAINT `FK7mluqeoggakn10mca9veouh1p` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table db_logistic.answer: ~0 rows (approximately)
+DELETE FROM `answer`;
+
 -- Dumping structure for table db_logistic.criteria_lapangan
 CREATE TABLE IF NOT EXISTS `criteria_lapangan` (
-  `criteria_id` int NOT NULL AUTO_INCREMENT,
-  `criteria_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`criteria_id`)
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table db_logistic.criteria_lapangan: ~7 rows (approximately)
 DELETE FROM `criteria_lapangan`;
-INSERT INTO `criteria_lapangan` (`criteria_id`, `criteria_name`) VALUES
+INSERT INTO `criteria_lapangan` (`id`, `name`) VALUES
 	(1, 'PEMILIHAN & TUJUAN PROYEK PERBAIKAN '),
 	(2, 'PENETAPAN TARGET PROYEK PERBAIKAN'),
 	(3, 'ANALISA SITUASI & PENENTUAN FAKTOR PENYEBAB MASALAH UTAMA\r\n'),
@@ -71,6 +87,24 @@ INSERT INTO `items_presentasi` (`id`, `title`, `max_score`) VALUES
 	(5, 'Keharmonisan penggunaan alat bantu', 15),
 	(6, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)', 10),
 	(7, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 7);
+
+-- Dumping structure for table db_logistic.kriteria
+CREATE TABLE IF NOT EXISTS `kriteria` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table db_logistic.kriteria: ~7 rows (approximately)
+DELETE FROM `kriteria`;
+INSERT INTO `kriteria` (`id`, `name`) VALUES
+	(1, 'PEMILIHAN & TUJUAN PROYEK PERBAIKAN '),
+	(2, 'PENETAPAN TARGET PROYEK PERBAIKAN'),
+	(3, 'ANALISA SITUASI & PENENTUAN FAKTOR PENYEBAB MASALAH UTAMA'),
+	(4, 'PENGEMBANGAN & RENCANA SOLUSI PERBAIKAN'),
+	(5, 'IMPLEMENTASI SOLUSI PERBAIKAN'),
+	(6, 'EVALUASI HASIL PERBAIKAN'),
+	(7, 'PENGENDALIAN DAN STANDARISASI');
 
 -- Dumping structure for table db_logistic.multiple_choice_lapangan
 CREATE TABLE IF NOT EXISTS `multiple_choice_lapangan` (
@@ -1012,7 +1046,7 @@ CREATE TABLE IF NOT EXISTS `point_yelyel` (
   PRIMARY KEY (`point_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1400 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table db_logistic.point_yelyel: ~78 rows (approximately)
+-- Dumping data for table db_logistic.point_yelyel: ~88 rows (approximately)
 DELETE FROM `point_yelyel`;
 INSERT INTO `point_yelyel` (`point_id`, `subscriteria_name`, `point`, `team_name`, `username`, `create_at`) VALUES
 	(1309, 'Vokal/Nada', 7, 'APW', 'harry', '2023-11-23'),
@@ -1107,6 +1141,61 @@ INSERT INTO `point_yelyel` (`point_id`, `subscriteria_name`, `point`, `team_name
 	(1398, 'Kesesuaian makna', 5, 'RPW', 'wiz', '2023-12-05'),
 	(1399, 'Waktu untuk yel- yel 3 menit', 5, 'RPW', 'wiz', '2023-12-05');
 
+-- Dumping structure for table db_logistic.questions
+CREATE TABLE IF NOT EXISTS `questions` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `question_text` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `subskriteria_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKhgr1ro6js8yts94qgt2nsm6bn` (`subskriteria_id`),
+  CONSTRAINT `FKhgr1ro6js8yts94qgt2nsm6bn` FOREIGN KEY (`subskriteria_id`) REFERENCES `subskriteria` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table db_logistic.questions: ~0 rows (approximately)
+DELETE FROM `questions`;
+INSERT INTO `questions` (`id`, `question_text`, `subskriteria_id`) VALUES
+	(1, 'Melakukan identifikasi dan membuat stratifikasi masalah (problem/persoalan)', 1),
+	(2, 'Memilih project improvement/inovasi berdasarkan data & fakta melalui penggunaan quality methode dan tools secara maksimal (baik dan benar)', 1),
+	(3, 'Menjelaskan alasan kenapa proyek perbaikan tersebut dipilih', 1),
+	(4, 'Menjelaskan proyek perbaikan (improvement/inovasi) yang terseleksi mempunyai potensi pengaruh positif terhadap tujuan (strategi) perusahaan', 2),
+	(5, 'Teridentifikasi tingkat kesulitan (kompleksitas) masalah / pelaksanaan perbaikan dari proyek yang terseleksi', 2),
+	(6, 'Tercermin harapan Customer dan/atau Stakeholders terhadap proyek perbaikan (improvement/inovasi) yang akan dilaksanakan', 2),
+	(7, 'Mengidentifikasi Stakeholders yang bisa involve (terlibat) maupun yang dapat memberikan support dalam proyek perbaikan (improvement/inovasi)', 3),
+	(8, 'Mengidentifikasi Stakeholders yang resisten (menghambat), sehingga menjadikan tantangan terhadap proyek perbaikan (improvement/inovasi)', 3),
+	(9, 'Menjelaskan bagaimana mereka (stakeholders) akan bisa memberikan dampak positif terhadap proyek perbaikan (Improvement/inovasi)', 3),
+	(10, 'Target (sasaran) yang ditetapkan mencakup QCDSMP', 4),
+	(11, 'Penetapan sasaran jangka pendek, dan sasaran tersebut menjadi bagian dari tujuan perbaikan', 4),
+	(12, 'Target (sasaran) jelas dan menantang', 5),
+	(13, 'Prediksi manfaat dan masalah potensial', 6),
+	(14, 'Verifikasi stakeholders yang terkait dengan proyek perbaikan', 7),
+	(15, 'Akar masalah teridentifikasi dengan jelas dan dapat dibuktikan', 8),
+	(16, 'Munculnya akar penyebab dari akar masalah pada suatu faktor yang telah dikembangkan', 8),
+	(17, 'Identifikasi dan validasi (memiliki akurasi penentuan) faktor penyebab dominan (akar penyebab masalah utama)', 8),
+	(18, 'Kesesuaian masalah dengan prioritas penanganan faktor penyebab dominan', 8),
+	(19, 'Aktualisasi dan keterlibatan team & stakeholders dalam mengembangkan pola hubungan sebab akibat', 9),
+	(20, 'Menjelaskan metode dan quality tools yang digunakan untuk mencari dan memilih ide perbaikan serta menentukan penanggulangan', 10),
+	(21, 'Menjelaskan kreatifitas team & stakeholders dalam menemukan alternatif solusi (improvement actions) dan parameter kelebihan serta analisa resiko (kekurangannya)', 10),
+	(22, 'Menjelaskan keterlibatan team & stakeholders dalam menemukan alternatif solusi (improvement actions) dan parameter kelebihan serta analisa resiko (kekurangannya)', 10),
+	(23, 'Menjelaskan tentang final solutions/improvement actions, validasi dan benefit/kemampuan dalam menjawab kebutuhan yang diharapkan terhadap inovasi/improvement actions yang akan dilakukan', 11),
+	(24, 'Menguraikan detail rencana project (5W2H), termasuk distribusi peranan dan keterlibatan stakeholders dalam melakukan perbaikan', 11),
+	(25, 'Memiliki sistem pantau (monitoring) atas proses pelaksanaan tindakan perbaikan yang dilakukan', 12),
+	(26, 'Menjelaskan bagaimana mengidentifikasikan serta mengalokasikan hambatan-hambatan (baik yang nyata atau potensial) yang muncul, serta memastikan keterlibatan team & stakeholders untuk meyepakati (buy-in) atas corrective action yang telah ditentukan serta dampaknya', 12),
+	(27, 'Semua anggota Tim memahami perubahan-perubahan yang terjadi di dalam improvement yang dibuat terhadap kondisi sebelumnya (kondisi awal)', 13),
+	(28, 'Ada analisis komparasi yg valid & tepat serta kesimpulan analisis/faktor penyebab yg belum teratasi', 14),
+	(29, 'Tools yang dipakai, alasan penggunaan & hasilnya', 14),
+	(30, 'Manfaat tangible & intangible', 15),
+	(31, 'Ada hasil-hasil positif lain yang timbul, tapi bukan sasaran penanggulangan/perbaikan yang telah dilaksanakan', 15),
+	(32, 'Ada analisis dampak terhadap hasil-hasil lain (apakah hasil perbaikan menimbulkan efek samping?) Bila ada, bagaimana tindakan untuk eliminasi hal tersebut? Hasilnya efisien?', 15),
+	(33, 'Proyek perbaikan memberikan kontribusi/ dampak nyata terhadap tujuan perusahaan/plant/divisi/departement  dan stakeholders', 16),
+	(34, 'Pendekatan sistem atas standar baru meliputi standar masukan, proses dan hasil. Dan standar baru tersebut mudah dipahami (informatif)', 17),
+	(35, 'Kualitas standar pengendalian dan pencegahan terhadap timbulnya masalah (lama atau baru)', 17),
+	(36, 'Standar baru lebih efektif dan aplikatif dari pada sebelumnya', 17),
+	(37, 'Standar baru telah dikomunikasikan, sudah diserah terimakan dan dapat diterapkan di tempat lain', 17),
+	(38, 'Bila terjadi non-conformance (ada peringatan otomatis/tidak otomatis/tidak ada peringatan)', 17),
+	(39, 'Memiliki kegiatan/tahapan/aktifitas yang menjamin pelaksanaan standar baru secara efektif', 18),
+	(40, 'Memiliki cara melakukan monitoring dan mengevaluasi standar baru', 18),
+	(41, 'Identifikasi & Penetapan Rencana Berikutnya', 19);
+
 -- Dumping structure for table db_logistic.questions_lapangan
 CREATE TABLE IF NOT EXISTS `questions_lapangan` (
   `question_id` int NOT NULL AUTO_INCREMENT,
@@ -1162,6 +1251,182 @@ INSERT INTO `questions_lapangan` (`question_id`, `question_text`, `subcriteria_i
 	(40, 'Memiliki cara melakukan monitoring dan mengevaluasi standar baru\r\n', 18),
 	(41, 'Identifikasi & Penetapan Rencana Berikutnya \r\n', 19);
 
+-- Dumping structure for table db_logistic.questions_options
+CREATE TABLE IF NOT EXISTS `questions_options` (
+  `questions_id` bigint NOT NULL,
+  `options` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  KEY `FKdnp6yxw78g69gnjwcat89vo2n` (`questions_id`),
+  CONSTRAINT `FKdnp6yxw78g69gnjwcat89vo2n` FOREIGN KEY (`questions_id`) REFERENCES `questions` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table db_logistic.questions_options: ~0 rows (approximately)
+DELETE FROM `questions_options`;
+INSERT INTO `questions_options` (`questions_id`, `options`) VALUES
+	(1, '1'),
+	(1, '0,75'),
+	(1, '0,5'),
+	(1, '0,3'),
+	(2, '1'),
+	(2, '0,75'),
+	(2, '0,5'),
+	(2, '0,3'),
+	(3, '1'),
+	(3, '0,75'),
+	(3, '0,5'),
+	(3, '0,3'),
+	(4, '1'),
+	(4, '0,75'),
+	(4, '0,5'),
+	(4, '0,3'),
+	(5, '1'),
+	(5, '0,75'),
+	(5, '0,5'),
+	(5, '0,3'),
+	(6, '1'),
+	(6, '0,75'),
+	(6, '0,5'),
+	(6, '0,3'),
+	(7, '1'),
+	(7, '0,75'),
+	(7, '0,5'),
+	(7, '0,3'),
+	(8, '0,75'),
+	(8, '0,56'),
+	(8, '0,38'),
+	(8, '0,23'),
+	(9, '1'),
+	(9, '0,75'),
+	(9, '0,5'),
+	(9, '0,3'),
+	(10, '1'),
+	(10, '0,75'),
+	(10, '0,5'),
+	(10, '0,3'),
+	(11, '1'),
+	(11, '0,75'),
+	(11, '0,5'),
+	(11, '0,3'),
+	(12, '2'),
+	(12, '1,5'),
+	(12, '1'),
+	(12, '0,6'),
+	(13, '2'),
+	(13, '1,5'),
+	(13, '1'),
+	(13, '0,6'),
+	(14, '2'),
+	(14, '1,5'),
+	(14, '1'),
+	(14, '0,6'),
+	(15, '1'),
+	(15, '0,75'),
+	(15, '0,5'),
+	(15, '0,3'),
+	(16, '1'),
+	(16, '0,75'),
+	(16, '0,5'),
+	(16, '0,3'),
+	(17, '1'),
+	(17, '0,75'),
+	(17, '0,5'),
+	(17, '0,3'),
+	(18, '1'),
+	(18, '0,75'),
+	(18, '0,5'),
+	(18, '0,3'),
+	(19, '2'),
+	(19, '1,5'),
+	(19, '1'),
+	(19, '0,6'),
+	(20, '1'),
+	(20, '0,75'),
+	(20, '0,5'),
+	(20, '0,3'),
+	(21, '1'),
+	(21, '0,75'),
+	(21, '0,5'),
+	(21, '0,3'),
+	(22, '1'),
+	(22, '0,75'),
+	(22, '0,5'),
+	(22, '0,3'),
+	(23, '2'),
+	(23, '1,5'),
+	(23, '1'),
+	(23, '0,6'),
+	(24, '2'),
+	(24, '1,5'),
+	(24, '1'),
+	(24, '0,6'),
+	(25, '10'),
+	(25, '7,5'),
+	(25, '5'),
+	(25, '3,6'),
+	(26, '10'),
+	(26, '7,5'),
+	(26, '5'),
+	(26, '3,6'),
+	(27, '10'),
+	(27, '7,5'),
+	(27, '5'),
+	(27, '3,6'),
+	(28, '5'),
+	(28, '3,75'),
+	(28, '2,5'),
+	(28, '1,5'),
+	(29, '5'),
+	(29, '3,75'),
+	(29, '2,5'),
+	(29, '1,5'),
+	(30, '3,33'),
+	(30, '3,75'),
+	(30, '1,67'),
+	(30, '1'),
+	(31, '3,33'),
+	(31, '3,75'),
+	(31, '1,67'),
+	(31, '1'),
+	(32, '3,33'),
+	(32, '3,75'),
+	(32, '1,67'),
+	(32, '1'),
+	(33, '10'),
+	(33, '7,5'),
+	(33, '5'),
+	(33, '3,6'),
+	(34, '1'),
+	(34, '0,75'),
+	(34, '0,5'),
+	(34, '0,3'),
+	(35, '1'),
+	(35, '0,75'),
+	(35, '0,5'),
+	(35, '0,3'),
+	(36, '1'),
+	(36, '0,75'),
+	(36, '0,5'),
+	(36, '0,3'),
+	(37, '1'),
+	(37, '0,75'),
+	(37, '0,5'),
+	(37, '0,3'),
+	(38, '1'),
+	(38, '0,75'),
+	(38, '0,5'),
+	(38, '0,3'),
+	(39, '1,5'),
+	(39, '1,13'),
+	(39, '0,75'),
+	(39, '0,5'),
+	(40, '1,5'),
+	(40, '1,13'),
+	(40, '0,75'),
+	(40, '0,5'),
+	(41, '2'),
+	(41, '1,5'),
+	(41, '1'),
+	(41, '0,5');
+
 -- Dumping structure for table db_logistic.score_presentasi
 CREATE TABLE IF NOT EXISTS `score_presentasi` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -1173,9 +1438,9 @@ CREATE TABLE IF NOT EXISTS `score_presentasi` (
   `created_at` date DEFAULT NULL,
   `max_score` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table db_logistic.score_presentasi: ~70 rows (approximately)
+-- Dumping data for table db_logistic.score_presentasi: ~28 rows (approximately)
 DELETE FROM `score_presentasi`;
 INSERT INTO `score_presentasi` (`id`, `title`, `score`, `team_name`, `username`, `nip`, `created_at`, `max_score`) VALUES
 	(85, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view', 10, 'SUGOI', 'dude', '11', '2023-12-05', '20'),
@@ -1198,7 +1463,14 @@ INSERT INTO `score_presentasi` (`id`, `title`, `score`, `team_name`, `username`,
 	(102, 'Teknik Penyampaian /\r\nKejelasan Presentasi', 9, 'SEMONGKO', 'wiz', '10', '2023-12-05', '18'),
 	(103, 'Keharmonisan penggunaan alat bantu', 9, 'SEMONGKO', 'wiz', '10', '2023-12-05', '15'),
 	(104, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)', 9, 'SEMONGKO', 'wiz', '10', '2023-12-05', '10'),
-	(105, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 1, 'SEMONGKO', 'wiz', '10', '2023-12-05', '7');
+	(105, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 1, 'SEMONGKO', 'wiz', '10', '2023-12-05', '7'),
+	(113, 'Korelasi dengan stretegi atau tingkat urgensi atau tingkat kepentingan permasalahan dalam company view', 5, 'TERASI', 'wiz', '10', '2023-12-06', '20'),
+	(114, 'Metode  dan tools yang digunakan dalam pengembangan solusi dan inovasi/improvement actions', 5, 'TERASI', 'wiz', '10', '2023-12-06', '20'),
+	(115, 'Standarisasi', 5, 'TERASI', 'wiz', '10', '2023-12-06', '10'),
+	(116, 'Teknik Penyampaian /\r\nKejelasan Presentasi', 5, 'TERASI', 'wiz', '10', '2023-12-06', '18'),
+	(117, 'Keharmonisan penggunaan alat bantu', 5, 'TERASI', 'wiz', '10', '2023-12-06', '15'),
+	(118, 'Kerjasama team dalam presentasi\r\n (Pengelolaan presentasi)', 5, 'TERASI', 'wiz', '10', '2023-12-06', '10'),
+	(119, 'Ketepatan waktu presentasi\r\n(Score by timekeeper)', 5, 'TERASI', 'wiz', '10', '2023-12-06', '7');
 
 -- Dumping structure for table db_logistic.subcriteria_lapangan
 CREATE TABLE IF NOT EXISTS `subcriteria_lapangan` (
@@ -1207,7 +1479,7 @@ CREATE TABLE IF NOT EXISTS `subcriteria_lapangan` (
   `criteria_id` int DEFAULT NULL,
   PRIMARY KEY (`subcriteria_id`),
   KEY `FKd17jsp88aroh433el5xihkeam` (`criteria_id`),
-  CONSTRAINT `FKd17jsp88aroh433el5xihkeam` FOREIGN KEY (`criteria_id`) REFERENCES `criteria_lapangan` (`criteria_id`)
+  CONSTRAINT `FKd17jsp88aroh433el5xihkeam` FOREIGN KEY (`criteria_id`) REFERENCES `criteria_lapangan` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table db_logistic.subcriteria_lapangan: ~19 rows (approximately)
@@ -1260,6 +1532,39 @@ INSERT INTO `subscriteria_yelyel` (`subscriteria_id`, `max_point`, `subscriteria
 	(11, 5, 'Gaya tidak berlebihan', 4),
 	(12, 5, 'Kesesuaian makna', 4),
 	(13, 10, 'Waktu untuk yel- yel 3 menit', 5);
+
+-- Dumping structure for table db_logistic.subskriteria
+CREATE TABLE IF NOT EXISTS `subskriteria` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `kriteria_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK48w2irgu21nnjuc4679eqdk38` (`kriteria_id`),
+  CONSTRAINT `FK48w2irgu21nnjuc4679eqdk38` FOREIGN KEY (`kriteria_id`) REFERENCES `kriteria` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table db_logistic.subskriteria: ~0 rows (approximately)
+DELETE FROM `subskriteria`;
+INSERT INTO `subskriteria` (`id`, `name`, `kriteria_id`) VALUES
+	(1, 'Menjelaskan methode, quality tools dan data dalam memilih suatu project', 1),
+	(2, 'Tema terkait dengan tujuan & strategi bisnis/perusahaan', 1),
+	(3, 'Stakeholders Involvement (Keterlibatan Stakeholders) : Pemegang Saham, Customer, Karyawan (Atasan/Bawahan), Pemerintah, Supplier, Community dan Lingkungan', 1),
+	(4, 'Target (sasaran) sesuai dengan tema', 2),
+	(5, 'Target (sasaran) jelas dan menantang', 2),
+	(6, 'Prediksi manfaat dan masalah potensial', 2),
+	(7, 'Verifikasi stakeholders yang terkait dengan proyek perbaikan', 2),
+	(8, 'Pendekatan/proses yang digunakan untuk mengidentifikasi potensi akar penyebab masalah utama/kemungkinan perbaikan', 3),
+	(9, 'Aktualisasi dan keterlibatan team & stakeholders dalam mengembangkan pola hubungan sebab akibat', 3),
+	(10, 'Menjelaskan metode dan quality tools yaang digunakan dalam pengembangan solusi dan inovasi/improvement actions', 4),
+	(11, 'Kualitas ide solusi / inovation actions', 4),
+	(12, 'Menjelaskan pendekatan yang digunakan untuk menerapkan tindakan solusi/improvement dan memastikan hasil yang ingin dicapai', 5),
+	(13, 'Semua anggota Tim memahami perubahan-perubahan yang terjadi di dalam improvement yang dibuat terhadap kondisi sebelumnya (kondisi awal)', 5),
+	(14, 'Tingkat pencapaian perbaikan dibandingkan dengan target (sasaran) akhir / antara', 6),
+	(15, 'Kuantifikasi dampak solusi/improvement actions', 6),
+	(16, 'Proyek perbaikan memberikan kontribusi/ dampak nyata terhadap tujuan perusahaan/plant/divisi/departement  dan stakeholders', 6),
+	(17, 'Standarisasi', 7),
+	(18, 'Menjamin pelaksanaan standar baru', 7),
+	(19, 'Identifikasi & Penetapan Rencana Berikutnya ', 7);
 
 -- Dumping structure for table db_logistic.teams
 CREATE TABLE IF NOT EXISTS `teams` (

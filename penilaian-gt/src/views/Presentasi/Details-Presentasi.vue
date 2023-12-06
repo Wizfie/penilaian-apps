@@ -140,7 +140,6 @@
 						item.score > item.maxScore)
 				) {
 					console.error("Invalid score detected.");
-					// Manipulasi item.score atau tindakan lainnya sesuai kebutuhan Anda
 				}
 			},
 			getByNip() {
@@ -173,7 +172,7 @@
 
 			totalScore() {
 				return this.filteredDetailScore.reduce((total, item) => {
-					return total + (item.score || 0); // Mengakumulasi nilai skor
+					return total + (item.score || 0);
 				}, 0);
 			},
 		},

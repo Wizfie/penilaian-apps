@@ -58,7 +58,6 @@ public class ScoreService {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException("Error occurred while saving scores");
         }
     }

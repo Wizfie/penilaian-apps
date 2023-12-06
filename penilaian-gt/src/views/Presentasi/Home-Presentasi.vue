@@ -46,7 +46,6 @@
 								<strong>{{ pointIndex + 1 }}. </strong>{{ point.text }} <br />
 								<strong>{{ "Point Max = " + point.maxValue }}</strong>
 								<br />
-								<!-- <strong>{{ "Score Max = " + item.items.maxScore }}</strong> -->
 							</li>
 						</ol>
 						<div class="card-footer">
@@ -57,6 +56,7 @@
 								placeholder="Answer"
 								v-model="score[item.title]"
 								required
+								@input="totalScoreInput()"
 							/>
 						</div>
 					</div>
@@ -282,13 +282,7 @@
 					const scoreValue = this.score[title] || 0;
 					total += Math.max(0, Math.min(scoreValue, question.maxScore));
 				}
-				return total;
-			},
-		},
-		watch: {
-			totalScoreInput(newTotal, oldTotal) {
-				// Memperbarui total skor saat nilai skor diubah
-				this.totalScore = newTotal;
+				this.totalScore = total;
 			},
 		},
 
@@ -300,15 +294,15 @@
 					this.tokenUser.nip = userData.nip;
 					this.tokenUser.role = userData.role;
 
+					this.getQuestion();
+					this.getTeams();
+					this.getByNip();
+
 					// console.log(this.tokenUser);
 				}
 			} catch (error) {
 				console.log("fail fetch userData " + error);
 			}
-
-			this.getQuestion();
-			this.getTeams();
-			this.getByNip();
 		},
 	};
 </script>
